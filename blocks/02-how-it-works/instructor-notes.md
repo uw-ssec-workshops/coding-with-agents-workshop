@@ -1,0 +1,147 @@
+# Block 2: Instructor Notes
+
+These are the notes you actually deliver from. The slide deck has the
+public-facing version; this is the inside view.
+
+## Pre-block checklist (do this in the 5 min before you start)
+
+- [ ] Reset Block 1's starter file: `cd blocks/01-landscape/demo/starter && git checkout -- src/sci_units/converters.py`
+- [ ] Confirm credentials: `echo $LITELLM_API_BASE` should print the proxy URL.
+- [ ] **Confirm at least one model is reachable.** Run the notebook's discovery cell (cell 4) up to that point and check the printed list. Ideally you have at least 2 models so the comparison is interesting.
+- [ ] Open VS Code with two windows arranged:
+  - **Left:** `blocks/02-how-it-works/slides.md` Marp preview, full-screen on the projector.
+  - **Right:** `blocks/02-how-it-works/demo/notebook.ipynb` open in a tab, kernel `Workshop (Python 3.12)` selected, all cells cleared.
+- [ ] Restart the notebook kernel so it shows a clean state.
+
+## Timing checkpoints
+
+| at minute | should be on slide | content |
+|---|---|---|
+| 2 | slide 2 (Where we left off) | Done with the recap |
+| 6 | slide 3 (Pre-training) | Done with the base-model framing |
+| 11 | slide 4 (SFT) | Q1 answered |
+| 16 | slide 5 (RLHF) | Q2 answered |
+| 21 | slide 6 (Tool-use FT) | Q3 answered |
+| 23 | slide 7 (Convergence) | Q4 answered, demo about to start |
+| 25 | slide 9 (Demo intro) | Switching to notebook |
+| 28 | (notebook) | Demo done, switching back to slide 10 |
+| 30 | slide 10 (Bridge) | Hand off to Block 3 |
+
+If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most expendable line) before cutting from the demo.
+
+## Per-slide notes
+
+### 1. Title
+
+- 30 seconds. Hand-off from Block 1 demo. Acknowledge: "this is the conceptual block. Stay with us, it pays off in everything that follows."
+
+### 2. Where we left off
+
+- Read all four phenomena slowly. Make eye contact.
+- This is the contract for the next 25 minutes. Land it.
+- "Each one of those was *not* something the model picked up from reading the internet. Each one has a name."
+
+### 3. Pre-training is a fluent autocomplete
+
+- The "Translate to French: Hello" example is the punchiest concrete demo. **Say it out loud:**
+  - prompt: `"Translate to French: Hello\n"`
+  - base-model continuation: `"Translate to Spanish: Hello\nTranslate to German: Hello\n..."`
+- Audience usually laughs. Good. The point landed.
+- Pre-training is **necessary, not sufficient.** Everything that makes a coding agent useful is post-training.
+
+### 4. SFT (instruction tuning)
+
+- Emphasize: SFT is a relatively cheap and small fine-tune compared to pre-training. The base model already "knows" the world; SFT just teaches it the dialogue format.
+- This is also why a small open-source SFT dataset (Alpaca, etc.) can turn a base model into a chatty one.
+- Don't get drawn into "and how does fine-tuning work?", wave at backprop, move on.
+
+### 5. RLHF (preference learning)
+
+- DPO fans in the audience will appreciate the mention. Don't get into the math; just say *"fewer moving parts than PPO + reward model, often equally good."*
+- The "when to stop" framing is the workshop-relevant one. Coding agents that don't stop are useless.
+- This is also where models get their "personality" / refusal behavior. Constitutional AI is one variant, mention if asked.
+
+### 6. Tool-use fine-tuning
+
+- The trace block on the slide is concrete. Walk through it. Point at each line.
+- **"Wire format vs meta-skill"** is the punchy two-part framing. Repeat it.
+- Agentic RL is the answer to *"why are agents getting better so fast in 2025-2026?"*, it's not bigger models, it's better RL signal over multi-turn trajectories.
+
+### 7. Why this is convergent
+
+- This is the slide where Block 1's spine ("all coding agents work the same way under the hood") gets its **proof**. Linger.
+- The table is a teaching tool, not a leaderboard. Read across rows.
+- Tee up the demo: "We're about to swap MODEL and watch the same loop drive a different brain."
+
+### 8. Trained in vs in the prompt
+
+- This is the most actionable slide of the whole block. Call it out: **"Bookmark this slide. This is the lens you'll use every time an agent surprises you."**
+- Concrete example to drop: *"if Claude won't follow your style guide, it's not because Claude lacks taste, it's because you didn't put the style guide in `AGENTS.md`."*
+- Almost every agent failure people complain about online turns out to be a prompt problem on inspection.
+
+### 9. Demo intro
+
+- Switch to VS Code. Restart kernel. Cells cleared.
+- Narrate the discovery cell: *"This is a defensive move. We don't know in advance whether the proxy fronts GPT and Gemini, so we ask. Same notebook keeps working as the proxy admin adds models."*
+
+### 10. Bridge to Block 3
+
+- Hard hand-off. Don't linger.
+- Last sentence: *"Block 3 turns these into a taxonomy with mitigations."* Stop talking.
+
+## Demo script
+
+### Setup (target: 30s)
+
+1. Restart kernel + run cells 1-3 (imports, reset). Should be instant.
+2. Run cell 4 (model discovery). Read the available list out loud.
+
+### Model swap (target: 3-4 min)
+
+3. Run cell 6 (signature), quick, just shows participants the function exists.
+4. Run cell 8 (`compare`), point at the docstring/comments.
+5. Run cell 10 (the loop). **This is the moment.** Narrate as each model runs:
+   - First model (Claude usually): "Watch which tool it picks first."
+   - Second model: "Same code. Different brain. Watch the path it takes."
+   - Third model (if available): "And now a third lab's training pipeline. Same outcome."
+6. Pause for 10 seconds after the last trace prints. Let participants read the output.
+
+### Discussion (target: 30s)
+
+7. Read cell 11 (the "convergence is not perfection" block). Don't paraphrase, read the punchline.
+
+### Bonus: tool description ablation (target: 1 min, time permitting)
+
+8. Run cell 13 (verbose vs vague). Narrate: *"Same model. Same task. The only thing that changed is how clearly we described the tools."*
+9. If behavior degrades, point at the diff. If it doesn't (modern models are robust to a lot of slop), say *"OK, even sabotaged tool descriptions work for the easy task, but try this on your own messy codebase and you'll see the lever very fast."*
+
+### What to do if something fails live
+
+| Symptom | Recovery |
+|---|---|
+| Discovery cell finds 0 models | Talk through the slide content; the conceptual case still stands. Promise to debug after the block. |
+| Discovery cell finds 1 model only | Skip ahead to the **tool-description ablation** (cell 13). Frame it: *"Convergence we'll have to trust the slides on; let's instead see the prompt-side lever in action."* |
+| One model raises mid-run | Point at the `try/except` in `compare`. *"This is data, Block 3 turns this into a taxonomy. For now, watch the model that did finish."* |
+| All models stall (proxy slow) | Cancel the cell, switch back to slide 8 ("trained in vs in the prompt"), expand on the framing for 2 extra minutes. Block 2 still lands. |
+
+## Common audience questions and how to handle them
+
+| Question | Short answer |
+|---|---|
+| "Is RLHF the same as Constitutional AI?" | "Constitutional AI is a *variant* of RLHF where the preferences come from a model graded against a written constitution, not from human raters. Same shape, less human labor." |
+| "What's the difference between RLHF and DPO?" | "DPO skips the explicit reward model, it directly optimizes the policy from preference pairs. Often equally effective, much simpler to implement." |
+| "Should I fine-tune for my codebase?" | "Almost never. Try prompt and tool-schema iteration first, that's Block 4. Fine-tuning is the last 5% of behavior shaping; the first 95% is in the prompt." |
+| "What's agentic RL exactly?" | "Reinforcement learning where the trajectory is multi-turn tool use, and the reward is task completion (e.g., 'did the tests pass?'). It's how recent agent products got reliably good at long workflows." |
+| "Will GPT-5 / Claude / Gemini eventually all be the same?" | "The shape of behavior is converging fast. The remaining differences are speed, cost, and the small number of capabilities each lab over-invests in. Expect the model layer to feel like a commodity within a couple of years." |
+
+## What to skip if you're behind time
+
+In order of expendability:
+
+1. The InstructGPT historical aside on slide 4.
+2. The DPO mention on slide 5.
+3. The agentic RL detail on slide 6, you can collapse it to "and the bleeding edge is multi-turn RL."
+4. The bonus tool-description ablation in the demo (cells 13).
+5. The convergence table on slide 7, collapse to one sentence.
+
+**Never skip:** the recap (slide 2), the "trained in vs in the prompt" slide (slide 8), or the bridge to Block 3 (slide 10).
