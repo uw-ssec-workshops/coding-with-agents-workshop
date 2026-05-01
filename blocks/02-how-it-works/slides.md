@@ -86,7 +86,42 @@ Speaker notes:
 Speaker notes:
 - Emphasize: SFT is a relatively cheap and small fine-tune. The base model already "knows" everything; SFT just teaches it the dialogue format.
 - This is also why a small open-source SFT dataset (Alpaca, etc.) can turn a base model into a chatty one.
-- Don't get drawn into "and how does fine-tuning work?", wave at backprop, move on.
+- Don't get drawn into "and how does fine-tuning work?", wave at backprop, loss functions, and move on.
+-->
+
+---
+
+## SFT for coding: what the data looks like
+
+A single training example is just a `(prompt, response)` pair. For coding agents, contractors write thousands of these:
+
+```
+PROMPT:
+Write a Python function `running_mean(xs, k)` that returns the
+length-k moving average of a list of floats. Handle k > len(xs)
+by returning an empty list.
+
+RESPONSE:
+def running_mean(xs: list[float], k: int) -> list[float]:
+    if k <= 0 or k > len(xs):
+        return []
+    out = []
+    s = sum(xs[:k])
+    out.append(s / k)
+    for i in range(k, len(xs)):
+        s += xs[i] - xs[i - k]
+        out.append(s / k)
+    return out
+```
+
+The model learns the **shape**: read the spec, write typed code, handle the edge case the prompt mentioned, stop. Multiply by ~hundreds of thousands of examples across languages, frameworks, and difficulty levels.
+
+<!--
+Speaker notes:
+- Walk through the example. Point out: typed signature, edge case from the spec, O(n) instead of naive O(nk), no extra commentary.
+- That's not the model "being smart", that's the model imitating what a contractor wrote.
+- Open-source analogues people may have heard of: CodeAlpaca, Magicoder/OSS-Instruct, the SFT split of OpenCodeInterpreter. Mention only if asked.
+- Key takeaway: the *style* of agent output (concise, typed, edge-case-aware) is literally a learned imitation of how the SFT contractors wrote.
 -->
 
 ---
@@ -109,6 +144,44 @@ Speaker notes:
 - DPO fans in the audience will appreciate the mention. Don't get into the math; just say "fewer moving parts than PPO + reward model, often equally good."
 - The "when to stop" framing is the workshop-relevant one. Coding agents that don't stop are useless.
 - This is also where models get their "personality" / refusal behavior. Constitutional AI is one variant.
+-->
+
+---
+
+## RLHF for coding: what the data looks like
+
+A single training example is a `(prompt, response_A, response_B, label)` tuple. The label is a human's pick of which response is better.
+
+```
+PROMPT:
+My pytest run hangs forever on test_ingest. What should I do?
+
+RESPONSE A:                          RESPONSE B:
+Run `pytest -x test_ingest` to       You should rewrite your test
+fail fast, then add `--timeout=10`   suite using async fixtures and
+(pytest-timeout). If it still        switch to pytest-asyncio. Also
+hangs, the culprit is usually a      consider migrating off pytest
+network call or a fixture waiting    entirely. Here is a 200-line
+on a lock; isolate with `-k` and     refactor that does that...
+add `-s` to see prints.
+
+LABEL: A > B   (focused, answers the question, stops)
+```
+
+What the model learns from millions of these:
+
+- **Stay on the asked question** (don't propose a rewrite when asked to debug).
+- **Match the user's scope** (one failing test, not the whole suite).
+- **Stop when the answer is complete** instead of padding.
+
+**That's the "knowing when to stop" behavior**, learned as a preference, not a rule.
+
+<!--
+Speaker notes:
+- Walk through both responses out loud. Audience laughs at B - we've all gotten that response.
+- Emphasize: nobody told the model "don't propose 200-line refactors". It learned that humans rate the focused answer higher.
+- Public analogues if asked: HH-RLHF (Anthropic), UltraFeedback, the preference splits in Llama-2/3 papers.
+- Tie back to Q2: the *reason* a coding agent eventually says "done" instead of looping is RLHF preference data like this.
 -->
 
 ---
@@ -141,6 +214,56 @@ Speaker notes:
 - The trace example is concrete. Walk through it. Point at each line.
 - "Wire format vs meta-skill" is the punchy two-part framing. Repeat it.
 - Agentic RL is the answer to "why are agents getting better so fast in 2026?", it's not bigger models, it's better RL signal.
+-->
+
+---
+
+## Tool-use FT: what one training example looks like
+
+A single example is a full multi-turn **trajectory**, with structured tool calls and results inline. Tokens the model is trained to emit are **bold**.
+
+```
+system: You are a coding agent. Tools available:
+        [{"name": "run_bash", "params": {"cmd": "string"}},
+         {"name": "read_file", "params": {"path": "string"}},
+         {"name": "write_file", "params": {"path": "...", "content": "..."}}]
+
+user:   The test_parse_date test is failing. Please fix it.
+
+assistant: I'll start by running the test to see the error.
+        ↳ tool_call: {"name": "run_bash",
+                      "params": {"cmd": "pytest -x test_parse.py::test_parse_date"}}
+
+tool:   FAILED test_parse.py::test_parse_date
+        AssertionError: expected datetime(2024,1,2), got datetime(2024,2,1)
+
+assistant: Day/month swap. Let me read the parser.
+        ↳ tool_call: {"name": "read_file", "params": {"path": "parser.py"}}
+
+tool:   def parse_date(s): return datetime.strptime(s, "%m/%d/%Y")
+
+assistant: Format string has month before day; input is DD/MM/YYYY.
+        ↳ tool_call: {"name": "write_file",
+                      "params": {"path": "parser.py",
+                                 "content": "def parse_date(s): return datetime.strptime(s, '%d/%m/%Y')"}}
+
+tool:   ok
+
+assistant: ↳ tool_call: {"name": "run_bash", "params": {"cmd": "pytest -x test_parse.py"}}
+tool:   1 passed
+
+assistant: Fixed. The format string had month and day swapped. Tests now pass.
+```
+
+The trajectory teaches **wire format** (valid JSON, right schema), **meta-skill** (run → read → reason → write → re-run), and **termination** (stop after the green test, don't keep poking).
+
+<!--
+Speaker notes:
+- This is the slide where the abstract "tool-use fine-tuning" becomes a thing the audience can point at.
+- Walk down the trajectory line by line. Note the structure: hypothesis → tool call → observation → updated hypothesis.
+- Call out: every assistant turn is either a tool call OR a final answer. That binary is *learned* here.
+- Public analogues if asked: ToolBench, Gorilla, the agentic SFT data described in the Llama-3.1 and DeepSeek-Coder-V2 papers.
+- Bridge: "Now imagine generating thousands of these trajectories, scoring whether the final test passed, and using *that* as RL reward. That's agentic RL — the bleeding edge from the previous slide."
 -->
 
 ---
