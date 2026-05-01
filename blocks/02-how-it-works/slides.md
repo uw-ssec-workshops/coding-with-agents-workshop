@@ -218,9 +218,54 @@ Speaker notes:
 
 ---
 
-## Tool-use FT: what one training example looks like
+## Tool-use FT: the meta-skill, side by side
 
-A single example is a full multi-turn **trajectory**, with structured tool calls and results inline. Tokens the model is trained to emit are **bold**.
+Start with the simplest version of a training example: **one prompt in, one assistant turn out**. Same system prompt, same tools, two different user prompts:
+
+```
+─── Example A ──────────────────────────────────────
+system: tools = [run_bash, read_file, write_file]
+user:   What does the `-x` flag do in pytest?
+
+A: It stops the test run after the first failure
+   instead of running the whole suite. Useful when
+   you want a fast feedback loop while debugging.
+────────────────────────────────────────────────────
+
+─── Example B ──────────────────────────────────────
+system: tools = [run_bash, read_file, write_file]
+user:   How many tests are in this repo right now?
+
+A: ↳ tool_call: {"name": "run_bash",
+                 "params": {"cmd": "pytest --collect-only -q | tail -1"}}
+
+tool:   137 tests collected
+
+A: 137 tests.
+────────────────────────────────────────────────────
+```
+
+The **only** thing that changes the assistant's first move is the prompt:
+
+- **A** is answerable from training knowledge → answer directly, **don't** call a tool.
+- **B** requires reading the actual repo state → **must** call a tool.
+
+This is the **meta-skill**: knowing which prompts cross the line into "I need to actually go look." Trained on thousands of paired examples like these.
+
+<!--
+Speaker notes:
+- Start here so the audience sees the simplest possible case before the multi-turn trajectory on the next slide.
+- The point to hammer: tools aren't called *because they exist in the system prompt*. They're called when the prompt requires fresh information the model can't have.
+- Common confusion to head off: "but couldn't the model just guess 137?" Yes, and a base model would. The whole point of this training stage is teaching it not to.
+- If asked: yes, this is also why agents sometimes call tools they shouldn't (over-eager tool use is a known failure mode and a major RLHF target).
+- Bridge to next slide: "OK, that's the easy case — one tool call. Now let's see what a *real* coding trajectory looks like."
+-->
+
+---
+
+## Tool-use FT: a full multi-turn trajectory
+
+Now scale up. A real example is a full **trajectory** — the model emits a tool call, reads the result, decides what to do next, and keeps going until the task is done. Lines starting with `A:` (the assistant) are the only ones the model is **trained to emit**; `system`, `user`, and `tool` lines are context the model is trained to **read and condition on**.
 
 ```
 system: You are a coding agent. Tools available:
@@ -230,40 +275,39 @@ system: You are a coding agent. Tools available:
 
 user:   The test_parse_date test is failing. Please fix it.
 
-assistant: I'll start by running the test to see the error.
-        ↳ tool_call: {"name": "run_bash",
-                      "params": {"cmd": "pytest -x test_parse.py::test_parse_date"}}
+A: I'll start by running the test to see the error.
+   ↳ tool_call: {"name": "run_bash",
+                 "params": {"cmd": "pytest -x test_parse.py::test_parse_date"}}
 
 tool:   FAILED test_parse.py::test_parse_date
         AssertionError: expected datetime(2024,1,2), got datetime(2024,2,1)
 
-assistant: Day/month swap. Let me read the parser.
-        ↳ tool_call: {"name": "read_file", "params": {"path": "parser.py"}}
+A: Day/month swap. Let me read the parser.
+   ↳ tool_call: {"name": "read_file", "params": {"path": "parser.py"}}
 
 tool:   def parse_date(s): return datetime.strptime(s, "%m/%d/%Y")
 
-assistant: Format string has month before day; input is DD/MM/YYYY.
-        ↳ tool_call: {"name": "write_file",
-                      "params": {"path": "parser.py",
-                                 "content": "def parse_date(s): return datetime.strptime(s, '%d/%m/%Y')"}}
+A: Format string has month before day; input is DD/MM/YYYY.
+   ↳ tool_call: {"name": "write_file",
+                 "params": {"path": "parser.py",
+                            "content": "def parse_date(s): return datetime.strptime(s, '%d/%m/%Y')"}}
 
 tool:   ok
 
-assistant: ↳ tool_call: {"name": "run_bash", "params": {"cmd": "pytest -x test_parse.py"}}
+A: ↳ tool_call: {"name": "run_bash", "params": {"cmd": "pytest -x test_parse.py"}}
 tool:   1 passed
 
-assistant: Fixed. The format string had month and day swapped. Tests now pass.
+A: Fixed. The format string had month and day swapped. Tests now pass.
 ```
 
-The trajectory teaches **wire format** (valid JSON, right schema), **meta-skill** (run → read → reason → write → re-run), and **termination** (stop after the green test, don't keep poking).
+The trajectory teaches **wire format** (valid JSON, right schema), **multi-step meta-skill** (run → read → reason → write → re-run), and **termination** (stop after the green test, don't keep poking).
 
 <!--
 Speaker notes:
-- This is the slide where the abstract "tool-use fine-tuning" becomes a thing the audience can point at.
-- Walk down the trajectory line by line. Note the structure: hypothesis → tool call → observation → updated hypothesis.
+- This is the meatier follow-up to the side-by-side slide. Walk down the trajectory line by line. Note the structure: hypothesis → tool call → observation → updated hypothesis.
 - Call out: every assistant turn is either a tool call OR a final answer. That binary is *learned* here.
 - Public analogues if asked: ToolBench, Gorilla, the agentic SFT data described in the Llama-3.1 and DeepSeek-Coder-V2 papers.
-- Bridge: "Now imagine generating thousands of these trajectories, scoring whether the final test passed, and using *that* as RL reward. That's agentic RL — the bleeding edge from the previous slide."
+- Bridge to the convergence slide: "Now imagine generating thousands of these trajectories, scoring whether the final test passed, and using *that* as RL reward. That's agentic RL — the bleeding edge from earlier."
 -->
 
 ---
