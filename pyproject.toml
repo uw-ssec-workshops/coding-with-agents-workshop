@@ -1,0 +1,52 @@
+[project]
+name = "schmidt-sciences-workshop"
+version = "0.1.0"
+description = "Coding with AI Agents: A Hands-On Workshop for Scientists (2026 Interdisciplinary Science Summit)"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+    { name = "UW Scientific Software Engineering Center" },
+]
+dependencies = [
+    "ipykernel>=6.29.0",
+    "jupyterlab>=4.2.0",
+    "litellm>=1.50.0",
+    "matplotlib>=3.9.0",
+    "numpy>=2.0.0",
+    "pint>=0.24.0",
+    "pytest>=8.3.0",
+    "sci-units",
+    "workshop-agent",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.11.0",
+    "ruff>=0.6.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+sci-units = { path = "blocks/01-landscape/demo/starter", editable = true }
+workshop-agent = { path = "workshop_agent", editable = true }
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [
+    # Block 3's demo subject is intentionally messy (mixed tabs, missing types,
+    # no package layout). The whole point of the demo is for the agent to
+    # discover and clean it up live. Keep ruff's hands off.
+    "blocks/03-research-loop/demo/starter",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["blocks"]
+addopts = "-ra"
