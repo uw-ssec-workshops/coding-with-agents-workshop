@@ -1,6 +1,6 @@
 # Block 2: Further Reading
 
-Curated, opinionated. We are deliberately *not* trying to survey the
+Curated, opinionated. We are deliberately _not_ trying to survey the
 field, we want resources that build the **mental model** Block 2 set up.
 
 ## The post-training pipeline, end to end
@@ -18,7 +18,7 @@ field, we want resources that build the **mental model** Block 2 set up.
 ## Tool use and agentic RL
 
 - **Anthropic, [Tool use overview](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview)**. The wire format the notebook used.
-- **Anthropic, [Building effective agents](https://www.anthropic.com/research/building-effective-agents)**. Read this once a year. The vocabulary in the workshop comes mostly from here.
+- **Anthropic, [Building effective agents](https://www.anthropic.com/research/building-effective-agents)**.
 - **Anthropic, [Software engineering using Claude](https://www.anthropic.com/engineering)** (engineering blog, ongoing). Real-world write-ups of Claude Code's design, the closest thing to "what agentic RL looks like in production" without an academic paper.
 
 ## Companion to slide 8 ("trained in vs in the prompt")
