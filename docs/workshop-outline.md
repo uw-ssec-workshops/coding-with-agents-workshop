@@ -24,7 +24,7 @@ The workshop is designed as a hands-on, interactive session rather than a lectur
 
 A focused introduction to the current ecosystem of AI coding agents, including tools like Claude Code, GitHub Copilot, Cursor, and OpenCode, with practical guidance on choosing and setting one up. Rather than exhaustively covering every option, we will go deep on one or two representative tools and enumerate the rest, helping attendees understand the key dimensions of choice: cost, capability, integration, and model hosting (API vs. cloud vs. self-hosted). We will also cover the anatomy of a coding agent: the LLM backbone, tool use, planning modes, configuration files (e.g., `AGENTS.md`), MCP servers, and skills. We will also show a brief demo of a working agent.
 
-### Block 2: How It Actually Works — A Primer on Post-Training and Tool Calling (30 minutes)
+### Block 2: How It Actually Works: A Primer on Post-Training and Tool Calling (30 minutes)
 
 A conceptual overview of how base large language models (LLMs) are post-trained to become capable coding agents. This block gives attendees the intuition they need to understand why agent behaviors like tool calling, planning, and iterative debugging work the way they do. The goal is to build a mental model that outlasts any single product release. If you understand how Claude Code or ChatGPT are built, you can anticipate and potentially influence the next generation of tools before they arrive.
 
@@ -59,5 +59,5 @@ Anant Mittal, Carlos García Jurado Suarez, Anshul Tambay, Vani Mandava, Robert 
 
 ## Contact
 
-- **Anshul Tambay**, University of Washington Scientific Software Engineering Center — [anshul37@uw.edu](mailto:anshul37@uw.edu)
-- **Tina Dang**, Schmidt Sciences — [tdang@schmidtsciences.org](mailto:tdang@schmidtsciences.org)
+- **Anshul Tambay**, University of Washington Scientific Software Engineering Center, [anshul37@uw.edu](mailto:anshul37@uw.edu)
+- **Tina Dang**, Schmidt Sciences, [tdang@schmidtsciences.org](mailto:tdang@schmidtsciences.org)
