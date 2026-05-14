@@ -90,12 +90,13 @@ printf '%s' "${EXISTING_SETTINGS}" | jq \
       ANTHROPIC_BASE_URL: $base,
       ANTHROPIC_AUTH_TOKEN: $token,
       CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: "1"
-   })' > "${CLAUDE_SETTINGS}.tmp"
+   })
+   | .model = "claude-sonnet-4-6"' > "${CLAUDE_SETTINGS}.tmp"
 mv "${CLAUDE_SETTINGS}.tmp" "${CLAUDE_SETTINGS}"
 chmod 600 "${CLAUDE_SETTINGS}"
 
 if [ -n "${LITELLM_BASE_URL:-}" ] && [ -n "${LITELLM_API_KEY:-}" ]; then
-  info "Wrote ${CLAUDE_SETTINGS} (ANTHROPIC_BASE_URL + ANTHROPIC_AUTH_TOKEN from secrets)"
+  info "Wrote ${CLAUDE_SETTINGS} (gateway creds from secrets, default model claude-sonnet-4-6)"
 else
   warn "Wrote ${CLAUDE_SETTINGS}, but LITELLM_BASE_URL/LITELLM_API_KEY are empty — Claude Code will not authenticate"
 fi
