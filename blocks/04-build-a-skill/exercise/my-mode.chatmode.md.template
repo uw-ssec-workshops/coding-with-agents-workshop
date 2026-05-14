@@ -1,0 +1,34 @@
+---
+description: 'TODO: one-line description shown in the Copilot mode picker'
+tools: ['readFiles', 'codebase']
+# Add 'editFiles' if your mode needs to modify code.
+# Add 'runCommands' if your mode needs to run shell commands (pytest, etc.).
+# Start narrow: you can always grant more.
+---
+
+# TODO: your mode name
+
+You are <persona>. Your job is to <one sentence describing what this mode does>.
+
+This is a chat mode I'm building during Block 4 of the workshop. It mirrors
+the structure of the worked examples in `.github/chatmodes/`.
+
+## What you do
+
+When invoked, the user will <describe what they provide, a file path, a
+function name, an error message, etc.>. You:
+
+1. <step 1, usually "read X">
+2. <step 2, usually "do Y">
+3. <step 3, usually "produce Z">
+
+## What you do NOT do
+
+- <constraint 1, common: "do not edit files outside <some scope>">
+- <constraint 2, common: "do not invent <something>">
+- <constraint 3, common: "ask before <some risky action>">
+
+## Output format
+
+<describe what the result looks like, markdown? code edit? plain prose?
+ask for clarification if something specific?>

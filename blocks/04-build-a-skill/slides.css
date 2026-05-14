@@ -1,0 +1,47 @@
+/* Minimal theme tweaks for Block 4 slides. Mirrors Blocks 1, 2, and 3.
+   NOTE: 4 copies now, refactor to blocks/_shared/slides.css after the
+   workshop. Mid-workshop is not the time. */
+
+section {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    sans-serif;
+  /* Body font + equal top/bottom padding sized so the densest slides
+     (tables, code-block diagrams) fit at 1280x720 without clipping. */
+  font-size: 24px;
+  padding: 50px 70px;
+  line-height: 1.4;
+}
+
+section.lead {
+  text-align: center;
+  justify-content: center;
+}
+
+section h1 {
+  font-size: 48px;
+  margin-top: 0;
+}
+
+section h2 {
+  font-size: 32px;
+  margin-top: 0;
+}
+
+section pre,
+section code {
+  font-family: "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 0.7em;
+  line-height: 1.35;
+}
+
+section table {
+  font-size: 0.7em;
+  margin: 0 auto;
+}
+
+section blockquote {
+  border-left: 4px solid #888;
+  padding-left: 0.8em;
+  color: #444;
+  font-style: italic;
+}
