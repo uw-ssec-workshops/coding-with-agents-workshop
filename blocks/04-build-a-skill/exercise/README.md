@@ -23,18 +23,24 @@ cp blocks/04-build-a-skill/exercise/my-mode.chatmode.md.template \
 
 ## 2. Pick a target (1 min)
 
-What code will your mode run against? Default options, in order of
-relevance to the workshop:
+What code (or data, or notebook) will your mode run against? Pick
+whichever gets you to "running" fastest:
 
-1. **The climate model** in [`blocks/03-research-loop/demo/starter/`](../../03-research-loop/demo/starter/), realistic research Python, has obvious style and structure issues, fits a wide range of skills.
-2. **`sci_units`** in [`blocks/01-landscape/demo/starter/`](../../01-landscape/demo/starter/), small and simple, good for narrow modes.
-3. **Your own code**: paste a snippet into a scratch file, or open a folder you brought.
+1. **Your own work** — a snippet of code, a notebook, a CSV from your lab, a transcript. This is the most useful target if you brought something. The chatmode pattern is identical regardless of domain (physical science, ML, behavioral / social science, bio, stats, qualitative work).
+2. **The climate model** in [`blocks/03-research-loop/demo/starter/`](../../03-research-loop/demo/starter/), realistic research Python, has obvious style and structure issues, fits a wide range of skills.
+3. **`sci_units`** in [`blocks/01-landscape/demo/starter/`](../../01-landscape/demo/starter/), small and simple, good for narrow modes.
+
+If you didn't bring something, that's fine — use the climate model. If
+the climate model feels far from your work, drop a notebook or CSV from
+your lab into a scratch folder and target that. The point is the
+*pattern*, not the example.
 
 ## 3. Pick a job (1 min)
 
-What does your mode do? See [`ideas.md`](ideas.md) for ~15 starting ideas
+What does your mode do? See [`ideas.md`](ideas.md) for ~30 starting ideas
 across categories: code review, code generation, refactoring, climate-
-specific, general research, onboarding.
+specific, general research, behavioral / social science / stats,
+experiment management, onboarding.
 
 Or invent your own. The good first ones are **narrow** ("review against
 one specific guideline", "explain one specific kind of error") rather than
@@ -80,7 +86,63 @@ This iteration loop, *write, run, observe, adjust the prompt*, is the
 same loop the rse-plugins authors used to build the polished Block 3
 demo. You're doing real prompt engineering.
 
-## 7. (Stretch) Show it off
+## 7. Stretch: take it further
+
+If your mode is working and you've still got time (or you've built
+chat modes before and want to push past the basics), pick one of these.
+Each is ~10-20 min on its own, none are required, all are great
+office-hours starting points if you don't finish.
+
+### Stretch A — Port your mode to a Claude Code skill
+
+The Block 3 panel uses Claude Code, which has its own skill format
+(`.claude/skills/<name>/SKILL.md`). The fields are slightly different
+(YAML frontmatter with `name` and `description`; markdown body) but the
+*shape* is identical to a Copilot chatmode: persona + steps + tools +
+output format.
+
+1. Make `.claude/skills/<your-skill-name>/` at the repo root.
+2. Create `SKILL.md` with `---\nname: <your-skill-name>\ndescription: <one line>\n---` frontmatter, then paste the body from your chatmode.
+3. Open Claude Code in the integrated terminal; your skill is now available as a slash command.
+
+Same six fields, different file path. That's the "tools are mostly UX
+differences" claim from Block 1, made concrete.
+
+### Stretch B — Chain two modes with a Copilot prompt file
+
+Chat modes are good for one-job interactions. **Prompt files**
+(`.github/prompts/*.prompt.md`) are good for one-shot orchestrations
+("review this, then fix what you found").
+
+1. Create `.github/prompts/review-and-fix.prompt.md`.
+2. Write a body like: *"First, run `scientific-python-reviewer` against `${input:file}`. Then, based on the review, switch to `docstring-writer` and add the missing docstrings."*
+3. Invoke from chat with `/review-and-fix file=path/to/code.py`.
+
+This is what the rse-plugins workflow is doing under the hood:
+slash commands chained into a pipeline.
+
+### Stretch C — Sketch an MCP server stub for a new tool
+
+Chat modes use existing tools (`readFiles`, `editFiles`, etc.). To give
+your agent a *new* tool (e.g., "summarize results from this MLflow run",
+"query our internal experiment DB"), you write an **MCP server**.
+
+You won't ship a real one in 15 minutes, but you can sketch the
+interface. In a scratch file, write:
+
+```
+Tool name: summarize_experiment
+Inputs: { run_dir: string }
+Outputs: { metrics: {...}, best_checkpoint: string, summary_md: string }
+What it does (1-2 sentences): ...
+```
+
+Bring it to office hours; instructors can help wire it up against the
+[MCP SDK](https://modelcontextprotocol.io). Especially useful for
+**experiment management** workflows — wrap your run tracker, give the
+agent a real tool, stop pasting metrics into chat.
+
+## 8. Show it off
 
 If your mode works and you have a few minutes left, share it:
 - Volunteer for the show-and-tell (instructor will ask).

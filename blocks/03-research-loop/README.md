@@ -12,14 +12,15 @@ By the end of this block, an attendee can:
 2. Recognize the **6 phases** of the `rse-plugins` workflow (`/research`, `/plan`, `/iterate-plan`, `/experiment`, `/implement`, `/validate`, `/handoff`) and pick the right subset for a given task.
 3. Name the common **agent failure modes** (context exhaustion, looping, niche-language hallucination, confidently-wrong answers, tool misuse, scope creep) and trace each one back to a specific post-training shortcut from Block 2.
 4. Apply the corresponding **mitigations** (tighter scope per turn, auditable artifacts, `/handoff` to compact context, `/validate` as a quality gate, AGENTS.md as durable project memory, manual intervention).
-5. Map the workshop's **practical use cases** (feature implementation, debugging, test writing, documentation, code review, exploratory coding) to where agents help most and where they hurt.
+5. Map the workshop's **practical use cases** (feature implementation, debugging, test writing, documentation, code review, exploratory coding, experiment management) to where agents help most and where they hurt.
+6. Pick the right **loop length** for the task: the full `/research` -> `/plan` -> `/implement` -> `/validate` cycle for durable code vs. fast chat-against-`AGENTS.md` iteration for research spikes.
 
 ## What's in this folder
 
 ```
 03-research-loop/
   README.md            # this file
-  slides.md            # Marp slides (~8 slides, ~22 min talking + demo)
+  slides.md            # Marp slides (~9 slides, ~22 min talking + demo)
   slides.css           # minimal slide theme tweaks
   instructor-notes.md  # per-slide notes, demo script with copy-paste prompts, fallback plan
   resources.md         # rse-plugins, Scientific Python guidelines, failure-mode reading
@@ -43,8 +44,9 @@ By the end of this block, an attendee can:
 | 14–20 | **Demo: `/implement`** + narrate failure modes while it runs |
 | 20–22 | **Demo: `/validate`** |
 | 22–26 | Failure mode taxonomy + mitigations |
-| 26–28 | Practical use cases tour |
-| 28–30 | Bridge to Block 4 |
+| 26–27 | Practical use cases tour |
+| 27–29 | Research vs. engineering mode + cross-field framing |
+| 29–30 | Bridge to Block 4 |
 
 The `/implement` step is timed as the longest because that's when we narrate the failure modes in parallel, productive use of the agent's "thinking time."
 

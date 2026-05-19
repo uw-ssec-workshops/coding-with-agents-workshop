@@ -49,6 +49,33 @@ description. Pick one and remix it.
 | `data-pipeline-reviewer` | `readFiles`, `codebase` | Spot reproducibility issues (hardcoded paths, magic numbers, missing seeds) | any pipeline code |
 | `repro-checklist` | `readFiles`, `codebase` | Score a repo against a research-reproducibility checklist | any |
 
+## Behavioral / social science / stats
+
+For attendees working with survey data, behavioral experiments, mixed-methods, or applied statistics. Most of these are read-only and target a CSV or a notebook rather than a package.
+
+| Skill | Tools | What it does | Good target |
+|---|---|---|---|
+| `survey-codebook-checker` | `readFiles`, `codebase` | Read a survey data file + a codebook, flag mismatches (missing columns, value ranges out of spec) | any survey CSV |
+| `stats-assumption-checker` | `readFiles`, `codebase` | Read a stats notebook, flag where parametric tests are used without checking assumptions (normality, equal variance) | any analysis `.ipynb` or `.py` |
+| `qualitative-coder-helper` | `readFiles` | Given a coding scheme + a transcript snippet, suggest tags and explain disagreements | any interview transcript |
+| `irb-redactor` | `readFiles`, `codebase` | Flag identifiers (names, emails, exact dates, free-text) that might leak through to a paper-ready dataset | any participant CSV |
+| `analysis-narrator` | `readFiles`, `codebase` | Read a notebook of effects + p-values, draft a "results" paragraph in your field's voice (APA / AMA / your style guide) | any analysis notebook |
+| `power-analysis-explainer` | `readFiles`, `codebase` | Read a study design, propose what a reasonable power analysis would look like (without claiming to do the math) | any preregistration draft |
+
+> **Tip for non-physical-science attendees:** pick `climate_model.py` only if it's faster than opening your own work. Otherwise, drop a notebook / CSV from your lab into a scratch folder and target that, the chatmode pattern is identical.
+
+## Experiment management
+
+The agent reads run outputs, summarizes them, and helps drive the next iteration. Especially relevant for ML / NLP / simulation work where you launch sweeps and compare results.
+
+| Skill | Tools | What it does | Good target |
+|---|---|---|---|
+| `run-summarizer` | `readFiles`, `codebase` | Read a directory of run logs / CSV metrics, produce a one-page comparison table | any `runs/` or `results/` folder |
+| `sweep-designer` | `readFiles` | Given a config file + a hypothesis ("does dropout help?"), propose the next 4-8 hyperparameter combinations | any training config |
+| `metric-explainer` | `readFiles`, `codebase` | Read training curves (CSV / `.jsonl`) and narrate what went well, what went wrong, where to look next | any logged run |
+| `failed-run-triager` | `readFiles`, `codebase`, `runCommands` | Read the last failed run's stderr + config, classify the failure (OOM / NaN loss / data issue), suggest fix | any crashed run |
+| `experiment-journal` | `readFiles`, `editFiles` | Append a structured entry ("what I tried, what happened, what's next") to a markdown lab notebook | `notebook.md` |
+
 ## Onboarding
 
 | Skill | Tools | What it does | Good target |

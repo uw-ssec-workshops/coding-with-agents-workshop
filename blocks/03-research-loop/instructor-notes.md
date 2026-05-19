@@ -27,8 +27,9 @@ public-facing version; this is the inside view.
 | 20 | `/implement` complete (or near it) | Validate kicks off |
 | 22 | `/validate` complete | Switching back to slides |
 | 26 | slide 5 (failure modes) -> slide 6 (mitigations) | Demo recap done |
-| 28 | slide 7 (use cases) | Tour done |
-| 30 | slide 8 (bridge) | Hand off to Block 4 |
+| 27 | slide 7 (use cases) | Tour done |
+| 29 | slide 8 (research vs. engineering) | Cross-field framing done |
+| 30 | slide 9 (bridge) | Hand off to Block 4 |
 
 If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If it's slower, **keep narrating** failure modes, that's the design.
 
@@ -69,8 +70,21 @@ If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If
 
 - 30 seconds total. Don't dwell on any row.
 - The closing one-liner, *"agents expand what one person can attempt; the editorial judgment stays yours"*, is the takeaway.
+- **Experiment management** (new row) is the one to flag for NLP / ML attendees: agent kicks off a sweep, summarizes results, drafts the next hypothesis. Office hours can dig in further.
 
-### 8. Bridge to Block 4
+### 8. Two modes: research vs. engineering
+
+- 60-90 seconds. Reframes everything they just saw: the four-phase demo was the *durable* end of the dial. Research work usually wants the *fast* end.
+- Read the table left-to-right. Then drop the punchline slowly: *"Pick the loop length to match the half-life of the code."*
+- **The `AGENTS.md` callout is the answer to "how do I configure an agent for my research context?"** Stress it explicitly: *"This is the one file you'll edit most. It's portable across tools (Claude Code, Copilot, Cursor all read some flavor of it). Your domain conventions live there, not in your daily prompts."*
+- For the cross-field examples: pick the closest field to your audience and elaborate for ~10 seconds. Examples:
+  - **NLP / ML:** *"AGENTS.md = eval harness paths, metric definitions, 'always use seed=42', model registry conventions."*
+  - **Behavioral / social science:** *"AGENTS.md = your coding scheme, IRB constraints on what data the agent may read, stats assumptions (parametric vs not), how you label conditions."*
+  - **Bio / bioinformatics:** *"AGENTS.md = file-format conventions (BED, VCF), pipeline DAG, where the reference genome lives."*
+  - **Physics / climate:** the demo we just ran.
+- Don't oversell: we have *one* worked example (climate). The claim is that the workflow shape is portable, not that the workshop covers every field.
+
+### 9. Bridge to Block 4
 
 - Hard hand-off.
 - *"Five files, no magic."*
@@ -114,6 +128,10 @@ Copy these to your scratch buffer before starting. **Run them one at a time, in 
 2. (Slide 6) Walk through mitigations.
 3. By the time you finish slide 6, the implement should be done or close to it.
 
+**Optional 30-second aside** (drop it once, while `/implement` is grinding, to preempt the "isn't this overkill?" question):
+
+> *"What you're watching now is the slow, durable loop - we're going to ship this code. For day-to-day research iteration you'd just chat against `AGENTS.md`, or run `/research` alone. The point of the full loop is the audit trail in `.agents/`, not throughput. We come back to that on slide 8."*
+
 **If `/implement` blows up live:** narrate the failure mode in real time. *"Look, it just hit context exhaustion / it's looping / it's hallucinating an API. This is the taxonomy on slide 5, in action."* Then pivot to the `expected-artifacts/` folder for the rest of the demo.
 
 ### Prompt 4: `/validate` (target: 2 min)
@@ -155,7 +173,8 @@ In order of expendability:
 
 1. The "iterate" / "experiment" / "handoff" rows on slide 3, collapse to "and three more for refinement, comparison, and context transfer."
 2. One column of the failure modes table on slide 5, drop "Where it comes from" if you have to (sad, it's the Block 2 payoff, but the *mitigations* are more actionable).
-3. The practical use cases tour (slide 7), collapse to one sentence: *"Agents help most with feature implementation, debugging, test writing, docs, code review, and exploration; they're easiest to misuse on architectural decisions."*
-4. The bonus discussion of `/validate` failures during the demo.
+3. The practical use cases tour (slide 7), collapse to one sentence: *"Agents help most with feature implementation, debugging, test writing, docs, code review, exploration, and experiment management; they're easiest to misuse on architectural decisions."*
+4. The cross-field paragraph at the bottom of slide 8, keep the table, drop the prose. Or vice versa if you have a single-field audience.
+5. The bonus discussion of `/validate` failures during the demo.
 
-**Never skip:** the "workflows are the prompt" framing (slide 2), the demo (even if abbreviated to 2 phases), or the bridge to Block 4 (slide 8).
+**Never skip:** the "workflows are the prompt" framing (slide 2), the demo (even if abbreviated to 2 phases), the research-vs-engineering table on slide 8 (it's why the durable loop isn't overkill), or the bridge to Block 4 (slide 9).

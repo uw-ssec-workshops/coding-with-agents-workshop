@@ -158,13 +158,39 @@ Speaker notes:
 | **Documentation** | Reads code, writes docs that match | Docs drift if code changes after |
 | **Code review** | Catches obvious issues, common pitfalls | Misses architectural concerns |
 | **Exploratory coding** | Spike code in minutes | Spikes become "production" code without rewrites |
+| **Experiment management** | Run sweeps, summarize results, draft next hypothesis | Confidently mis-reads metrics; always spot-check the numbers |
 
-> The pattern across all six: the **agent expands what one person can attempt**. The discipline question is which 95% of the work is fine to delegate, and which 5% must stay yours.
+> The pattern across all seven: the **agent expands what one person can attempt**. The discipline question is which 95% of the work is fine to delegate, and which 5% must stay yours.
 
 <!--
 Speaker notes:
 - 30 seconds total. Don't dwell on any one row.
 - The closing one-liner is the takeaway: agents are a productivity multiplier, but the editorial judgment stays yours.
+-->
+
+---
+
+## Two modes: research vs. engineering
+
+The full `/research` -> `/plan` -> `/implement` -> `/validate` loop is the **durable** mode. Research work often wants the **fast** mode instead.
+
+| | Fast (research) | Durable (engineering) |
+|---|---|---|
+| **When** | Notebook spikes, parameter sweeps, "does this idea work?" | Library / package code, anything that outlives the question |
+| **Loop** | Chat against `AGENTS.md`; maybe `/research` | All four phases; `/validate` non-negotiable |
+| **Throwaway?** | Yes, by design | No, this is your contribution |
+| **Trust model** | You eyeball the output | The artifacts in `.agents/` are the audit trail |
+
+**Same agents. Same workflows. Different dial settings.** Pick the loop length to match the half-life of the code.
+
+> **The workflow generalizes; your `AGENTS.md` is where your research context lives.** It's the one file you'll edit most: conventions, vocabulary, data shape, "don't touch X", citations to your stats methods, what counts as a passing run. NLP labs put eval harness + metric definitions there. Bio puts file-format conventions and pipeline DAGs. Behavioral / social science puts coding schemes, IRB constraints, and analysis assumptions. Physics / climate puts the sci-Python guidelines we used in the demo.
+
+<!--
+Speaker notes:
+- 60-90 seconds. This slide exists for two audiences: (a) people from non-RSE backgrounds (NLP, ML, comp ling) who want to know the loop isn't only for "build me a package", and (b) AI engineers who want fast iteration and worry the full loop is overkill.
+- Read the table left-to-right. Land "pick the loop length to match the half-life of the code" slowly.
+- For the cross-field paragraph: pick the audience's closest field and elaborate for 10 seconds. If mixed audience, just read it.
+- Avoid claiming the workshop covers all four domains - we don't. The point is the *shape* is portable.
 -->
 
 ---
