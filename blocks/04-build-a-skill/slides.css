@@ -3,10 +3,12 @@
    workshop. Mid-workshop is not the time. */
 
 section {
+  /* Bumped canvas from the default 1280x720 to 1920x1080 so dense slides
+     (tables, code blocks, diagrams) stop clipping. Still 16:9. */
+  width: 1920px;
+  height: 1080px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
     sans-serif;
-  /* Body font + equal top/bottom padding sized so the densest slides
-     (tables, code-block diagrams) fit at 1280x720 without clipping. */
   font-size: 24px;
   padding: 50px 70px;
   line-height: 1.4;
