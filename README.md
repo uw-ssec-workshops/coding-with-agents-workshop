@@ -8,7 +8,7 @@ This repository contains the slides, demos, hands-on notebooks, and instructor n
 
 1. Make sure your GitHub handle has been added to the team [`2026-viss-ai-workshop-participants`](https://github.com/orgs/schmidt-sciences/teams/2026-viss-ai-workshop-participants).
 2. Click **Code → Create codespace on main** at the top of this repo. The first build takes ~3 minutes.
-3. When VSCode opens in your browser, wait for `postCreate.sh` to finish (you'll see a green "Done" line in the terminal).
+3. When VSCode opens in your browser, wait for the `.devcontainer` setup scripts to finish. They print green `==> ... complete` lines as they run; the last one reads `complete — Copilot extension is installed.`
 4. Open `blocks/01-landscape/demo/notebook.ipynb` and follow along.
 
 Detailed setup, troubleshooting, and pre-workshop checks are in [`docs/setup.md`](docs/setup.md).
@@ -37,10 +37,11 @@ blocks/0N-name/
 
 ## Tools used
 
-- **GitHub Copilot in VSCode / Codespaces**: the deep-dive tool through Blocks 1, 2, and 4.
+- **Copilot Chat in VSCode / Codespaces**: the deep-dive tool through Blocks 1, 2, and 4. The Codespace ships a custom **OAI-compatible Copilot** extension ([`uw-ssec/oai-compatible-copilot`](https://github.com/uw-ssec/oai-compatible-copilot)) that points Copilot Chat at the workshop's gateway, so you don't need your own Copilot subscription — you pick the workshop's models (Claude Sonnet 4.6, Claude Haiku 4.5) right in the model picker.
+  - *Why a custom extension?* Stock Copilot Chat does support bring-your-own-key, but its in-editor flow needs a per-participant GitHub sign-in with a Copilot entitlement, manual per-user key entry, and a fixed list of named providers with no "point at an arbitrary OpenAI-compatible base URL" option. The custom extension reads the gateway URL + key from the Codespace secrets and pre-registers the models, so Chat works on launch for everyone with zero setup and no Copilot license. (The pre-installed **Copilot CLI** instead uses stock BYOK directly via the `COPILOT_PROVIDER_*` env vars, since the CLI *does* accept a custom base URL.)
   - Block 4's capstone uses **custom chat modes** (`.github/chatmodes/*.chatmode.md`); the workshop ships two worked examples in [`.github/chatmodes/`](.github/chatmodes/) for participants to read and remix.
-- **Claude Code VS Code extension** + the [`rse-plugins`](https://github.com/uw-ssec/rse-plugins) plugin, used in Block 3's live demo to show the structured research-plan-implement workflow. Same Codespace, different chat panel.
-- **Claude (via the workshop's LLM proxy server)**: the model backend. Copilot, the notebooks, and Claude Code all hit the same proxy. The notebooks use the **`litellm` Python SDK** so the same agent loop also works against any other model the proxy fronts (GPT, Gemini, ...), change one constant.
+- **Claude Code VS Code extension** + the [`rse-plugins`](https://github.com/uw-ssec/rse-plugins) plugin, used in Block 3's live demo to show the structured research-plan-implement workflow. Same Codespace, different chat panel. The GitHub Copilot CLI and Claude Code CLI come pre-installed too, both wired to the same gateway with the `ai-research-workflows` plugin. You can browse the installed skills and plugins in the **`agent-resources/`** folder (see [`docs/setup.md`](docs/setup.md#browsing-the-installed-skills--plugins)).
+- **Claude (via the workshop's LiteLLM/LLMoxie gateway)**: the model backend, fronting Claude Sonnet 4.6 and Claude Haiku 4.5. Copilot, the notebooks, and Claude Code all hit the same gateway. The notebooks use the **`litellm` Python SDK** so the same agent loop also works against any other model the gateway fronts (GPT, Gemini, ...), change one constant.
 - **Python 3.12 + `uv`**: environment and package management.
 - **Marp**: slides as markdown.
 

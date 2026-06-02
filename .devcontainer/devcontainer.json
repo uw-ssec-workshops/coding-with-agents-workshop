@@ -46,7 +46,11 @@
           "**/.git/objects/**": true,
           "**/.git/subtree-cache/**": true,
           "**/node_modules/**": true,
-          "**/.venv/**": true
+          "**/.venv/**": true,
+          // Symlinks into the home-dir agent plugin/skill trees (see
+          // .devcontainer/link-agent-resources.sh). Excluded so the watcher
+          // doesn't follow them out into ~/.claude and ~/.copilot.
+          "**/agent-resources/**": true
         }
       }
     }

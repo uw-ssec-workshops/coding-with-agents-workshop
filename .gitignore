@@ -37,3 +37,8 @@ slides.pptx
 .env.*
 !.env.example
 .aws/
+
+# Browsable symlinks to the installed agent CLI plugins/skills (created by
+# .devcontainer/link-agent-resources.sh). These point into ~/.claude and
+# ~/.copilot in the container home dir; never commit them.
+agent-resources/
