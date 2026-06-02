@@ -8,7 +8,6 @@
     "vscode": {
       "extensions": [
         "marp-team.marp-vscode",
-        "GitHub.copilot",
         "GitHub.copilot-chat",
         "anthropic.claude-code",
         "ms-python.python",

@@ -78,7 +78,7 @@ To add them:
 
 1. Go to your GitHub profile -> **Settings -> Codespaces -> Codespaces secrets -> New secret**.
 2. Add `LITELLM_API_KEY` and `LITELLM_BASE_URL` with the values you were given.
-3. Scope each secret to this repository (`schmidt-sciences-workshop`).
+3. Scope each secret to this repository (`iss-agentic-ai-workshop-viss-2026`).
 4. Rebuild or restart the Codespace so the new secrets are injected.
 
 You only set those two secrets; `devcontainer.json` and the lifecycle scripts fan them out to every tool for you:

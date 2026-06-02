@@ -75,7 +75,7 @@ say 5 "Configuring shell auto-activation of .venv"
 # is the active interpreter for VS Code terminals and Copilot Chat — not just on
 # PATH.
 BASHRC="${HOME}/.bashrc"
-HOOK_MARKER='# >>> uv venv activation (schmidt-sciences-workshop) >>>'
+HOOK_MARKER='# >>> uv venv activation (iss-agentic-ai-workshop-viss-2026) >>>'
 if ! grep -qF "${HOOK_MARKER}" "${BASHRC}" 2>/dev/null; then
   {
     echo ""
@@ -85,7 +85,7 @@ if ! grep -qF "${HOOK_MARKER}" "${BASHRC}" 2>/dev/null; then
     echo 'if [ -z "${VIRTUAL_ENV:-}" ] && [ -f "'"${PWD}"'/.venv/bin/activate" ]; then'
     echo '  source "'"${PWD}"'/.venv/bin/activate"'
     echo 'fi'
-    echo "# <<< uv venv activation (schmidt-sciences-workshop) <<<"
+    echo "# <<< uv venv activation (iss-agentic-ai-workshop-viss-2026) <<<"
   } >> "${BASHRC}"
   info "Added .venv activation hook to ~/.bashrc"
 else

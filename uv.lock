@@ -2763,7 +2763,7 @@ wheels = [
 ]
 
 [[package]]
-name = "schmidt-sciences-workshop"
+name = "iss-agentic-ai-workshop-viss-2026"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

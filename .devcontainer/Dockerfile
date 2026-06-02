@@ -19,7 +19,7 @@ ENV VSCODE_HOME=/home/vscode \
     PATH=/home/vscode/.local/bin:${PATH}
 
 USER ${VSCODE_USER}
-WORKDIR /workspaces/schmidt-sciences-workshop
+WORKDIR /workspaces/iss-agentic-ai-workshop-viss-2026
 
 RUN echo 'eval "$(uv generate-shell-completion bash)"' >> ${VSCODE_HOME}/.bashrc
 
