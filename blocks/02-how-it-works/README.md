@@ -64,7 +64,7 @@ The notebook is robust to model unavailability, if the proxy only fronts Claude,
 
 ## Prerequisites
 
-- Block 1 completed (or at least its setup: Codespace running, `LITELLM_API_KEY` and `LITELLM_API_BASE` configured).
+- Block 1 completed (or at least its setup: Codespace running, `LITELLM_API_KEY` and `LITELLM_BASE_URL` configured).
 - `workshop_agent` importable (verified by `postCreate.sh`).
 
 ## Bridge to Block 3

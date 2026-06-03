@@ -72,6 +72,28 @@ Speaker notes:
 
 ---
 
+## Aside: why can a network learn any of this?
+
+Pre-training, SFT, RLHF, every stage in this block assumes one thing: that a neural network _can_ represent the function you are training it toward. That assumption has a name.
+
+**Universal Approximation Theorem** (Cybenko 1989, Hornik 1991): a network with a non-linear activation and enough neurons can approximate _any_ continuous function to arbitrary precision.
+
+- "Next token given context", "helpful reply given prompt", "tool call given task", all just functions.
+- The **non-linearity** (ReLU, etc.) is the key ingredient. Stack only linear layers and the whole thing collapses back into a single straight line.
+- **Depth** is what makes it _efficient_: deep nets compose simple features into complex ones, instead of needing astronomically many neurons in one layer.
+
+> Universality only says the function _exists_ inside the network. Training is the bet that gradient descent can _find_ it, and that it _generalizes_ to new inputs. It usually does. That empirical fact is the miracle the rest of this block stands on.
+
+<!--
+Speaker notes:
+- OPTIONAL aside (~60-90s). If you're on time it's a nice "zoom out". If you're behind, skip it entirely, nothing downstream depends on it.
+- Do NOT get into the math. The whole pitch in one line: "a big enough net with a non-linear squiggle can bend itself to fit any curve."
+- The payoff is the blockquote. Mirror the pre-training framing: universality is *necessary, not sufficient*. Existence is not findability, and findability is not generalization.
+- If asked "then why not just use one giant hidden layer?": depth buys *efficiency*, not new expressive power. A shallow net could match it but might need an impractical number of neurons.
+-->
+
+---
+
 ## Stage 1: SFT (instruction tuning)
 
 **Supervised fine-tuning** on a curated set of `(prompt, ideal response)` pairs.

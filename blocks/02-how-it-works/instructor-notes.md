@@ -6,7 +6,7 @@ public-facing version; this is the inside view.
 ## Pre-block checklist (do this in the 5 min before you start)
 
 - [ ] Reset Block 1's starter file: `cd blocks/01-landscape/demo/starter && git checkout -- src/sci_units/converters.py`
-- [ ] Confirm credentials: `echo $LITELLM_API_BASE` should print the proxy URL.
+- [ ] Confirm credentials: `echo $LITELLM_BASE_URL` should print the proxy URL.
 - [ ] **Confirm at least one model is reachable.** Run the notebook's discovery cell (cell 4) up to that point and check the printed list. Ideally you have at least 2 models so the comparison is interesting.
 - [ ] Open VS Code with two windows arranged:
   - **Left:** `blocks/02-how-it-works/slides.md` Marp preview, full-screen on the projector.
@@ -48,6 +48,14 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
   - base-model continuation: `"Translate to Spanish: Hello\nTranslate to German: Hello\n..."`
 - Audience usually laughs. Good. The point landed.
 - Pre-training is **necessary, not sufficient.** Everything that makes a coding agent useful is post-training.
+
+### 3a. Aside: why can a network learn any of this? (OPTIONAL)
+
+- This slide is a budget-dependent insert. Use it only if you hit the minute-6 checkpoint with room to spare; otherwise skip straight to SFT. Nothing downstream depends on it.
+- Keep it to 60-90 seconds. The one-line pitch: **"a big enough net with a non-linear squiggle can bend itself to fit any curve."**
+- The teaching payoff is the parallel to pre-training: universality is **necessary, not sufficient**. Existence (the function is in there) is not findability (gradient descent reaches it) is not generalization (it works on new inputs).
+- Resist the math. If someone wants the proof, point them to office hours.
+- Likely question, "why not one giant hidden layer?": depth buys **efficiency**, not extra expressive power. A shallow net could match it but might need an impractical number of neurons.
 
 ### 4. SFT (instruction tuning)
 
@@ -138,6 +146,7 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 
 In order of expendability:
 
+1. The "why can a network learn any of this?" aside (slide 3a), it's an optional insert in the first place.
 1. The InstructGPT historical aside on slide 4.
 2. The DPO mention on slide 5.
 3. The agentic RL detail on slide 6, you can collapse it to "and the bleeding edge is multi-turn RL."
