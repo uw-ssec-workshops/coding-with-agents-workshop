@@ -70,10 +70,10 @@ If anything goes wrong on the day, the [`expected-artifacts/`](demo/expected-art
 ## Prerequisites
 
 - Codespace running (see top-level [`README.md`](../../README.md) and [`docs/setup.md`](../../docs/setup.md)).
-- `LITELLM_API_KEY` and `LITELLM_API_BASE` Codespace secrets set (the devcontainer also exposes them as `ANTHROPIC_API_KEY` / `ANTHROPIC_BASE_URL` so Claude Code uses the same proxy).
+- `LITELLM_API_KEY` and `LITELLM_BASE_URL` Codespace secrets set (the devcontainer also exposes them as `ANTHROPIC_API_KEY` / `ANTHROPIC_BASE_URL` so Claude Code uses the same proxy).
 - Claude Code VS Code extension signed in (auto-prompted on first launch).
 - `ai-research-workflows` plugin (from the [`rse-plugins`](https://github.com/uw-ssec/rse-plugins) marketplace) installed and visible in `claude plugin list`. Auto-installed by `postCreate.sh` via two commands — `claude plugin marketplace add ...` followed by `claude plugin install ai-research-workflows@rse-plugins`. Falls back to printing both manual commands if the Claude Code CLI isn't on PATH yet. Requires Claude Code `>= 2.1.61`.
 
 ## Bridge to Block 4
 
-This block ends with: *"You just watched the rse-plugins plugin do all this. Now you'll build a small skill of your own. The pieces are the same."* Block 4 is the capstone where attendees write their first slash command / chatmode / prompt file and run it against their own code.
+This block ends with: *"You just watched the rse-plugins plugin do all this. Now you'll build a small skill of your own. The pieces are the same."* Block 4 is the capstone where attendees write their first custom agent / prompt-file command / skill and run it against their own code.

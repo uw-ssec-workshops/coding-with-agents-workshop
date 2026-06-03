@@ -1,8 +1,8 @@
-# Skill Ideas
+# Agent Ideas
 
 A scrolling menu so nobody freezes on "what should I build?" Each idea
 includes a suggested target file, a starting tool list, and a one-line
-description. Pick one and remix it.
+description. Pick one and remix it into a custom agent (`.github/agents/`).
 
 ## Code review (read-only: easiest)
 
@@ -62,7 +62,7 @@ For attendees working with survey data, behavioral experiments, mixed-methods, o
 | `analysis-narrator` | `readFiles`, `codebase` | Read a notebook of effects + p-values, draft a "results" paragraph in your field's voice (APA / AMA / your style guide) | any analysis notebook |
 | `power-analysis-explainer` | `readFiles`, `codebase` | Read a study design, propose what a reasonable power analysis would look like (without claiming to do the math) | any preregistration draft |
 
-> **Tip for non-physical-science attendees:** pick `climate_model.py` only if it's faster than opening your own work. Otherwise, drop a notebook / CSV from your lab into a scratch folder and target that, the chatmode pattern is identical.
+> **Tip for non-physical-science attendees:** pick `climate_model.py` only if it's faster than opening your own work. Otherwise, drop a notebook / CSV from your lab into a scratch folder and target that, the custom-agent pattern is identical.
 
 ## Experiment management
 
@@ -94,7 +94,7 @@ The agent reads run outputs, summarizes them, and helps drive the next iteration
 
 ---
 
-**A note on scope:** the most successful first chatmodes are **boring and
+**A note on scope:** the most successful first agents are **boring and
 narrow**. "Add docstrings to one file" beats "be my coding assistant",
 because the narrow one will work and the broad one will disappoint. You
 can always broaden later.
