@@ -18,12 +18,6 @@ style: |
 *2026 Interdisciplinary Science Summit*
 *Schmidt Sciences x UW SSEC*
 
-<!--
-Speaker notes:
-- 30-second intro. Welcome them. State the workshop's spine: "all coding agents work the same way under the hood."
-- Tell them this block is the map; Block 2 is the engine; Block 3 is the workflow; Block 4 is the build.
--->
-
 ---
 
 ## What changed
@@ -32,12 +26,6 @@ Speaker notes:
 - Today: **agents**. They read the codebase, plan, edit files, run tests, debug, iterate.
 - Same models, mostly. *What changed is the loop wrapped around them.*
 - This workshop is about that loop.
-
-<!--
-Speaker notes:
-- Don't oversell. Most attendees have already used some of this.
-- The point is: the *category* changed, not just the quality.
--->
 
 ---
 
@@ -52,12 +40,6 @@ Speaker notes:
 | **Aider** | CLI, OSS | Bring your own | Pioneered git-aware workflows |
 | **Cline** | VSCode extension | Bring your own | OSS competitor to Copilot |
 
-<!--
-Speaker notes:
-- 30 seconds per row, max. Don't dwell.
-- Emphasize: this list will be different in 6 months. The categories won't.
--->
-
 ---
 
 ## Four axes that actually matter
@@ -70,12 +52,6 @@ When you compare tools, ignore the marketing. Look at:
 4. **Model hosting**: vendor API vs your cloud account vs your hardware.
 
 > The right tool depends on **your constraints**, not on benchmarks.
-
-<!--
-Speaker notes:
-- For science contexts, model hosting matters more than for industry: data residency, IRB, sometimes air-gapped.
-- Capability claims are noisy; trust your own evaluation on your code.
--->
 
 ---
 
@@ -103,12 +79,6 @@ Speaker notes:
                        (templated behaviors)
 ```
 
-<!--
-Speaker notes:
-- This is THE diagram. Reference it for the rest of the workshop.
-- Each label maps to a concrete file, function, or API call we'll see in the demo.
--->
-
 ---
 
 ## Why they all feel the same
@@ -126,12 +96,6 @@ Same six pieces. Different wrappers.
 
 > If you understand the **pieces**, switching tools is a config exercise.
 
-<!--
-Speaker notes:
-- This is the workshop's spine. Say it explicitly.
-- Pay-off: when a new tool launches next quarter, you'll know what to look for.
--->
-
 ---
 
 ## Picking a tool
@@ -144,30 +108,6 @@ A short decision flow. Not a leaderboard.
 4. **Do you need self-hosting?** Then OpenCode + a hosted or local model.
 
 For today: **GitHub Copilot in VSCode + Codespaces, with Claude (via the workshop's LLM proxy server) as the model backend**. It's the lowest-friction option for a workshop, and it's representative.
-
-<!--
-Speaker notes:
-- Acknowledge: Cursor users in the room, your skills transfer 1:1.
-- The choice is "what runs cleanly in 90 minutes for 30 people on borrowed laptops."
--->
-
----
-
-## Setup for today
-
-Three things, all done for you:
-
-1. **GitHub Codespace**: preconfigured Python 3.12 + JupyterLab + Copilot.
-2. **GitHub Copilot**: signed in via your GitHub identity, agent mode enabled.
-3. **Claude via the workshop's LLM proxy server**: exposed as `LITELLM_API_KEY` and `LITELLM_BASE_URL`. Copilot and the notebook talk to the same proxy.
-
-If `postCreate.sh` printed a green "Done", you are ready. If not, see [`docs/setup.md`](../../docs/setup.md) and ping an instructor.
-
-<!--
-Speaker notes:
-- Pause here. Walk the room. Help anyone whose Codespace didn't build.
-- Be reassuring: failures here are setup failures, not your fault.
--->
 
 ---
 
@@ -182,12 +122,6 @@ We are going to fix it twice.
 
 The point: it's the same loop.
 
-<!--
-Speaker notes:
-- Reset starter/src/sci_units/converters.py before this slide!
-- Have the prompt copied to clipboard.
--->
-
 ---
 
 ## Bridge to Block 2
@@ -199,8 +133,3 @@ Nothing in the API said "you're allowed to use these." We just *gave* it a tool 
 That behavior didn't fall out of next-token prediction on web text.
 
 It was **trained in**. That's Block 2.
-
-<!--
-Speaker notes:
-- Hard hand-off. Don't linger. Block 2 is where the "why does this work" answer lives.
--->

@@ -17,12 +17,6 @@ style: |
 
 _A primer on why the loop you just saw is even possible._
 
-<!--
-Speaker notes:
-- 30 seconds. Hand-off from Block 1 demo.
-- Set expectation: this block is the most conceptual of the four. Stick with us, by the end you'll have a mental model that outlasts any product release.
--->
-
 ---
 
 ## Where we left off: four questions
@@ -36,13 +30,6 @@ Block 1 ended with an agent that, given one prompt, did four things we mostly to
 
 > None of these are things the model picked up by reading the internet.
 > Each has a name in the post-training pipeline.
-
-<!--
-Speaker notes:
-- Read all four questions slowly. Make eye contact.
-- Frame the rest of the block: "we're going to answer Q1 through Q4 in order, each gets one slide."
-- This slide is the contract. The next 25 minutes pay it off.
--->
 
 ---
 
@@ -61,15 +48,6 @@ What that does NOT give you:
 
 Everything that makes a coding agent _useful_ is grafted on **after** pre-training.
 
-<!--
-Speaker notes:
-- The "Translate to French: Hello" example is the punchiest concrete demo. Say it out loud:
-  - prompt: "Translate to French: Hello\n"
-  - base model continuation: "Translate to Spanish: Hello\nTranslate to German: Hello\n..."
-- Audience laughs. Good. The point landed.
-- Hammer it: pre-training is necessary, not sufficient. Everything else is post-training.
--->
-
 ---
 
 ## Aside: why can a network learn any of this?
@@ -84,14 +62,6 @@ Pre-training, SFT, RLHF, every stage in this block assumes one thing: that a neu
 
 > Universality only says the function _exists_ inside the network. Training is the bet that gradient descent can _find_ it, and that it _generalizes_ to new inputs. It usually does. That empirical fact is the miracle the rest of this block stands on.
 
-<!--
-Speaker notes:
-- OPTIONAL aside (~60-90s). If you're on time it's a nice "zoom out". If you're behind, skip it entirely, nothing downstream depends on it.
-- Do NOT get into the math. The whole pitch in one line: "a big enough net with a non-linear squiggle can bend itself to fit any curve."
-- The payoff is the blockquote. Mirror the pre-training framing: universality is *necessary, not sufficient*. Existence is not findability, and findability is not generalization.
-- If asked "then why not just use one giant hidden layer?": depth buys *efficiency*, not new expressive power. A shallow net could match it but might need an impractical number of neurons.
--->
-
 ---
 
 ## Stage 1: SFT (instruction tuning)
@@ -103,13 +73,6 @@ Speaker notes:
 - Outcome: the model learns the **format** of "user asks, assistant answers." It now follows instructions instead of pattern-matching them.
 
 **This is what answers Q1.** _(Why does it follow our prompt at all?)_
-
-<!--
-Speaker notes:
-- Emphasize: SFT is a relatively cheap and small fine-tune. The base model already "knows" everything; SFT just teaches it the dialogue format.
-- This is also why a small open-source SFT dataset (Alpaca, etc.) can turn a base model into a chatty one.
-- Don't get drawn into "and how does fine-tuning work?", wave at backprop, loss functions, and move on.
--->
 
 ---
 
@@ -138,14 +101,6 @@ def running_mean(xs: list[float], k: int) -> list[float]:
 
 The model learns the **shape**: read the spec, write typed code, handle the edge case the prompt mentioned, stop. Multiply by ~hundreds of thousands of examples across languages, frameworks, and difficulty levels.
 
-<!--
-Speaker notes:
-- Walk through the example. Point out: typed signature, edge case from the spec, O(n) instead of naive O(nk), no extra commentary.
-- That's not the model "being smart", that's the model imitating what a contractor wrote.
-- Open-source analogues people may have heard of: CodeAlpaca, Magicoder/OSS-Instruct, the SFT split of OpenCodeInterpreter. Mention only if asked.
-- Key takeaway: the *style* of agent output (concise, typed, edge-case-aware) is literally a learned imitation of how the SFT contractors wrote.
--->
-
 ---
 
 ## Stage 2: RLHF (preference learning)
@@ -160,13 +115,6 @@ Outcome: the model learns **what humans find helpful**, when to refuse, and, cru
 **This is what answers Q2.** _(Why did it stop instead of looping forever?)_
 
 > Trade-off: too much RLHF and the model becomes overly cautious or sycophantic. Lab releases live or die on this dial.
-
-<!--
-Speaker notes:
-- DPO fans in the audience will appreciate the mention. Don't get into the math; just say "fewer moving parts than PPO + reward model, often equally good."
-- The "when to stop" framing is the workshop-relevant one. Coding agents that don't stop are useless.
-- This is also where models get their "personality" / refusal behavior. Constitutional AI is one variant.
--->
 
 ---
 
@@ -198,14 +146,6 @@ What the model learns from millions of these:
 
 **That's the "knowing when to stop" behavior**, learned as a preference, not a rule.
 
-<!--
-Speaker notes:
-- Walk through both responses out loud. Audience laughs at B - we've all gotten that response.
-- Emphasize: nobody told the model "don't propose 200-line refactors". It learned that humans rate the focused answer higher.
-- Public analogues if asked: HH-RLHF (Anthropic), UltraFeedback, the preference splits in Llama-2/3 papers.
-- Tie back to Q2: the *reason* a coding agent eventually says "done" instead of looping is RLHF preference data like this.
--->
-
 ---
 
 ## Stage 3: Tool-use fine-tuning
@@ -230,13 +170,6 @@ The model learns **two things at once**:
 **Bleeding edge: agentic RL.** RL applied over multi-turn tool-use trajectories with task-completion reward. This is what major labs are pouring resources into in 2025-2026. It's why Claude Code, Cursor, and Copilot agent mode have gotten so much better in the last 18 months.
 
 **This is what answers Q3.** _(Why did it call `run_bash` instead of just describing it?)_
-
-<!--
-Speaker notes:
-- The trace example is concrete. Walk through it. Point at each line.
-- "Wire format vs meta-skill" is the punchy two-part framing. Repeat it.
-- Agentic RL is the answer to "why are agents getting better so fast in 2026?", it's not bigger models, it's better RL signal.
--->
 
 ---
 
@@ -273,15 +206,6 @@ The **only** thing that changes the assistant's first move is the prompt:
 - **B** requires reading the actual repo state → **must** call a tool.
 
 This is the **meta-skill**: knowing which prompts cross the line into "I need to actually go look." Trained on thousands of paired examples like these.
-
-<!--
-Speaker notes:
-- Start here so the audience sees the simplest possible case before the multi-turn trajectory on the next slide.
-- The point to hammer: tools aren't called *because they exist in the system prompt*. They're called when the prompt requires fresh information the model can't have.
-- Common confusion to head off: "but couldn't the model just guess 137?" Yes, and a base model would. The whole point of this training stage is teaching it not to.
-- If asked: yes, this is also why agents sometimes call tools they shouldn't (over-eager tool use is a known failure mode and a major RLHF target).
-- Bridge to next slide: "OK, that's the easy case — one tool call. Now let's see what a *real* coding trajectory looks like."
--->
 
 ---
 
@@ -324,14 +248,6 @@ A: Fixed. The format string had month and day swapped. Tests now pass.
 
 The trajectory teaches **wire format** (valid JSON, right schema), **multi-step meta-skill** (run → read → reason → write → re-run), and **termination** (stop after the green test, don't keep poking).
 
-<!--
-Speaker notes:
-- This is the meatier follow-up to the side-by-side slide. Walk down the trajectory line by line. Note the structure: hypothesis → tool call → observation → updated hypothesis.
-- Call out: every assistant turn is either a tool call OR a final answer. That binary is *learned* here.
-- Public analogues if asked: ToolBench, Gorilla, the agentic SFT data described in the Llama-3.1 and DeepSeek-Coder-V2 papers.
-- Bridge to the convergence slide: "Now imagine generating thousands of these trajectories, scoring whether the final test passed, and using *that* as RL reward. That's agentic RL — the bleeding edge from earlier."
--->
-
 ---
 
 ## Why this is convergent
@@ -351,12 +267,6 @@ Different data. Different reward signals. Different sequencing.
 > When you train very different models to do _overlapping skills_, they
 > converge on _overlapping behaviors_. That's why `MODEL = "..."` is
 > just a string. **Answers Q4.**
-
-<!--
-Speaker notes:
-- This is the slide where "all coding agents work the same way under the hood" gets its proof. Linger.
-- Tee up the demo: "We're about to swap MODEL and watch the same loop drive a different brain."
--->
 
 ---
 
@@ -379,13 +289,6 @@ When debugging an agent, ask:
 
 **Most issues are prompt problems.** That's the whole reason Block 4 exists.
 
-<!--
-Speaker notes:
-- This is the most actionable slide of the whole block. Bookmark it for participants.
-- Concrete example: "if Claude won't follow your style guide, it's not because Claude lacks taste, it's because you didn't put the style guide in AGENTS.md."
-- Almost every agent failure people complain about online turns out to be a prompt problem on inspection.
--->
-
 ---
 
 ## Demo: Same loop, different brain
@@ -400,13 +303,6 @@ What to watch for:
 - That's convergent post-training, made tactile.
 
 Bonus, if there's time: re-run the agent with deliberately **vague tool descriptions**. Watch behavior degrade. Prompt levers are real.
-
-<!--
-Speaker notes:
-- Switch to VS Code. Open blocks/02-how-it-works/demo/notebook.ipynb.
-- Reset Block 1's starter file before this slide, see instructor-notes pre-block checklist.
-- Run all cells. Narrate the proxy discovery cell explicitly: "this is a defensive move, in case GPT or Gemini aren't on the proxy."
--->
 
 ---
 
@@ -427,9 +323,3 @@ That same training history also tells you **how it can fail**:
 - Trained on short trajectories -> loops on long ones
 
 **Block 3 turns these into a taxonomy with mitigations.**
-
-<!--
-Speaker notes:
-- Hard hand-off. Don't linger.
-- Last sentence: "Block 3 turns these into a taxonomy with mitigations." Stop talking.
--->

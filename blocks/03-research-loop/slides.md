@@ -17,12 +17,6 @@ style: |
 
 *From "the model can call tools" to "I trust this on my actual research code."*
 
-<!--
-Speaker notes:
-- 30 seconds. Hand-off from Block 2.
-- Set the stakes: the previous two blocks were about *how it works*. This block is about *how to use it on real research code without it blowing up in your face*.
--->
-
 ---
 
 ## Where we left off
@@ -39,12 +33,6 @@ So how do you systematically write good prompts for hard, multi-step research ta
 > *per phase of your work*, not just per project.
 
 **Workflows ARE the prompt.**
-
-<!--
-Speaker notes:
-- This is the workshop-spine continuation. Block 1 introduced project memory; Block 2 said "in the prompt > trained in"; Block 3 says structured workflows are the systematic way to do that.
-- Hammer "workflows are the prompt", it's the slide-8 takeaway from Block 2 made operational.
--->
 
 ---
 
@@ -66,13 +54,6 @@ Speaker notes:
 - *Multiple approaches:* add `/experiment` in the middle
 - *Already-known codebase:* `/plan` -> `/implement`
 
-<!--
-Speaker notes:
-- Read across the table.
-- Emphasize: this is the rse-plugins plugin (a Claude Code plugin built by UW SSEC). The pattern is the lesson; the plugin is one polished implementation.
-- Tee up the demo: "we're about to run the simple-change pattern, live, on real research code."
--->
-
 ---
 
 ## Demo: package the climate model
@@ -86,15 +67,6 @@ We'll run **four phases** in order: `/research`, `/plan`, `/implement`, `/valida
 > While `/implement` runs (it's the slow one), we'll use the time to talk
 > through **failure modes**, what to watch for, where they come from,
 > what to do when you see them.
-
-<!--
-Speaker notes:
-- Switch to VS Code's integrated terminal. We're running Claude Code as a CLI (`claude`) from the terminal, not from the graphical panel — see instructor-notes.md for why (the CLI lets us pick the working directory; the panel always inherits the workspace root).
-- Working directory for the demo: blocks/03-research-loop/demo/ (the parent of starter/, so AGENTS.md is at cwd and the starter scripts sit in the starter/ subfolder).
-- Confirm `.agents/` does not exist yet (rm -rf .agents/ if it's been left over from a dry run). Then launch `claude`.
-- Have all four prompts copied to clipboard (see instructor-notes.md).
-- For each phase: paste the prompt, narrate what's happening, point at the artifact when it appears.
--->
 
 ---
 
@@ -112,12 +84,6 @@ Each failure traces back to a specific post-training shortcut from Block 2.
 | Scope creep | Refactors files you didn't mention | SFT taught "be helpful" too eagerly | Tight `/plan`, narrow per-phase scope |
 
 > Most production agent disasters are 2 or 3 of these stacked.
-
-<!--
-Speaker notes:
-- The "Where it comes from" column is the workshop's payoff, we said in Block 2 that knowing how the model is shaped tells you how it can fail. This is that payoff.
-- Pick one row to elaborate (audience-dependent): scientific computing audiences often hit niche-language and confident-wrong-answer hardest.
--->
 
 ---
 
@@ -140,12 +106,6 @@ Speaker notes:
 - Stop the agent. Read the artifact. Push back. Re-run.
 - Agents are *coworkers*, not magic. Coworkers get pushback.
 
-<!--
-Speaker notes:
-- "Agents are coworkers, not magic", drop this line slowly. It's the most quotable thing in Block 3.
-- The mitigations are the actionable thing. Bookmark this slide.
--->
-
 ---
 
 ## Practical use cases (a quick tour)
@@ -161,12 +121,6 @@ Speaker notes:
 | **Experiment management** | Run sweeps, summarize results, draft next hypothesis | Confidently mis-reads metrics; always spot-check the numbers |
 
 > The pattern across all seven: the **agent expands what one person can attempt**. The discipline question is which 95% of the work is fine to delegate, and which 5% must stay yours.
-
-<!--
-Speaker notes:
-- 30 seconds total. Don't dwell on any one row.
-- The closing one-liner is the takeaway: agents are a productivity multiplier, but the editorial judgment stays yours.
--->
 
 ---
 
@@ -185,14 +139,6 @@ The full `/research` -> `/plan` -> `/implement` -> `/validate` loop is the **dur
 
 > **The workflow generalizes; your `AGENTS.md` is where your research context lives.** It's the one file you'll edit most: conventions, vocabulary, data shape, "don't touch X", citations to your stats methods, what counts as a passing run. NLP labs put eval harness + metric definitions there. Bio puts file-format conventions and pipeline DAGs. Behavioral / social science puts coding schemes, IRB constraints, and analysis assumptions. Physics / climate puts the sci-Python guidelines we used in the demo.
 
-<!--
-Speaker notes:
-- 60-90 seconds. This slide exists for two audiences: (a) people from non-RSE backgrounds (NLP, ML, comp ling) who want to know the loop isn't only for "build me a package", and (b) AI engineers who want fast iteration and worry the full loop is overkill.
-- Read the table left-to-right. Land "pick the loop length to match the half-life of the code" slowly.
-- For the cross-field paragraph: pick the audience's closest field and elaborate for 10 seconds. If mixed audience, just read it.
-- Avoid claiming the workshop covers all four domains - we don't. The point is the *shape* is portable.
--->
-
 ---
 
 ## Bridge to Block 4
@@ -209,10 +155,3 @@ That's all a "skill" is. Five files, no magic.
 > **Block 4: build your own.** We'll write one slash command from
 > scratch, pick the phase that's most useful to you, or invent your
 > own, and run it against the climate model (or your own code).
-
-<!--
-Speaker notes:
-- Hard hand-off. Don't linger.
-- The "five files, no magic" framing is what makes Block 4 feel approachable.
-- Last sentence: "Block 4: build your own." Stop talking.
--->

@@ -79,18 +79,13 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 - This is the most opinionated slide. Lean in.
 - Acknowledge Cursor users in the room: "your skills transfer 1:1, Copilot is just what runs cleanly in Codespaces today."
 
-### 8. Setup for today
-
-- **Pause here.** Walk the room. Ask "everyone see a green Done line in their Codespace?"
-- This is the last chance to recover from a setup failure before the demo. If 5+ people are stuck, freeze the talk and triage.
-
-### 9. Demo intro
+### 8. Demo intro
 
 - Confirm the converters file is reset to the buggy state (you did this in the pre-block checklist).
 - Open Copilot Chat in agent mode (the icon at the top of the chat panel; or `Ctrl+Shift+I` then switch to "Agent" from the picker).
 - Say: "Same task, two ways. Watch how it feels."
 
-### 10. Bridge to Block 2
+### 9. Bridge to Block 2
 
 - Hard hand-off. Don't linger.
 - Last sentence: *"That behavior was trained in. That's Block 2."*

@@ -37,8 +37,7 @@ By the end of this block, an attendee can:
 | 7–15 | Anatomy of a coding agent (the spine) |
 | 15–17 | "They're all the same" |
 | 17–20 | Picking a tool (decision flow) |
-| 20–22 | Setup for today (Codespace + Copilot + LLM proxy) |
-| 22–28 | **Demo**: 2 min live Copilot + 4 min "agent in 50 lines" notebook |
+| 20–28 | **Demo**: 2 min live Copilot + 4 min "agent in 50 lines" notebook |
 | 28–30 | Bridge to Block 2 |
 
 ## How to run the material
