@@ -11,8 +11,7 @@ BOLD="\033[1m"
 RESET="\033[0m"
 
 STAGE="on-create"
-TOTAL_STEPS=6
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+TOTAL_STEPS=5
 
 say()  { printf "%b\n==> [%s] (%s/%s) %s%b\n" "${BOLD}${GREEN}" "${STAGE}" "$1" "${TOTAL_STEPS}" "$2" "${RESET}"; }
 info() { printf "      %s\n" "$1"; }
@@ -91,14 +90,6 @@ if ! grep -qF "${HOOK_MARKER}" "${BASHRC}" 2>/dev/null; then
 else
   info "~/.bashrc already has the .venv activation hook"
 fi
-
-say 6 "Linking agent plugins/skills into the repo for browsing"
-# The CLIs (and their plugins/skills) are installed in the home directory at
-# image-build time. This mirrors the ~/.claude and ~/.copilot home dirs under
-# ./agent-resources via per-entry symlinks so the SKILL.md and plugin files are
-# visible in the VS Code Explorer. Credential/secret files are excluded, and the
-# folder is git-ignored.
-bash "${SCRIPT_DIR}/link-agent-resources.sh"
 
 printf "%b\n==> [%s] complete — workspace is ready.%b\n" "${BOLD}${GREEN}" "${STAGE}" "${RESET}"
 info "Next step: open README.md for the workshop walkthrough"
