@@ -17,13 +17,13 @@ else is "going further."
 
 ## The same idea in other tools
 
-- **Anthropic: [Claude Code skills](https://docs.claude.com/en/docs/claude-code/skills)**: custom agents' closest cousin in Claude Code. The Block 3 demo used these (via the `rse-plugins` plugin).
+- **Anthropic: [Claude Code skills](https://docs.claude.com/en/docs/claude-code/skills)**: custom agents' closest cousin in Claude Code. The `rse-plugins` workflow that inspired Block 3 is built from these.
 - **Cursor: [Custom rules and modes](https://docs.cursor.com/)**: for participants who use Cursor day-to-day.
 - **Aider: [Conventions and prompts](https://aider.chat/docs/usage/conventions.html)**: the OSS alternative; same patterns, smaller surface area.
 
 ## Inspiration: full agent workflows built on these primitives
 
-- **[`rse-plugins`](https://github.com/uw-ssec/rse-plugins)**: the Claude Code plugin we demoed in Block 3. Read its source to see how a 6-phase research-plan-implement workflow is built from skills.
+- **[`rse-plugins`](https://github.com/uw-ssec/rse-plugins)**: the research-plan-implement workflow Block 3's prompt files are adapted from. Read its source to see how the six-phase workflow is built from skills; we reimplemented its commands as Copilot prompt files in `.github/prompts/`.
 - **[Anthropic: Building effective agents](https://www.anthropic.com/research/building-effective-agents)**: the most-quoted paper on agent design patterns. Read once a year.
 - **[Cognition: Don't build multi-agents](https://cognition.ai/blog/dont-build-multi-agents)**: the counter-cultural pushback. Worth reading before you build something baroque.
 

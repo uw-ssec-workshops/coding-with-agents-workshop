@@ -28,9 +28,9 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 | 2 | slide 2 (What changed) | Done with the hook |
 | 7 | slide 4 (Four axes) | Done with the tool tour |
 | 15 | slide 6 (Why they all feel the same) | Done with the anatomy |
-| 20 | slide 8 (Setup) | Done with picking a tool |
-| 22 | slide 9 (Demo intro) | Demo about to start |
-| 28 | slide 10 (Bridge) | Demo done, transitioning |
+| 20 | slide 7 (Picking a tool) | Done with picking a tool; demo next |
+| 22 | slide 8 (Demo) | Demo about to start |
+| 28 | slide 9 (Bridge) | Demo done, transitioning |
 | 30 | hand off to Block 2 | |
 
 ## Per-slide notes
@@ -39,18 +39,20 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 
 - 30 seconds. Welcome. State the spine: **"all coding agents work the same way under the hood."**
 - This isn't a tool review. It's a mental model that outlasts any product.
+- Frame the arc: *this block is the map; Block 2 is the engine; Block 3 is the workflow; Block 4 is the build.*
 
 ### 2. What changed
 
 - Most attendees have used some autocomplete-ish tool already.
-- The point is the *category* changed, not the quality.
+- **Don't oversell.** The point is the *category* changed, not the quality.
 - Don't get into history. Move on.
 
 ### 3. The landscape
 
-- 30 seconds per row, max. Six rows = three minutes.
+- 30 seconds per row, max. Six rows = three minutes. Don't dwell.
 - If asked "which is best?" → defer with: "wrong question. Look at slide 4."
 - If asked about a tool not on the list (Devin, Replit Agent, etc.) → "same anatomy, different wrapper."
+- Emphasize: *this list will be different in 6 months. The categories won't.*
 
 ### 4. Four axes
 
@@ -59,7 +61,8 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 
 ### 5. Anatomy of a coding agent
 
-- This is *the* slide of Block 1. Spend real time here.
+- This is *the* slide of Block 1. Spend real time here. **Reference this diagram for the rest of the workshop.**
+- Each label maps to a concrete file, function, or API call you'll see in the demo.
 - Walk through each box. For each, name a concrete example:
   - LLM backbone → "Claude Sonnet 4.5, GPT-5, Gemini 2.5, pick one."
   - Agent loop → "decides what to do next based on what just happened."
@@ -73,6 +76,7 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 
 - Read across the rows, not down the columns.
 - Don't apologize for tools you didn't pick. Make the framing-claim instead: *if you understand the pieces, switching is a config exercise.*
+- This is the workshop's spine, say it explicitly. Pay-off: *when a new tool launches next quarter, you'll know what to look for.*
 
 ### 7. Picking a tool
 
@@ -87,7 +91,7 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 
 ### 9. Bridge to Block 2
 
-- Hard hand-off. Don't linger.
+- Hard hand-off. Don't linger. Block 2 is where the *"why does this work"* answer lives.
 - Last sentence: *"That behavior was trained in. That's Block 2."*
 
 ## Demo script

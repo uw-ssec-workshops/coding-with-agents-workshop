@@ -177,4 +177,4 @@ Turn `climate_model.py` + `co2_emissions.py` (currently standalone scripts in `b
 
 ## Open questions
 
-**None.** All decisions made above. If something feels ambiguous during `/implement`, raise it as `/iterate-plan` feedback rather than guessing.
+**None.** All decisions made above. If something feels ambiguous during `/implement`, stop and update this plan (it's plain markdown) rather than guessing.

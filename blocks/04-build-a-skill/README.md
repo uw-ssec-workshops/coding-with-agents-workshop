@@ -22,7 +22,7 @@ By the end of this block, an attendee can:
 1. Read a Copilot custom agent file and identify which line corresponds to which **anatomy concept** from Block 1 (LLM backbone, tool use, project memory, system prompt).
 2. **Write** a custom agent end-to-end: pick a job, write a focused system prompt, choose a narrow tool list, save it to `.github/agents/`, and invoke it.
 3. **Iterate** on an agent that almost works: tighten the prompt, add explicit constraints, narrow or broaden the tool list.
-4. Map the same agent pattern to **other primitives** (Copilot prompt-file commands for one-shots; skills for multi-step capabilities; Claude Code skills if they prefer the Block 3 setup; MCP servers if they want to add new tools).
+4. Map the same agent pattern to **other primitives** (Copilot prompt-file commands for one-shots, like the Block 3 workflow; skills for multi-step capabilities; MCP servers if they want to add new tools).
 
 ## What's in this folder
 
@@ -87,8 +87,8 @@ VISS members will be available the day after the workshop to help
 attendees:
 
 - Try their agent against their own data or workflows.
-- Promote an agent to a Copilot **prompt-file command** or a **skill** (with bundled scripts) if they want a different shape, or wrap a new tool with an **MCP server**.
-- Port their agent to a **Claude Code skill** if they prefer that setup.
+- Promote an agent to a Copilot **prompt-file command** (like the Block 3 workflow) or a **skill** (with bundled scripts) if they want a different shape, or wrap a new tool with an **MCP server**.
+- Port their agent to another tool (Cursor, Claude Code, ...) — the pattern carries over even though the file format differs.
 - Talk through agentic research workflows in general.
 
 Bring whatever code or data you wanted to try during the workshop but

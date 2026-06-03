@@ -54,6 +54,7 @@ If you're behind: cut show-and-tell first (it's optional). Then collapse the liv
   - System prompt -> persona + project memory + workflow.
   - "What you do NOT do" -> safety constraints (analogous to RLHF refusals, but in the prompt, not the weights).
 - *"A handful of fields. That's it. You can read the file in 30 seconds."*
+- Tee up the live build.
 
 ### 4. Two worked examples
 
@@ -66,6 +67,8 @@ If you're behind: cut show-and-tell first (it's optional). Then collapse the liv
 
 - Project for the duration. Participants need it as a reference.
 - Repeat *"narrow over broad"* whenever you spot someone aiming too big.
+- ~3 min in: walk the room. Help anyone whose agent hasn't appeared in the picker.
+- ~10 min in: announce 5 min remaining and start scouting show-and-tell volunteers.
 
 ### 6. Wrap-up
 
@@ -173,6 +176,6 @@ In order:
 | "What's a skill then?" | "A skill is a folder (`.github/skills/<name>/SKILL.md`) that can bundle scripts and resources, loaded on demand. Use it for a multi-step capability, not a single prompt. See `.github/skills/experiment-log/`." |
 | "Can I have multiple agents active?" | "One at a time per chat. But you can switch mid-conversation, and agents can hand off to each other." |
 | "Does the agent use the LiteLLM proxy?" | "Yes, Copilot uses the same env vars regardless of agent. The model you see in the picker comes from your Copilot settings." |
-| "Can I use this with Claude Code instead?" | "Claude Code has 'skills' which are similar. The pattern transfers; the file format differs slightly. See `resources.md`." |
+| "Can I use this with another tool (Cursor, Claude Code)?" | "Yes. They have their own equivalents (Cursor rules/modes, Claude Code skills). The pattern transfers; the file format differs slightly. We keep the whole workshop in Copilot Chat for consistency. See `resources.md`." |
 | "Where do I save the agent if I want to use it on my own repo?" | "Same place: `.github/agents/<name>.agent.md` in that repo. The file is portable; commit it and your collaborators get it too." |
 | "How do I test an agent without running a real query?" | "You can't, really. The iteration loop is: edit prompt -> reload -> run -> observe -> edit. Same as prompt engineering anywhere." |

@@ -1,9 +1,9 @@
 ---
 name: TODO-your-agent-name
 description: 'TODO: one-line description shown in the Copilot agent picker'
-tools: ['readFiles', 'codebase']
-# Add 'editFiles' if your agent needs to modify code.
-# Add 'runCommands' if your agent needs to run shell commands (pytest, etc.).
+tools: ['read', 'search/codebase']
+# Add 'edit/editFiles' if your agent needs to modify code.
+# Add 'execute/runInTerminal' if your agent needs to run shell commands (pytest, etc.).
 # Start narrow: you can always grant more.
 ---
 

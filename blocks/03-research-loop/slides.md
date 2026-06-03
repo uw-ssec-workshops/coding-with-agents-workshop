@@ -36,7 +36,9 @@ So how do you systematically write good prompts for hard, multi-step research ta
 
 ---
 
-## The 6-phase workflow we'll demo
+## The research loop as Copilot prompt files
+
+Seven Copilot Chat slash commands, all shipped in-repo as `.github/prompts/*.prompt.md`:
 
 | Phase | Slash command | Output | Purpose |
 |---|---|---|---|
@@ -48,11 +50,15 @@ So how do you systematically write good prompts for hard, multi-step research ta
 | 6. Validate | `/validate` | inline report | Verify built vs planned |
 | (any time) | `/handoff` | `.agents/handoff-<ts>.md` | Transfer session context |
 
-**You don't use all six every time.** Pick the pattern:
+Each is just a **prompt file**: frontmatter (tools) plus a templated system
+prompt that writes an auditable artifact to `.agents/`. No plugin to install.
+
+**You don't use all seven every time.** We'll demo four. Pick the pattern:
 
 - *Simple change:* `/research` -> `/plan` -> `/implement` -> `/validate`
 - *Multiple approaches:* add `/experiment` in the middle
 - *Already-known codebase:* `/plan` -> `/implement`
+- *Quick spike:* just chat against `AGENTS.md`
 
 ---
 
@@ -76,7 +82,7 @@ Each failure traces back to a specific post-training shortcut from Block 2.
 
 | Failure | What it looks like | Where it comes from | Mitigation |
 |---|---|---|---|
-| Context exhaustion | Forgets earlier instructions, repeats work | Limited context window | `/handoff`, smaller scope per phase |
+| Context exhaustion | Forgets earlier instructions, repeats work | Limited context window | `/handoff`, then a fresh chat; smaller scope per phase |
 | Looping | Same tool called over and over | RL trained on short trajectories | `max_steps`, intervene, restate goal |
 | Niche language hallucination | Invents Fortran / Julia / IDL APIs | Underrepresented in training data | Load docs into context, examples in `AGENTS.md` |
 | Confident wrong answer | "Done!" when nothing is fixed | RLHF over-tuned for confidence | Always `/validate`; trust nothing without proof |
@@ -89,7 +95,7 @@ Each failure traces back to a specific post-training shortcut from Block 2.
 
 ## Mitigations: the levers you have
 
-**Process levers** (what the rse-plugins workflow gives you):
+**Process levers** (what the prompt-file workflow gives you):
 
 - Auditable artifacts in `.agents/`, you can read what the model planned vs what it built
 - `/validate` as a quality gate, not a vibe check
@@ -143,15 +149,15 @@ The full `/research` -> `/plan` -> `/implement` -> `/validate` loop is the **dur
 
 ## Bridge to Block 4
 
-You just watched the rse-plugins plugin do this:
+You just watched four Copilot prompt files do this:
 
-- **System prompt** for each slash command (templated text)
-- **Tool schemas** for `read_file`, `write_file`, `run_bash`, etc. (same schemas as Block 1)
+- **System prompt** for each slash command (templated text in a `.prompt.md`)
+- **Tool list** per command (`readFiles`, `editFiles`, `runCommands`, ... same idea as Block 1's tool schemas)
 - **Project memory** via `AGENTS.md` (same mechanic as Block 1)
 - **Output convention**: write a markdown artifact to `.agents/`
 
-That's all a "skill" is. Five files, no magic.
+That's all a workflow command is. A markdown file, no magic.
 
-> **Block 4: build your own.** We'll write one slash command from
-> scratch, pick the phase that's most useful to you, or invent your
-> own, and run it against the climate model (or your own code).
+> **Block 4: build your own.** We'll write one prompt file (or custom
+> agent) from scratch, pick the phase that's most useful to you, or invent
+> your own, and run it against the climate model (or your own code).

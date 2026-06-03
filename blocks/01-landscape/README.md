@@ -70,7 +70,7 @@ git restore src/sci_units/converters.py
 ## Prerequisites
 
 - Codespace running (see top-level [`README.md`](../../README.md) and [`docs/setup.md`](../../docs/setup.md)).
-- LiteLLM proxy credentials configured: `LITELLM_API_KEY` and `LITELLM_BASE_URL` (verified by `postCreate.sh`).
+- LiteLLM proxy credentials configured: `LITELLM_API_KEY` and `LITELLM_BASE_URL` (verified by `post-start.sh`).
 - Copilot extension signed in.
 
 ## Bridge to Block 2

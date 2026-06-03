@@ -63,17 +63,46 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 - This is also why a small open-source SFT dataset (Alpaca, etc.) can turn a base model into a chatty one.
 - Don't get drawn into "and how does fine-tuning work?", wave at backprop, move on.
 
+### 4a. SFT for coding: what the data looks like
+
+- Walk through the `running_mean` example. Point out: typed signature, edge case from the spec, O(n) instead of naive O(nk), no extra commentary.
+- That's not the model "being smart", that's the model **imitating what a contractor wrote.**
+- Key takeaway: the *style* of agent output (concise, typed, edge-case-aware) is literally a learned imitation of how the SFT contractors wrote.
+- Open-source analogues, mention only if asked: CodeAlpaca, Magicoder/OSS-Instruct, the SFT split of OpenCodeInterpreter.
+
 ### 5. RLHF (preference learning)
 
 - DPO fans in the audience will appreciate the mention. Don't get into the math; just say *"fewer moving parts than PPO + reward model, often equally good."*
 - The "when to stop" framing is the workshop-relevant one. Coding agents that don't stop are useless.
 - This is also where models get their "personality" / refusal behavior. Constitutional AI is one variant, mention if asked.
 
+### 5a. RLHF for coding: what the data looks like
+
+- Walk through both responses out loud. Audience usually laughs at B, we've all gotten that response.
+- Emphasize: nobody told the model *"don't propose 200-line refactors."* It learned that humans rate the focused answer higher.
+- Tie back to Q2: the *reason* a coding agent eventually says "done" instead of looping is RLHF preference data like this.
+- Public analogues if asked: HH-RLHF (Anthropic), UltraFeedback, the preference splits in the Llama-2/3 papers.
+
 ### 6. Tool-use fine-tuning
 
 - The trace block on the slide is concrete. Walk through it. Point at each line.
 - **"Wire format vs meta-skill"** is the punchy two-part framing. Repeat it.
 - Agentic RL is the answer to *"why are agents getting better so fast in 2025-2026?"*, it's not bigger models, it's better RL signal over multi-turn trajectories.
+
+### 6a. Tool-use FT: the meta-skill, side by side
+
+- Start here so the audience sees the simplest possible case (one prompt in, one turn out) before the multi-turn trajectory on the next slide.
+- The point to hammer: tools aren't called *because they exist in the system prompt.* They're called when the prompt requires fresh information the model can't have.
+- Common confusion to head off: *"but couldn't the model just guess 137?"* Yes, and a base model would. The whole point of this training stage is teaching it **not** to.
+- If asked: yes, this is also why agents sometimes call tools they shouldn't, over-eager tool use is a known failure mode and a major RLHF target.
+- Bridge to the next slide: *"OK, that's the easy case, one tool call. Now let's see what a real coding trajectory looks like."*
+
+### 6b. Tool-use FT: a full multi-turn trajectory
+
+- The meatier follow-up to the side-by-side slide. Walk down the trajectory line by line. Note the structure: hypothesis → tool call → observation → updated hypothesis.
+- Call out: every assistant turn is either a tool call **or** a final answer. That binary is *learned* here.
+- Bridge to the convergence slide: *"Now imagine generating thousands of these trajectories, scoring whether the final test passed, and using that as RL reward. That's agentic RL, the bleeding edge from the previous slide."*
+- Public analogues if asked: ToolBench, Gorilla, the agentic SFT data described in the Llama-3.1 and DeepSeek-Coder-V2 papers.
 
 ### 7. Why this is convergent
 

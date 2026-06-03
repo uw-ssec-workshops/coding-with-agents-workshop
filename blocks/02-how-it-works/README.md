@@ -25,7 +25,6 @@ By the end of this block, an attendee can:
   resources.md         # curated further reading
   demo/
     notebook.ipynb     # "Same loop, different brain", model swap experiment
-    _build_notebook.py # source-of-truth builder for the notebook
 ```
 
 ## Timing (30 min)
@@ -65,7 +64,7 @@ The notebook is robust to model unavailability, if the proxy only fronts Claude,
 ## Prerequisites
 
 - Block 1 completed (or at least its setup: Codespace running, `LITELLM_API_KEY` and `LITELLM_BASE_URL` configured).
-- `workshop_agent` importable (verified by `postCreate.sh`).
+- `workshop_agent` importable (verified by the `on-create.sh` sanity check).
 
 ## Bridge to Block 3
 

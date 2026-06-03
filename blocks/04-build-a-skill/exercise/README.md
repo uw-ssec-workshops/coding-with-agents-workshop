@@ -87,8 +87,8 @@ Did your agent do what you expected? If not, that's the point.
 - **Agent being too cautious or too eager?** Add explicit "do NOT" constraints.
 
 This iteration loop, *write, run, observe, adjust the prompt*, is the
-same loop the rse-plugins authors used to build the polished Block 3
-demo. You're doing real prompt engineering.
+same loop behind the Block 3 workflow prompt files in `.github/prompts/`.
+You're doing real prompt engineering.
 
 ## 7. Stretch: take it further
 
@@ -97,21 +97,21 @@ agents before and want to push past the basics), pick one of these.
 Each is ~10-20 min on its own, none are required, all are great
 office-hours starting points if you don't finish.
 
-### Stretch A — Port your agent to a Claude Code skill
+### Stretch A — Promote your agent to a Copilot skill
 
-The Block 3 panel uses Claude Code, which has its own skill format
-(`.claude/skills/<name>/SKILL.md`). The fields are slightly different
-(YAML frontmatter with `name` and `description`; markdown body) but the
-*shape* is identical to a Copilot agent: persona + steps + tools +
-output format. (Copilot reads `.github/skills/` the same way — see the
-worked `experiment-log` skill in `.github/skills/`.)
+A **skill** (`.github/skills/<name>/SKILL.md`) is the next primitive up
+from an agent: it can bundle scripts and resources and load on demand.
+The fields are slightly different (YAML frontmatter with `name` and
+`description`; markdown body) but the *shape* is identical to a Copilot
+agent: persona + steps + tools + output format. See the worked
+`experiment-log` skill in [`.github/skills/`](../../../.github/skills/).
 
-1. Make `.claude/skills/<your-skill-name>/` at the repo root.
+1. Make `.github/skills/<your-skill-name>/` at the repo root.
 2. Create `SKILL.md` with `---\nname: <your-skill-name>\ndescription: <one line>\n---` frontmatter, then paste the body from your agent.
-3. Open Claude Code in the integrated terminal; your skill is now available as a slash command.
+3. Reload the window; ask for it in plain language (or `/`-invoke it) in Copilot Chat.
 
-Same handful of fields, different file path. That's the "tools are mostly
-UX differences" claim from Block 1, made concrete.
+Same handful of fields, different file path. That's the "primitives are
+just structured prompts" claim from Block 1, made concrete.
 
 ### Stretch B — Chain two agents with a Copilot prompt file
 
@@ -124,8 +124,8 @@ already has a few worked commands to copy from.
 2. Write a body like: *"First, review `${input:file}` against Scientific Python guidelines. Then add the missing docstrings."*
 3. Invoke from chat with `/review-and-fix file=path/to/code.py`.
 
-This is what the rse-plugins workflow is doing under the hood:
-slash commands chained into a pipeline.
+This is what the Block 3 workflow prompt files are doing under the hood:
+slash commands, each a templated prompt, that you run in sequence.
 
 ### Stretch C — Sketch an MCP server stub for a new tool
 

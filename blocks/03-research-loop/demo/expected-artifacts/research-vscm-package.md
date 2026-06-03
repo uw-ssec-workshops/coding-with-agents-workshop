@@ -1,6 +1,6 @@
 # Research: VSCM Package Structure
 
-> **Note:** This is a hand-crafted sample artifact, used as a live-demo fallback if the rse-plugins workflow misbehaves on the day. It is structured to look like a real `/research` output so attendees can study it as a reference. The first run of `/research` against the actual climate model code will produce something similar in shape.
+> **Note:** This is a hand-crafted sample artifact, used as a live-demo fallback if the live `/research` command misbehaves on the day. It is structured to look like a real `/research` output so attendees can study it as a reference. The first run of `/research` against the actual climate model code will produce something similar in shape.
 
 ## Question
 
