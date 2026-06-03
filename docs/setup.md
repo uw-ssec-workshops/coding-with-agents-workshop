@@ -17,7 +17,7 @@ The Codespace is configured by the scripts in [`.devcontainer/`](../.devcontaine
 **At image-build time** the container pre-installs:
 
 - Python 3.12 and [`uv`](https://docs.astral.sh/uv/), with the workshop's dependency cache warmed.
-- The **GitHub Copilot CLI** and **Claude Code CLI**, each with the `ai-research-workflows` plugin from the [`rse-plugins`](https://github.com/uw-ssec/rse-plugins) marketplace (used in Block 3 — provides `/research`, `/plan`, `/implement`, `/validate`).
+- The **GitHub Copilot CLI** (BYOK against the same gateway). No agent plugins are installed — Block 3's research loop (`/research`, `/plan`, `/iterate-plan`, `/experiment`, `/implement`, `/validate`, `/handoff`) ships **in-repo** as Copilot prompt files in [`.github/prompts/`](../.github/prompts/) and runs in **Copilot Chat**.
 - The pinned **OAI-compatible Copilot** extension VSIX (downloaded and SHA256-verified against `.devcontainer/oai-compatible-copilot-vsix.env`).
 
 **When the container is created/started**, the lifecycle scripts:
@@ -25,9 +25,8 @@ The Codespace is configured by the scripts in [`.devcontainer/`](../.devcontaine
 1. Run `uv sync` to install the workshop's Python dependencies (including the `sci_units` and `workshop_agent` packages as path sources). — `on-create.sh`
 2. Register a Jupyter kernel called `Workshop (Python 3.12)`. — `on-create.sh`
 3. Run a sanity check confirming `litellm`, `sci_units`, and `workshop_agent` import. — `on-create.sh`
-4. Link the installed agent skills/plugins into a browsable `agent-resources/` folder in the repo (see [Browsing the installed skills & plugins](#browsing-the-installed-skills--plugins)). — `on-create.sh` → `link-agent-resources.sh`
-5. Report whether the workshop's gateway credentials are visible, and write Claude Code's `~/.claude/settings.json` so the **Claude Code extension** (Block 3) points at the same gateway. — `post-start.sh`
-6. Install the **OAI-compatible Copilot** extension into VS Code so Copilot Chat is ready on launch. — `install-vsix.sh` (post-attach)
+4. Report whether the workshop's gateway credentials are visible. — `post-start.sh`
+5. Install the **OAI-compatible Copilot** extension into VS Code so Copilot Chat is ready on launch. — `install-vsix.sh` (post-attach)
 
 Each script prints green `==> ... complete` lines as it runs. The last one you'll see reads:
 
@@ -43,29 +42,21 @@ bash .devcontainer/on-create.sh
 
 or rebuild the container from the command palette (**Codespaces: Rebuild Container**).
 
-## Browsing the installed skills & plugins
+## Where the agent customizations live
 
-The agent CLIs install their plugins and skills into the container's home directory (`~/.claude`, `~/.copilot`), which isn't visible in the VS Code Explorer. To make them easy to read and discuss, `on-create.sh` runs `link-agent-resources.sh`, which mirrors those home directories into an **`agent-resources/`** folder at the repo root using per-entry symlinks:
+Everything the workshop ships is **visible at the repo root** — no generated or
+symlinked folders to browse. Open [`.github/`](../.github/) in the Explorer:
 
-```
-agent-resources/
-  claude/    # Claude Code home dir: plugins/, skills/, ...
-  copilot/   # Copilot CLI home dir: installed-plugins/, skills/, ...
-  README.md  # explains the folder
-```
+- [`.github/prompts/`](../.github/prompts/) — slash-command prompt files, including Block 3's research loop (`/research`, `/plan`, `/iterate-plan`, `/experiment`, `/implement`, `/validate`, `/handoff`).
+- [`.github/agents/`](../.github/agents/) — custom agents (Block 4 worked examples).
+- [`.github/skills/`](../.github/skills/) — skills that bundle a helper script.
+- [`.github/instructions/`](../.github/instructions/) — path-scoped conventions.
 
-Open `agent-resources/` in the Explorer to browse the available `SKILL.md` files and plugin sources — e.g. the `ai-research-workflows` skills used in Block 3 live under `agent-resources/claude/plugins/cache/rse-plugins/`.
-
-A few things to know:
-
-- **Credential/secret files are deliberately excluded.** Files like `settings.json`, `.credentials.json`, and `config.json` are filtered out by `link-agent-resources.sh`, so the gateway token never appears in the browsable view.
-- **These are symlinks**, so editing a file under `agent-resources/` edits the real installed copy in the home directory.
-- The folder is **git-ignored** and won't be committed.
-- It's regenerated on container create; re-run `bash .devcontainer/link-agent-resources.sh` if you ever need to refresh it.
+See [`.github/README.md`](../.github/README.md) for the full gallery.
 
 ## Gateway credentials
 
-The workshop runs an **LLM gateway** (LiteLLM / LLMoxie) that gives participants access to Claude — currently **Claude Sonnet 4.6** and **Claude Haiku 4.5** — and potentially other models (GPT, Gemini, ...) behind the same endpoint. Copilot Chat, the Copilot CLI, Claude Code, and the **"agent in 50 lines" notebook** all talk to this one gateway.
+The workshop runs an **LLM gateway** (LiteLLM / LLMoxie) that gives participants access to Claude — currently **Claude Sonnet 4.6** and **Claude Haiku 4.5** — and potentially other models (GPT, Gemini, ...) behind the same endpoint. Copilot Chat, the Copilot CLI, and the **"agent in 50 lines" notebook** all talk to this one gateway.
 
 You provide two values as **Codespace user secrets**:
 
@@ -85,7 +76,6 @@ You only set those two secrets; `devcontainer.json` and the lifecycle scripts fa
 
 - **Copilot Chat** (the OAI-compatible extension) reads `LITELLM_BASE_URL` plus `OAI_API_KEY` (aliased from `LITELLM_API_KEY`).
 - **Copilot CLI** reads `COPILOT_PROVIDER_BASE_URL` / `COPILOT_PROVIDER_API_KEY` (also aliased from the same two secrets).
-- **Claude Code** is configured at start by `post-start.sh`, which writes `~/.claude/settings.json` with `ANTHROPIC_BASE_URL` + `ANTHROPIC_AUTH_TOKEN` from the secrets (regenerated each start so key rotation propagates).
 - **The notebooks** wire `litellm` to the gateway in their setup cell.
 
 The instructors will walk you through this live at the start of the workshop if you haven't done it yet.

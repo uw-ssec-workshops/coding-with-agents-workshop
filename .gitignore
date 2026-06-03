@@ -38,7 +38,7 @@ slides.pptx
 !.env.example
 .aws/
 
-# Browsable symlinks to the installed agent CLI plugins/skills (created by
-# .devcontainer/link-agent-resources.sh). These point into ~/.claude and
-# ~/.copilot in the container home dir; never commit them.
-agent-resources/
+# Artifacts written by the Block 3 research-loop workflow commands
+# (/research, /plan, /implement, /validate). Demo run output, not source.
+# The curated fallback copies live in blocks/*/demo/expected-artifacts/.
+.agents/

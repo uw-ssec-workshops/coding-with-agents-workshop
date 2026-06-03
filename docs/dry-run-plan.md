@@ -14,7 +14,7 @@ There are **three review passes**, in order:
 
 Each section has a checklist. Tick boxes; flag what you change.
 
-If you're tight on time, the minimum viable review is: **cross-cutting + Block 3 deep + full rehearsal**. Block 3 has the most external dependencies (Claude Code extension, `rse-plugins` plugin, climate-model demo subject) and is the most likely to break in front of a room.
+If you're tight on time, the minimum viable review is: **cross-cutting + Block 3 deep + full rehearsal**. Block 3 has the most moving parts (the four workflow prompt files in `.github/prompts/`, agent mode, the climate-model demo subject) and is the most likely to break in front of a room.
 
 ---
 
@@ -25,21 +25,19 @@ Done once, applies to everything downstream.
 ### 1.1 Shared infrastructure works in a fresh Codespace
 
 - [ ] Open a new Codespace from the `main` branch (no cached state from previous reviews).
-- [ ] `postCreate.sh` runs to completion and prints a green "Done" line.
-- [ ] All four sanity checks in `postCreate.sh` print green:
-    - [ ] Python + litellm + sci_units + workshop_agent imports
-    - [ ] LITELLM_API_KEY + LITELLM_BASE_URL found
-    - [ ] ANTHROPIC_API_KEY + ANTHROPIC_BASE_URL mapped
-    - [ ] `ai-research-workflows` install OR a clear "claude CLI not on PATH yet" message (the script runs `claude plugin marketplace add ...` then `claude plugin install ai-research-workflows@rse-plugins`; both must succeed)
+- [ ] The lifecycle scripts (`on-create.sh`, `post-create.sh`, `post-start.sh`, `install-vsix.sh`) each run to completion and print their green `==> ... complete` line.
+- [ ] The sanity checks print green:
+    - [ ] Python + litellm + sci_units + workshop_agent imports (`on-create.sh`)
+    - [ ] LITELLM_API_KEY + LITELLM_BASE_URL found (`post-start.sh`)
+    - [ ] GitHub Copilot CLI installed at image-build time (no agent plugins expected — the research loop ships as in-repo prompt files)
 - [ ] Open Copilot Chat. The **agent picker** shows `scientific-python-reviewer`, `docstring-writer`, `reproducibility-auditor`, and `research-pair` (the `.github/agents/*.agent.md` files). **This is the load-bearing format check:** the workshop now ships custom agents (`.agent.md`), the renamed form of "chat modes". Confirm the installed `GitHub.copilot-chat` build recognizes `.agent.md` on a fresh Codespace. If the agents do NOT appear, the Codespace's Copilot Chat may predate the agent rename, fall back to verifying via the chat customization **Diagnostics** view (right-click in Chat → Diagnostics) and flag for a fix.
-- [ ] Type `/` in Copilot Chat. The prompt-file commands appear (`/eda-summary`, `/write-tests`, `/scaffold-package`, `/citation-and-release`).
-- [ ] Open the Claude Code panel. Signed in. `claude plugin list` includes `ai-research-workflows` (not just the `rse-plugins` marketplace).
+- [ ] Type `/` in Copilot Chat. The prompt-file commands appear (`/eda-summary`, `/write-tests`, `/scaffold-package`, `/citation-and-release`, and the Block 3 workflow `/research`, `/plan`, `/iterate-plan`, `/experiment`, `/implement`, `/validate`, `/handoff`).
 - [ ] Open a `.md` file with Marp frontmatter (e.g. [`blocks/01-landscape/slides.md`](../blocks/01-landscape/slides.md)). Marp preview renders.
 
 **Files to check if anything fails:**
 
 - [`.devcontainer/devcontainer.json`](../.devcontainer/devcontainer.json)
-- [`.devcontainer/postCreate.sh`](../.devcontainer/postCreate.sh)
+- [`.devcontainer/on-create.sh`](../.devcontainer/on-create.sh), [`post-create.sh`](../.devcontainer/post-create.sh), [`post-start.sh`](../.devcontainer/post-start.sh), [`install-vsix.sh`](../.devcontainer/install-vsix.sh)
 - [`pyproject.toml`](../pyproject.toml)
 - [`docs/setup.md`](setup.md)
 
@@ -51,16 +49,15 @@ Read just the slide titles / block READMEs and verify the through-line:
 
 - [ ] Block 1 introduces the spine ("anatomy of an agent" - six pieces).
 - [ ] Block 2 justifies it ("convergent post-training is why all the models behave like agents").
-- [ ] Block 3 operationalizes it ("workflows ARE the prompt; same loop driven by a different IDE").
+- [ ] Block 3 operationalizes it ("workflows ARE the prompt; the same loop wrapped in named slash commands").
 - [ ] Block 4 instantiates it ("a few fields in a markdown file - write a custom agent yourself").
 
 If any block feels like it's a side-trip, that's the time to flag and adjust.
 
 ### 1.3 Tool consistency
 
-- [ ] Blocks 1, 2, 4 use **GitHub Copilot** as the deep-dive tool.
-- [ ] Block 3 introduces **Claude Code** explicitly as a tool switch, with a sentence justifying it ("watch the same loop driven by a different IDE").
-- [ ] All four blocks talk to the **same LiteLLM proxy** (verify the `LITELLM_API_*` -> `ANTHROPIC_*` mapping in `devcontainer.json` is honored everywhere).
+- [ ] All four blocks use **GitHub Copilot Chat** as the tool — no tool switch. Block 3 stays in Copilot Chat (agent mode) and runs the workflow prompt files.
+- [ ] All four blocks talk to the **same LiteLLM gateway** (verify the `LITELLM_*` / `OAI_API_KEY` / `COPILOT_PROVIDER_*` wiring in `devcontainer.json` is honored everywhere).
 - [ ] No block introduces a new tool that participants didn't see coming.
 
 ### 1.4 Repo conventions
@@ -124,7 +121,7 @@ For each block, allocate ~30-45 min. The review pattern is the same across block
 - [ ] **Tool tour table** (slide 3): all 6 tools (Copilot, Claude Code, Cursor, OpenCode, Aider, Cline) still exist and are accurately characterized? Anything new or shifted?
 - [ ] **Anatomy diagram** (slide 5 ASCII art): does it actually look readable on the projector? If not, render it as a clean SVG and embed.
 - [ ] **Comparison table on slide 6**: all six rows (LLM backbone, tool use, project memory, MCP, skills, agent loop) accurate for each tool's 2026 state?
-- [ ] **The notebook's MODEL constant**: `claude-sonnet-4-5` is what the LiteLLM proxy will alias for Schmidt? Or do we need a different alias?
+- [ ] **The notebook's MODEL constant**: `claude-sonnet-4-6` is what the LiteLLM proxy will alias for Schmidt? Or do we need a different alias? (Must match the model IDs in `devcontainer.json` and `docs/setup.md`.)
 - [ ] **The 50-line claim**: count the lines. The agent loop in cell 14 should be ~25 lines, plus tools (cell 8, ~15 lines) + schemas (cell 10, ~25 lines). Total Python (excluding markdown) ~ 65 lines. Tighten or rephrase if "50" feels misleading.
 - [ ] **The bridge to Block 2**: does the closing question ("why does the model know to call `run_bash`?") still feel earned by what was just demonstrated?
 
@@ -150,7 +147,7 @@ For each block, allocate ~30-45 min. The review pattern is the same across block
 #### Run
 
 - [x] Open [`demo/notebook.ipynb`](../blocks/02-how-it-works/demo/notebook.ipynb). Restart kernel. **Run all cells.**
-    - [x] Cell 4 (proxy model discovery): which models actually come back as available against the real proxy? Update `CANDIDATE_MODELS` in [`_build_notebook.py`](../blocks/02-how-it-works/demo/_build_notebook.py) and rebuild if the list is wildly off.
+    - [x] Cell 4 (proxy model discovery): which models actually come back as available against the real proxy? Update the candidate model list in the notebook if it's wildly off.
     - [x] Cell 12 (the `compare(model)` loop): runs against at least 2 models without error.
     - [x] Cell 15 (VAGUE_TOOLS ablation): observable behavior difference between verbose and vague.
 - [x] If only one model is available on the proxy: re-read the instructor notes' fallback path (pivot to the ablation). Is the conceptual lesson still landed?
@@ -194,9 +191,9 @@ For each block, allocate ~30-45 min. The review pattern is the same across block
 
 This is the block where you really need a working environment.
 
-- [ ] Open the Claude Code panel. Signed in. Mode shows "Ready."
-- [ ] Confirm `claude plugin list` includes `ai-research-workflows` (the plugin, not just the `rse-plugins` marketplace — `claude plugin marketplace list` shows the marketplace separately).
-- [ ] `cd blocks/03-research-loop/demo/starter && rm -rf .agents/` to clear any leftover artifacts.
+- [ ] Open Copilot Chat in **Agent** mode with a workshop model selected.
+- [ ] Type `/` and confirm `research`, `plan`, `implement`, `validate` appear (the prompt files in `.github/prompts/`). If not, **Developer: Reload Window**.
+- [ ] Open the workspace at `blocks/03-research-loop/demo/`, then `rm -rf .agents/` in the terminal to clear any leftover artifacts.
 - [ ] Run the four prompts from [`instructor-notes.md`](../blocks/03-research-loop/instructor-notes.md), in order:
     - [ ] `/research ...` - produces `.agents/research-*.md` in <4 min, with file:line references.
     - [ ] `/plan ...` - produces `.agents/plan-*.md` in <4 min, with phases + verification steps + no open questions.
@@ -213,10 +210,9 @@ This is the block where you really need a working environment.
 
 #### Block 3 risk check
 
-- [ ] **Claude Code extension marketplace ID** in [`devcontainer.json`](../.devcontainer/devcontainer.json) - `anthropic.claude-code` is correct? Verify against the VS Code marketplace.
-- [ ] **`ANTHROPIC_BASE_URL` exact path** - does the LiteLLM proxy expose Anthropic format at the bare URL, or under `/anthropic`? If the latter, fix in `devcontainer.json`.
-- [ ] **`ai-research-workflows` install in non-interactive shell** (`postCreate.sh`) - do `claude plugin marketplace add ...` and `claude plugin install ai-research-workflows@rse-plugins` both succeed without an interactive prompt? (Note: adding the marketplace alone does _not_ install the plugin; both commands are required.)
-- [ ] **`rse-plugins` itself** - when was it last updated? Does it work with the Claude Code version pinned in the devcontainer? (Historical gotcha: Claude Code `< 2.1.61` rejects the plugin manifest with `Unrecognized keys: "category", "strict"`. If you bump the extension, re-test the install.)
+- [ ] **The four workflow prompt files** in [`.github/prompts/`](../.github/prompts/) (`research`, `plan`, `implement`, `validate`) - do they appear in the `/` picker on a fresh Codespace, and does each `mode`/`tools` frontmatter validate?
+- [ ] **Artifact output path** - do the prompts write to `.agents/` relative to the workspace folder? Confirm the demo opens the workspace at `blocks/03-research-loop/demo/` so `AGENTS.md` is at the root.
+- [ ] **`implement`/`validate` tool access** - confirm Copilot agent mode is allowed to run `uv run pytest` (runCommands) and edit files (editFiles) without per-call approval stalling the live demo.
 - [ ] **The 4-phase demo timing** - `/implement` is the variable one; if it consistently runs >6 min, prepare to skip `/validate` live.
 - [ ] **Failure mode taxonomy** (slide 5): all 6 rows accurate? Any newly common failure modes worth adding (e.g., "model drops Unicode" if that's still a thing)?
 - [ ] **The "where it comes from" column** (slide 5): does it tie back cleanly to Block 2's content?
