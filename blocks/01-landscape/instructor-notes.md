@@ -16,7 +16,7 @@ public-facing version; this is the inside view.
   There are failing tests in this project. Investigate, fix the bug, and verify with pytest. Make the smallest possible change.
   ```
 
-- [ ] Confirm LiteLLM proxy credentials are visible in the Codespace terminal: `echo $LITELLM_API_BASE` should print the proxy URL.
+- [ ] Confirm LiteLLM proxy credentials are visible in the Codespace terminal: `echo $LITELLM_BASE_URL` should print the proxy URL.
 - [ ] Restart the notebook kernel so it shows a clean state.
 
 ## Timing checkpoints
@@ -122,7 +122,7 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 
 1. **Open `notebook.ipynb`**. Kernel: `Workshop (Python 3.12)`.
 2. **Restart kernel and run all cells from the top.** Narrate as you go:
-   - **Cell 2 (imports + client)**: "Two lines wire up `litellm` to the workshop proxy via `LITELLM_API_KEY` + `LITELLM_API_BASE`. *That's the LLM backbone.* Note the `MODEL` is just a string, try `gpt-5` or `gemini-2.5-flash` later, the loop won't change."
+   - **Cell 2 (imports + client)**: "Two lines wire up `litellm` to the workshop proxy via `LITELLM_API_KEY` + `LITELLM_BASE_URL`. *That's the LLM backbone.* Note the `MODEL` is just a string, try `gpt-5` or `gemini-2.5-flash` later, the loop won't change."
    - **Cell 4 (sandbox)**: "Tools are gated. The agent can't touch anything outside `starter/`."
    - **Cell 6 (reset)**: "We re-break the file so the demo is reproducible."
    - **Cells 8 + 10 (tools + schemas)**: "Three tools. JSON Schemas tell the model how to call them."

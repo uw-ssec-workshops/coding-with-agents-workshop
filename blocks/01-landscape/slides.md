@@ -121,7 +121,7 @@ Same six pieces. Different wrappers.
 | Tool use | built-in | built-in | built-in |
 | Project memory | `.github/copilot-instructions.md` | `AGENTS.md` / `CLAUDE.md` | `.cursor/rules` |
 | MCP servers | yes | yes | yes |
-| Skills / prompts | prompt files, chatmodes | skills, slash commands | rules, modes |
+| Skills / prompts | prompt files, agents, skills | skills, slash commands | rules, modes |
 | Agent loop | "agent mode" | the whole CLI | "Cmd+I" |
 
 > If you understand the **pieces**, switching tools is a config exercise.
@@ -159,7 +159,7 @@ Three things, all done for you:
 
 1. **GitHub Codespace**: preconfigured Python 3.12 + JupyterLab + Copilot.
 2. **GitHub Copilot**: signed in via your GitHub identity, agent mode enabled.
-3. **Claude via the workshop's LLM proxy server**: exposed as `LITELLM_API_KEY` and `LITELLM_API_BASE`. Copilot and the notebook talk to the same proxy.
+3. **Claude via the workshop's LLM proxy server**: exposed as `LITELLM_API_KEY` and `LITELLM_BASE_URL`. Copilot and the notebook talk to the same proxy.
 
 If `postCreate.sh` printed a green "Done", you are ready. If not, see [`docs/setup.md`](../../docs/setup.md) and ping an instructor.
 
