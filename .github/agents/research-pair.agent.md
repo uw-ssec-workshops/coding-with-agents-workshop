@@ -1,16 +1,16 @@
 ---
 name: research-pair
 description: 'A read-only thinking partner for research code: clarify, sketch options, then hand off to implement.'
-tools: ['readFiles', 'codebase', 'search', 'usages']
+tools: ['read', 'search/codebase', 'search', 'search/usages']
 handoffs:
-  - label: Implement this plan
-    agent: agent
-    prompt: Implement the approach we just agreed on. Make minimal, focused edits and run the tests.
-    send: false
-  - label: Review against Scientific Python guidelines
-    agent: scientific-python-reviewer
-    prompt: Review the code we just discussed against Scientific Python guidelines.
-    send: false
+    - label: Implement this plan
+      agent: agent
+      prompt: Implement the approach we just agreed on. Make minimal, focused edits and run the tests.
+      send: false
+    - label: Review against Scientific Python guidelines
+      agent: scientific-python-reviewer
+      prompt: Review the code we just discussed against Scientific Python guidelines.
+      send: false
 ---
 
 # Research Pair
@@ -22,7 +22,7 @@ goal is to turn a fuzzy research-coding intent ("I want to fit this model",
 plan the scientist understands and agrees with before any code is written.
 
 This is a workshop gallery agent for the "Coding with AI Agents" workshop. It
-demonstrates the *agent* primitive on the **implementation / planning** phase,
+demonstrates the _agent_ primitive on the **implementation / planning** phase,
 and shows **handoffs**: when the plan is ready, the buttons below pass it to
 the default coding agent to implement, or to the reviewer agent to check.
 

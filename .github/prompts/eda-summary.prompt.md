@@ -1,7 +1,7 @@
 ---
-mode: agent
+agent: agent
 description: 'Summarize a tabular dataset: shape, columns, types, ranges, and missingness.'
-tools: ['readFiles', 'codebase']
+tools: ['read', 'search/codebase']
 ---
 
 # Exploratory data summary
@@ -18,14 +18,14 @@ If blank, use the currently open file `${file}`.
 1. Read the file (or its header + a sample of rows if it is large; do not try
    to load a huge file into the response).
 2. Report, as plainly as possible:
-   - **Shape**: rows x columns (note if you only sampled).
-   - **Columns**: name, inferred dtype, and a one-line meaning if it is
-     guessable from the name.
-   - **Ranges**: min/max (or a few example values) for numeric and date
-     columns; cardinality for categoricals.
-   - **Missingness**: which columns have blanks/NaNs and roughly how many.
-   - **Smells**: mixed types in a column, suspicious sentinels (`-999`, `0`
-     used as missing), duplicate rows, unparsed dates, encoding issues.
+    - **Shape**: rows x columns (note if you only sampled).
+    - **Columns**: name, inferred dtype, and a one-line meaning if it is
+      guessable from the name.
+    - **Ranges**: min/max (or a few example values) for numeric and date
+      columns; cardinality for categoricals.
+    - **Missingness**: which columns have blanks/NaNs and roughly how many.
+    - **Smells**: mixed types in a column, suspicious sentinels (`-999`, `0`
+      used as missing), duplicate rows, unparsed dates, encoding issues.
 3. End with **3 suggested next questions** the data could answer, and any
    **caveat** a careful analyst should know before trusting it.
 

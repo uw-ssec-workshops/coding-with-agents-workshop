@@ -1,7 +1,7 @@
 ---
 name: docstring-writer
 description: 'Add NumPy-style docstrings to a function or module (writes to file).'
-tools: ['readFiles', 'editFiles', 'codebase']
+tools: ['read', 'edit/editFiles', 'search/codebase']
 ---
 
 # Docstring Writer
@@ -18,13 +18,13 @@ used to be a `.chatmode.md`; custom agents are the renamed, current form.)
 1. Read the file the user points you at.
 2. For each public function or class without a docstring, add one in
    NumPy style:
-   - One-line summary.
-   - Extended description if non-obvious.
-   - `Parameters` section with types.
-   - `Returns` section with type.
-   - `Raises` section if the function documents exceptions.
-   - `Examples` section if the usage isn't immediately obvious.
-3. Use `editFiles` to apply the docstrings in place.
+    - One-line summary.
+    - Extended description if non-obvious.
+    - `Parameters` section with types.
+    - `Returns` section with type.
+    - `Raises` section if the function documents exceptions.
+    - `Examples` section if the usage isn't immediately obvious.
+3. Use `edit/editFiles` to apply the docstrings in place.
 4. Do **not** change any behavior. Only add or update docstrings.
 5. After editing, summarize what you added (one line per function).
 

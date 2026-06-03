@@ -1,7 +1,7 @@
 ---
-mode: agent
+agent: agent
 description: 'Draft a CITATION.cff and release notes from the repo metadata and git history.'
-tools: ['readFiles', 'codebase', 'runCommands']
+tools: ['read', 'search/codebase', 'execute/runInTerminal']
 ---
 
 # Citation + release notes
@@ -24,7 +24,7 @@ Scope for this run: `${input:scope:e.g. "v0.2.0 release" or "just the CITATION.c
 3. **Release notes**: read recent history with `git log` (e.g.
    `git log --oneline -n 50` and tags via `git tag`). Group changes into
    **Added / Changed / Fixed / Removed** (Keep a Changelog style). Write for
-   a scientist reader: lead with what changed for *users*, not internal refactors.
+   a scientist reader: lead with what changed for _users_, not internal refactors.
 4. Suggest the version bump (semver: breaking -> major, feature -> minor,
    fix -> patch) and the next steps to archive for a DOI (e.g. tag the
    release, connect the repo to Zenodo).

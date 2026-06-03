@@ -1,7 +1,7 @@
 ---
-mode: agent
+agent: agent
 description: 'Plan the conversion of a flat research script into an installable src/ package.'
-tools: ['readFiles', 'codebase']
+tools: ['read', 'search/codebase']
 ---
 
 # Scaffold a package (plan only)
@@ -20,14 +20,14 @@ If blank, use the currently open file `${file}`.
    imports. Infer the third-party dependencies actually used.
 2. Propose a target layout, named after the project:
 
-   ```
-   <pkg>/
-     pyproject.toml          # PEP 621 metadata, hatchling backend
-     src/<pkg>/__init__.py
-     src/<pkg>/<module>.py   # the script's logic, as importable functions
-     tests/test_<module>.py
-     README.md
-   ```
+    ```
+    <pkg>/
+      pyproject.toml          # PEP 621 metadata, hatchling backend
+      src/<pkg>/__init__.py
+      src/<pkg>/<module>.py   # the script's logic, as importable functions
+      tests/test_<module>.py
+      README.md
+    ```
 
 3. Map **every** existing file/blob of logic to where it lands in the new
    layout. Call out top-level script code that needs wrapping in functions or
