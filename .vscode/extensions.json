@@ -2,10 +2,10 @@
   "recommendations": [
     "marp-team.marp-vscode",
     "GitHub.copilot-chat",
-    "anthropic.claude-code",
     "ms-python.python",
     "ms-python.vscode-pylance",
     "ms-toolsai.jupyter",
-    "charliermarsh.ruff"
+    "charliermarsh.ruff",
+    "PKief.material-icon-theme"
   ]
 }
