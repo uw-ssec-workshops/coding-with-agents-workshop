@@ -39,7 +39,7 @@ If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If
 
 ### 2. Where we left off ("workflows are the prompt")
 
-- This is the through-line. Land it explicitly.
+- This is the through-line. State it explicitly.
 - Connect: *"Block 2 said 'in the prompt' matters more than 'trained in.' Workflows are the systematic version of that, every phase of your work has a templated prompt."*
 - Spell out the spine chain: *Block 1 introduced project memory; Block 2 said in-the-prompt > trained-in; Block 3 says structured workflows are the systematic way to do that.*
 
@@ -103,7 +103,7 @@ If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If
 
 - Hard hand-off.
 - *"A markdown file, no magic."* This framing is what makes Block 4 feel approachable.
-- Last sentence: *"Block 4: build your own."* Stop talking.
+- Last sentence: *"Block 4: build your own."* Then hand off.
 
 ## Demo script: the four prompts
 

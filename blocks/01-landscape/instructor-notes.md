@@ -95,7 +95,7 @@ Glance at these. If you're behind, cut from the "Landscape" or "Axes that matter
 
 ### 9. Bridge to Block 2
 
-- Hard hand-off. Don't linger. Block 2 is where the *"why does this work"* answer lives.
+- Keep this hand-off brief. Block 2 is where the *"why does this work"* answer lives.
 - Last sentence: *"That behavior was trained in. That's Block 2."*
 
 ## Demo script
@@ -131,7 +131,7 @@ Glance at these. If you're behind, cut from the "Landscape" or "Axes that matter
    - **Cells 8 + 10 (tools + schemas)**: "Three tools. JSON Schemas tell the model how to call them."
    - **Cell 12 (system prompt + AGENTS.md)**: "This is project memory. We just paste `AGENTS.md` into the system prompt, same trick Claude Code does, same trick `.github/copilot-instructions.md` does."
    - **Cell 14 (loop)**: "This is the whole agent. Twenty-five lines."
-   - **Cell 16 (run)**: kick it off. Watch the trace stream. Let participants read the `[tool_use]` and `[tool_result]` lines. **This is the moment.**
+   - **Cell 16 (run)**: kick it off. Watch the trace stream. Let participants read the `[tool_use]` and `[tool_result]` lines. This is the core of the demo.
 3. **Punchline**: "That's it. That's all there is. Copilot, Claude Code, Cursor, they're all this loop with more tools, better UX, and project memory."
 
 **If the proxy fails:**

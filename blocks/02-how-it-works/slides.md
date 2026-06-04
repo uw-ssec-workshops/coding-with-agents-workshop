@@ -23,10 +23,7 @@ Block 1 ended with an agent that, given one prompt, did four things we mostly to
 - **Q1.** It **followed our instructions** at all. *Why?*
 - **Q2.** It **acted helpfully** and **stopped when done** instead of rambling or looping. *Why?*
 - **Q3.** It **called `run_bash`** instead of describing what it would do. *Why?*
-- **Q4.** The same loop worked with **Claude, GPT, or Gemini**. *Why?*
-
-> None of these are things the model picked up by reading the internet.
-> Each has a name in the post-training pipeline.
+- **Q4.** We claimed the same loop would work with **GPT or Gemini**, not just Claude. *Why is that swap even possible?*
 
 ---
 

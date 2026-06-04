@@ -37,8 +37,9 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 
 ### 2. Where we left off
 
-- Read all four phenomena slowly. Make eye contact.
-- This is the contract for the next 25 minutes. Land it.
+- Read all four slowly.
+- This is the contract for the next 25 minutes.
+- Q1-Q3 are things the audience *watched happen* in Block 1. Q4 is different: the notebook only ran Claude (`MODEL` was hardcoded) and *claimed* the swap to GPT/Gemini would work. Don't oversell it as something they saw, frame it as the promise the demo (slide 9) and convergence slide (slide 7) actually cash in.
 - "Each one of those was *not* something the model picked up from reading the internet. Each one has a name."
 
 ### 3. Pre-training is a fluent autocomplete
@@ -46,7 +47,7 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 - The "Translate to French: Hello" example is the punchiest concrete demo. **Say it out loud:**
   - prompt: `"Translate to French: Hello\n"`
   - base-model continuation: `"Translate to Spanish: Hello\nTranslate to German: Hello\n..."`
-- Audience usually laughs. Good. The point landed.
+- The example makes the point concretely; it usually gets a laugh.
 - Pre-training is **necessary, not sufficient.** Everything that makes a coding agent useful is post-training.
 
 ### 3a. Aside: why can a network learn any of this? (OPTIONAL)
@@ -106,7 +107,7 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 
 ### 7. Why this is convergent
 
-- This is the slide where Block 1's spine ("all coding agents work the same way under the hood") gets its **proof**. Linger.
+- This is the slide where Block 1's spine ("all coding agents work the same way under the hood") gets its **proof**. Spend time here.
 - The table is a teaching tool, not a leaderboard. Read across rows.
 - Tee up the demo: "We're about to swap MODEL and watch the same loop drive a different brain."
 
@@ -132,8 +133,8 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 
 ### 10. Bridge to Block 3
 
-- Hard hand-off. Don't linger.
-- Last sentence: *"Block 3 turns these into a taxonomy with mitigations."* Stop talking.
+- Keep this hand-off brief.
+- Last sentence: *"Block 3 turns these into a taxonomy with mitigations."* Then hand off.
 
 ## Demo script
 
@@ -146,15 +147,15 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 
 3. Run cell 6 (signature), quick, just shows participants the function exists.
 4. Run cell 8 (`compare`), point at the docstring/comments.
-5. Run cell 10 (the loop). **This is the moment.** Narrate as each model runs:
+5. Run cell 10 (the loop). This is the core of the demo. Narrate as each model runs:
    - First model (Claude usually): "Watch which tool it picks first."
    - Second model: "Same code. Different brain. Watch the path it takes."
    - Third model (if available): "And now a third lab's training pipeline. Same outcome."
-6. Pause for 10 seconds after the last trace prints. Let participants read the output.
+6. After the last trace prints, give participants time to read the output before moving on.
 
 ### Discussion (target: 30s)
 
-7. Read cell 11 (the "convergence is not perfection" block). Don't paraphrase, read the punchline.
+7. Read cell 11 (the "convergence is not perfection" block) verbatim rather than paraphrasing.
 
 ### Bonus: tool description ablation (target: 1 min, time permitting)
 
