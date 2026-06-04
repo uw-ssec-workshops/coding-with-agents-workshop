@@ -12,6 +12,7 @@ By the end of this block, an attendee can:
 2. Recognize the **phases** of the workshop workflow (`/research`, `/plan`, `/iterate-plan`, `/experiment`, `/implement`, `/validate`, `/handoff`), see that each is just a `.github/prompts/*.prompt.md` file, and pick the right subset for a given task.
 3. Name the common **agent failure modes** (context exhaustion, looping, niche-language hallucination, confidently-wrong answers, tool misuse, scope creep) and trace each one back to a specific post-training shortcut from Block 2.
 4. Apply the corresponding **mitigations** (tighter scope per turn, auditable artifacts, fresh chats to compact context, `/validate` as a quality gate, AGENTS.md as durable project memory, manual intervention).
+4. Stay in control of an agent that edits files: **review the diff (not the chat), commit per phase, and roll back cleanly with git**, and recognize **prompt injection** (the agent acting on instructions hidden in untrusted code/data/web) and the tool-scoping that mitigates it.
 5. Map the workshop's **practical use cases** (feature implementation, debugging, test writing, documentation, code review, exploratory coding, experiment management) to where agents help most and where they hurt.
 6. Pick the right **loop length** for the task: the full `/research` -> `/plan` -> `/implement` -> `/validate` cycle for durable code vs. fast chat-against-`AGENTS.md` iteration for research spikes.
 
@@ -20,8 +21,8 @@ By the end of this block, an attendee can:
 ```
 03-research-loop/
   README.md            # this file
-  slides.md            # Marp slides (~9 slides, ~22 min talking + demo)
-  slides.css           # minimal slide theme tweaks
+  slides.md            # Marp slides (~11 slides, ~22 min talking + demo)
+                       # (theme: shared blocks/_shared/slides.css)
   instructor-notes.md  # per-slide notes, demo script with copy-paste prompts, fallback plan
   resources.md         # workflow prompts, Scientific Python guidelines, failure-mode reading
   demo/
@@ -43,7 +44,7 @@ By the end of this block, an attendee can:
 | 10–14 | **Demo: `/plan`** |
 | 14–20 | **Demo: `/implement`** + narrate failure modes while it runs |
 | 20–22 | **Demo: `/validate`** |
-| 22–26 | Failure mode taxonomy + mitigations |
+| 22–26 | Failure mode taxonomy + mitigations (+ optional git-hygiene / prompt-injection slides 6a/6b) |
 | 26–27 | Practical use cases tour |
 | 27–29 | Research vs. engineering mode + cross-field framing |
 | 29–30 | Bridge to Block 4 |

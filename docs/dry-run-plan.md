@@ -62,7 +62,7 @@ If any block feels like it's a side-trip, that's the time to flag and adjust.
 
 ### 1.4 Repo conventions
 
-- [ ] Every block follows the same folder layout: `README.md`, `slides.md`, `slides.css`, `instructor-notes.md`, `resources.md`, `demo/` or `exercise/`.
+- [ ] Every block follows the same folder layout: `README.md`, `slides.md`, `instructor-notes.md`, `resources.md`, `demo/` or `exercise/`. (Slide styling is a single shared Marp theme at `blocks/_shared/slides.css`, registered in `.vscode/settings.json`.)
 - [ ] Every block's `README.md` has the same sections in the same order.
 - [ ] Every block's `slides.md` has the same Marp frontmatter shape.
 - [ ] [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) reflects the current state (agents / prompts / skills / instructions gallery mentioned).
@@ -212,7 +212,7 @@ This is the block where you really need a working environment.
 
 - [ ] **The four workflow prompt files** in [`.github/prompts/`](../.github/prompts/) (`research`, `plan`, `implement`, `validate`) - do they appear in the `/` picker on a fresh Codespace, and does each `mode`/`tools` frontmatter validate?
 - [ ] **Artifact output path** - do the prompts write to `.agents/` relative to the workspace folder? Confirm the demo opens the workspace at `blocks/03-research-loop/demo/` so `AGENTS.md` is at the root.
-- [ ] **`implement`/`validate` tool access** - confirm Copilot agent mode is allowed to run `uv run pytest` (runCommands) and edit files (editFiles) without per-call approval stalling the live demo.
+- [ ] **`implement`/`validate` tool access** - confirm Copilot agent mode is allowed to run `uv run pytest` (`execute/runInTerminal`) and edit files (`edit/editFiles`) without per-call approval stalling the live demo.
 - [ ] **The 4-phase demo timing** - `/implement` is the variable one; if it consistently runs >6 min, prepare to skip `/validate` live.
 - [ ] **Failure mode taxonomy** (slide 5): all 6 rows accurate? Any newly common failure modes worth adding (e.g., "model drops Unicode" if that's still a thing)?
 - [ ] **The "where it comes from" column** (slide 5): does it tie back cleanly to Block 2's content?
@@ -269,7 +269,7 @@ Now also test the worked examples actually do their job:
 #### Block 4 risk check
 
 - [ ] **`.agent.md` format support** - on a FRESH Codespace, confirm the unpinned `GitHub.copilot-chat` build recognizes `.agent.md` files in `.github/agents/` (the agents appear in the picker). The format parser auto-updates to latest, so this should hold, but verify since the workshop curriculum now depends on it. If they don't appear, check the chat Diagnostics view.
-- [ ] **Copilot agent `tools` field IDs** - the IDs used (`readFiles`, `editFiles`, `runCommands`, `codebase`, `search`, `usages`) match Copilot's current spec? Verify against the VS Code custom-agent docs in resources.md. If wrong, update the worked examples, the gallery agents/prompts, and the template.
+- [ ] **Copilot agent `tools` field IDs** - the namespaced IDs used (`read`, `edit/editFiles`, `execute/runInTerminal`, `search/codebase`, `search`, `search/usages`) match Copilot's current spec? Verify against the VS Code custom-agent docs in resources.md. The whole repo (gallery agents/prompts, the template, the slides, the exercise, and `ideas.md`) now uses this one vocabulary — if the spec differs, update them together so they stay consistent.
 - [ ] **Auto-detection vs reload** - confirm whether new agents auto-load or need a window reload. Update [`exercise/README.md`](../blocks/04-build-a-skill/exercise/README.md)'s troubleshooting table accordingly.
 - [ ] **Live-build script** ([`instructor-notes.md`](../blocks/04-build-a-skill/instructor-notes.md), "Live-build script" section) - type it from memory once. Does it flow? Time it; should be ≤ 4 min.
 - [ ] **The 15-minute hands-on budget** - try to build an agent in 15 min as if you were a participant. Realistic? Tighten the template if not.

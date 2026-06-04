@@ -116,6 +116,15 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 - Concrete example to drop: *"if Claude won't follow your style guide, it's not because Claude lacks taste, it's because you didn't put the style guide in `AGENTS.md`."*
 - Almost every agent failure people complain about online turns out to be a prompt problem on inspection.
 
+### 8a. The context window (the prompt is a finite budget)
+
+- 60-90 seconds. This is the one **inference-time** idea in an otherwise training-focused block, and it's the direct setup for Block 3's "context exhaustion" failure mode. If you're at/under the minute-25 checkpoint, keep it; if you're behind, it's skippable (Block 3 re-states the failure mode).
+- The hook: *"Slide 8 said 'in the prompt' is your lever. The catch: the prompt is finite."*
+- The one-liner to land: **"When the window fills, the model doesn't error, it silently forgets your earliest instructions."** That's the intuition Block 3 cashes in.
+- Concrete cost example to drop: *"One `read` of a 2,000-line file or a noisy stack trace can eat thousands of tokens, that's why long agent sessions drift."*
+- Resist a tokenization deep-dive. "Roughly ¾ of a word" is enough. If someone wants BPE details, point to office hours.
+- Tie to a lever they already have: *"This is why `/handoff` and smaller per-phase scope (Block 3) exist, they're context-budget management."*
+
 ### 9. Demo intro
 
 - Switch to VS Code. Restart kernel. Cells cleared.
@@ -176,6 +185,7 @@ If you are behind, cut from slides 4-6 (each one's "trade-off note" is the most 
 In order of expendability:
 
 1. The "why can a network learn any of this?" aside (slide 3a), it's an optional insert in the first place.
+1. The context-window slide (slide 8a), Block 3 re-states the context-exhaustion failure mode, so this is a "nice to have" setup rather than load-bearing.
 1. The InstructGPT historical aside on slide 4.
 2. The DPO mention on slide 5.
 3. The agentic RL detail on slide 6, you can collapse it to "and the bleeding edge is multi-turn RL."

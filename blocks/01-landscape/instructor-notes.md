@@ -28,7 +28,8 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 | 2 | slide 2 (What changed) | Done with the hook |
 | 7 | slide 4 (Four axes) | Done with the tool tour |
 | 15 | slide 6 (Why they all feel the same) | Done with the anatomy |
-| 20 | slide 7 (Picking a tool) | Done with picking a tool; demo next |
+| 20 | slide 7 (Picking a tool) | Done with picking a tool |
+| 21 | slide 7a (where does your data go?) | Data-sensitivity framing; skippable if behind |
 | 22 | slide 8 (Demo) | Demo about to start |
 | 28 | slide 9 (Bridge) | Demo done, transitioning |
 | 30 | hand off to Block 2 | |
@@ -56,7 +57,7 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 
 ### 4. Four axes
 
-- Emphasize: **for science, model hosting matters more than for industry.** Data residency, IRB, sometimes air-gapped clusters.
+- Emphasize: **for science, model hosting matters more than for industry.** Data residency, IRB, sometimes air-gapped clusters. (This gets its own slide, 7a, right before the demo, just plant the seed here.)
 - Capability claims are noisy. The only benchmark that matters is your own code on your own task.
 
 ### 5. Anatomy of a coding agent
@@ -82,6 +83,14 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 
 - This is the most opinionated slide. Lean in.
 - Acknowledge Cursor users in the room: "your skills transfer 1:1, Copilot is just what runs cleanly in Codespaces today."
+
+### 7a. Before you paste: where does your data go?
+
+- 60-90 seconds, and the most science-specific slide in the block. Don't rush past it: for many attendees "can I even put my data in here?" is the real blocker to adopting agents.
+- The actionable line: **"match the model hosting to the sensitivity of the data, and when in doubt, don't paste it."**
+- Make the workshop setup concrete: *"That's why we run a proxy/gateway instead of having you each paste into a consumer chatbot, the requests stay inside a controlled endpoint."*
+- The redaction tip is the practical out: *"You rarely need the real data. A synthetic sample or a redacted snippet is usually enough for the agent to help."*
+- Skippable if you're behind: fold it back into the slide-4 "model hosting" bullet as a one-liner. But try to keep it, this is the slide that earns trust with a cautious research audience.
 
 ### 8. Demo intro
 
@@ -153,5 +162,6 @@ In order of expendability:
 1. The "Four axes" slide (slide 4), can be a 30-second mention.
 2. The decision-flow walk in "Picking a tool" (slide 7), read it, don't elaborate.
 3. The third row of the comparison table on slide 6.
+4. The "where does your data go?" slide (7a), collapse to the one-liner *"match model hosting to data sensitivity; when in doubt, don't paste it"* (but keep it if the audience handles sensitive data).
 
 **Never skip:** the anatomy slide, the demo, or the bridge.

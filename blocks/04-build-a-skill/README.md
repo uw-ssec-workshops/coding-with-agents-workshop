@@ -30,7 +30,7 @@ By the end of this block, an attendee can:
 04-build-a-skill/
   README.md            # this file
   slides.md            # Marp slides (~6 slides, ~10 min talking)
-  slides.css           # minimal slide theme tweaks
+                       # (theme: shared blocks/_shared/slides.css)
   instructor-notes.md  # facilitation guide, live-build script, what to circulate for
   resources.md         # Copilot custom-agent docs, prompt files, skills, MCP
   exercise/

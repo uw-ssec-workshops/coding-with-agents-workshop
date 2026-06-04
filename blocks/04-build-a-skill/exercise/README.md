@@ -58,7 +58,7 @@ Open `.github/agents/my-agent.agent.md` and fill in the TODOs:
 |---|---|
 | `name` | The identifier shown in the agent picker. Match the filename minus `.agent.md`. |
 | `description` | One line. Shows next to the name. Make it scannable. |
-| `tools` | Start narrow. `['readFiles', 'codebase']` is read-only and safe. Add `editFiles` only if your agent needs to modify code. Add `runCommands` only if it needs to run shell (e.g., `pytest`). |
+| `tools` | Start narrow. `['read', 'search/codebase']` is read-only and safe. Add `edit/editFiles` only if your agent needs to modify code. Add `execute/runInTerminal` only if it needs to run shell (e.g., `pytest`). |
 | Persona / what you do | A few sentences setting role, then a numbered list of steps. Be specific. Vague prompts produce vague behavior. |
 | What you do NOT do | The constraints are as important as the instructions. "Do not edit files outside `tests/`" is a real safety lever. |
 | Output format | Show an example of what good output looks like. Concrete examples beat abstract descriptions. |
@@ -129,7 +129,7 @@ slash commands, each a templated prompt, that you run in sequence.
 
 ### Stretch C — Sketch an MCP server stub for a new tool
 
-Agents use existing tools (`readFiles`, `editFiles`, etc.). To give
+Agents use existing tools (`read`, `edit/editFiles`, etc.). To give
 your agent a *new* tool (e.g., "summarize results from this MLflow run",
 "query our internal experiment DB"), you write an **MCP server**.
 
@@ -162,7 +162,7 @@ If your agent works and you have a few minutes left, share it:
 | Agent doesn't appear in the picker | Confirm filename ends in `.agent.md` and lives in `.github/agents/`. Click the picker, then "Configure Custom Agents", or run **Developer: Reload Window**. |
 | Agent appears but won't load | Check the YAML frontmatter, common issues are missing quotes around the description or a malformed `tools` list. The first two lines should be `---` exactly. |
 | Agent runs but ignores your prompt rules | The system prompt is too vague. Make the numbered steps more specific. Add a "do NOT" line for behaviors you've seen go wrong. |
-| Agent tries to edit files but isn't allowed | Add `'editFiles'` to the `tools` list in frontmatter. |
+| Agent tries to edit files but isn't allowed | Add `'edit/editFiles'` to the `tools` list in frontmatter. |
 | Agent runs forever | Add a max-iterations note in the system prompt: *"After at most 5 tool calls, summarize what you've done and stop."* |
 
 If something else breaks, ask an instructor, that's exactly what they're

@@ -1,12 +1,9 @@
 ---
 marp: true
-theme: default
+theme: workshop
 paginate: true
-size: 16:9
 title: "Block 1 - The AI Coding Agent Landscape"
 description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
-style: |
-  @import "slides.css";
 ---
 
 <!-- _class: lead -->
@@ -108,6 +105,27 @@ A short decision flow. Not a leaderboard.
 4. **Do you need self-hosting?** Then OpenCode + a hosted or local model.
 
 For today: **GitHub Copilot in VSCode + Codespaces, with Claude (via the workshop's LLM proxy server) as the model backend**. It's the lowest-friction option for a workshop, and it's representative.
+
+---
+
+## Before you paste: where does your data go?
+
+For scientists this matters more than for most developers. When you use an
+agent, **your code, data, and prompts leave your machine** and go to whoever
+hosts the model.
+
+| Ask first | Why it matters in research |
+|---|---|
+| **Who hosts the model?** | Vendor cloud, your institution's cloud account, or on-prem each have different data-handling terms. |
+| **Is the data governed?** | Human-subjects / PII, IRB-restricted, HIPAA, or embargoed data may *not* be allowed to leave your environment. |
+| **Is it licensed / proprietary?** | NDA'd collaborator data, pre-publication results, or restrictively licensed code. |
+| **Is it logged or trained on?** | Check whether the provider retains prompts or trains on them. Enterprise/proxy tiers usually don't; consumer tiers often do. |
+
+> **The workshop's setup is deliberate:** the LLM proxy keeps requests inside a
+> controlled gateway rather than hitting a consumer endpoint. For your own work,
+> match the **model hosting** (slide 4) to the **sensitivity of the data** — and
+> when in doubt, don't paste it. A redacted snippet or a synthetic sample is
+> often enough for the agent to help.
 
 ---
 

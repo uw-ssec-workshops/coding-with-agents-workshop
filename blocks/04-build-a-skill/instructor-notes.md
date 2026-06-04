@@ -96,7 +96,7 @@ Then in the editor, replace the TODOs with:
 ---
 name: error-explainer
 description: 'Explain a Python traceback in plain English and suggest a fix.'
-tools: ['readFiles', 'codebase']
+tools: ['read', 'search/codebase']
 ---
 
 # Error Explainer
@@ -106,7 +106,7 @@ You are a friendly Python tutor. The user pastes you a traceback.
 ## What you do
 
 1. Read the traceback. Identify the error type and the relevant line.
-2. If the line references project files, read them with `readFiles` to confirm context.
+2. If the line references project files, read them with `read` to confirm context.
 3. Explain in plain English: what the error is, why it happened, and one or two ways to fix it.
 4. Be concrete: cite the actual line of code. No vague suggestions.
 
@@ -148,7 +148,7 @@ The biggest categories of stuck participants and how to unstick them:
 | Agent loaded but YAML error | (check the chat panel for an error toast) | Read the frontmatter together. Common: missing quotes around description, malformed `tools` list |
 | Agent runs but does the wrong thing | "Read your steps out loud" | Usually the steps are too vague. Tighten step 1, add a "do NOT" |
 | Agent stuck in a loop / doing too much | (check for missing terminal condition) | Add to system prompt: *"After at most 5 tool calls, summarize and stop."* |
-| Wants to use `editFiles` but worried | "What scope?" | Suggest narrowing: *"only edit files in `tests/`"* in system prompt + the file path filter |
+| Wants to use `edit/editFiles` but worried | "What scope?" | Suggest narrowing: *"only edit files in `tests/`"* in system prompt + the file path filter |
 | Wants something more advanced | "Have you got the basic one working?" | If yes, point at the prompt-file, skill, or MCP sections of `resources.md`. If no, finish the basic one first. |
 
 ## Show-and-tell

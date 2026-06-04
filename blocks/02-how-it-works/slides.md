@@ -1,12 +1,9 @@
 ---
 marp: true
-theme: default
+theme: workshop
 paginate: true
-size: 16:9
 title: 'Block 2 - How It Actually Works'
 description: 'Coding with AI Agents - 2026 Interdisciplinary Science Summit'
-style: |
-    @import "slides.css";
 ---
 
 <!-- _class: lead -->
@@ -288,6 +285,29 @@ When debugging an agent, ask:
 > **prompt problem** (it could if I told it better)?"_
 
 **Most issues are prompt problems.** That's the whole reason Block 4 exists.
+
+---
+
+## The catch: the prompt is a finite budget
+
+Everything "in the prompt" shares **one fixed window of tokens** — the
+**context window**. The model sees only what fits in it, all at once.
+
+What competes for that budget on every single turn:
+
+- The **system prompt** + your `AGENTS.md` (project memory)
+- The **whole conversation so far** (every turn is re-sent)
+- Every **tool result**: file contents, `pytest` output, search hits
+- The model's own reasoning and the answer it's about to write
+
+A *token* is roughly ¾ of a word (or a few characters of code). Windows are
+large (~100K–1M tokens) but **not infinite**, and agent runs fill them fast —
+one `read` of a big file or a noisy traceback can cost thousands of tokens.
+
+> When the window fills, the earliest content (your original instructions)
+> gets pushed out. The model doesn't error — it just **silently forgets**.
+> That's not a bug; it's the architecture. It's the root of Block 3's
+> first failure mode.
 
 ---
 

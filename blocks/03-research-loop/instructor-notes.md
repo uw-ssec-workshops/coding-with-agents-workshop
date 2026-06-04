@@ -23,6 +23,7 @@ public-facing version; this is the inside view.
 | 20 | `/implement` complete (or near it) | Validate kicks off |
 | 22 | `/validate` complete | Switching back to slides |
 | 26 | slide 5 (failure modes) -> slide 6 (mitigations) | Demo recap done |
+| 26 | slides 6a/6b (git hygiene, prompt injection) | Extra `/implement`-time filler; skip if on schedule |
 | 27 | slide 7 (use cases) | Tour done |
 | 29 | slide 8 (research vs. engineering) | Cross-field framing done |
 | 30 | slide 9 (bridge) | Hand off to Block 4 |
@@ -63,6 +64,21 @@ If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If
 - Three groups: process, prompt-side, manual.
 - *"Agents are coworkers, not magic. Coworkers get pushback."* Drop this line slowly, it's the most quotable thing in Block 3.
 - The mitigations are the actionable thing. Tell them to bookmark this slide.
+
+### 6a. Reviewing the agent's work (git hygiene)
+
+- 45-60 seconds. This is the practical complement to mitigations: the `.agents/` artifacts are the *plan* audit trail, git is the *code* audit trail.
+- The quotable line: **"Read the diff, not the chat. The 'Done!' is a claim; the diff is the evidence."** Ties straight back to the "confident wrong answer" failure mode on slide 5.
+- Concrete demo callback: *"Notice we `git restore`d between runs all morning, that's the same one-command undo you'd use after a bad phase."*
+- For scientists new to git: keep it to the four bullets, don't teach git here, just establish "commit before, review the diff, commit per phase." Point them at the Software/Code Carpentry links in `resources.md`.
+
+### 6b. When the input is hostile (prompt injection)
+
+- 45-60 seconds. The one *security* beat in the workshop, and increasingly the question a savvy audience asks. Don't oversell it into paranoia; frame it as a known failure mode with the same levers they already learned.
+- The intuition to land: **"the agent can't fully tell your instructions from instructions hidden in the content it reads."** The data file example (a malicious CSV header) is the one that surprises scientists, lead with it.
+- The mitigation that matters most for this room: *"reading untrusted data → use a read-only agent. No edit, no shell."* That's a tool-list decision, the same lever from Block 4.
+- The closing line, *"a credulous, eager coworker, don't hand it your credentials and point it at the open internet"*, is the memorable one. Deliver it, then move on.
+- If asked "has this actually happened?": yes, real incidents exist (poisoned READMEs, injected web content). Keep it short; offer office hours for the rabbit hole.
 
 ### 7. Practical use cases
 
@@ -170,7 +186,8 @@ The expected-artifacts folder is your safety net. **Don't try to debug live.** A
 In order of expendability:
 
 1. The "iterate" / "experiment" / "handoff" rows on slide 3, collapse to "and three more for refinement, comparison, and context transfer."
-2. One column of the failure modes table on slide 5, drop "Where it comes from" if you have to (sad, it's the Block 2 payoff, but the *mitigations* are more actionable).
+2. Slides 6a (git hygiene) and 6b (prompt injection), they're high-value but not load-bearing for the spine. Best used as extra narration filler *while `/implement` grinds*; if the demo runs to time, cut them. If your audience handles sensitive data or is security-minded, keep 6b.
+3. One column of the failure modes table on slide 5, drop "Where it comes from" if you have to (sad, it's the Block 2 payoff, but the *mitigations* are more actionable).
 3. The practical use cases tour (slide 7), collapse to one sentence: *"Agents help most with feature implementation, debugging, test writing, docs, code review, exploration, and experiment management; they're easiest to misuse on architectural decisions."*
 4. The cross-field paragraph at the bottom of slide 8, keep the table, drop the prose. Or vice versa if you have a single-field audience.
 5. The bonus discussion of `/validate` failures during the demo.

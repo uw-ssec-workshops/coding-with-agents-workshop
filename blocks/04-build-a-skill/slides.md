@@ -1,12 +1,9 @@
 ---
 marp: true
-theme: default
+theme: workshop
 paginate: true
-size: 16:9
 title: 'Block 4 - Build Your Own Skill'
 description: 'Coding with AI Agents - 2026 Interdisciplinary Science Summit'
-style: |
-    @import "slides.css";
 ---
 
 <!-- _class: lead -->
@@ -39,7 +36,7 @@ _Five fields in a markdown file. No magic. Let's go._
 ---
 name: scientific-python-reviewer
 description: 'Review code against Scientific Python guidelines (read-only).'
-tools: ['readFiles', 'codebase', 'search']
+tools: ['read', 'search/codebase', 'search']
 ---
 
 # Scientific Python Reviewer
