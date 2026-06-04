@@ -20,7 +20,7 @@ description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 
 - 18 months ago: **autocomplete**. The IDE finished your line.
 - Today: **agents**. They read the codebase, plan, edit files, run tests, debug, iterate.
-- Same models, mostly. *What changed is the loop wrapped around them.*
+- Same models, mostly. *What changed is the loop wrapped around them — the industry calls it the agent "harness."*
 - This workshop is about that loop.
 
 ---
@@ -37,7 +37,6 @@ description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 | **Cline** | VSCode extension | Bring your own | OSS competitor to Copilot |
 | **Hermes** | CLI | Bring your own | Lightweight, scriptable agent |
 | **Pi Coding** | CLI / IDE | Multi-provider | Coding-focused agent workflows |
-| **Harness** | CLI / cloud | Bring your own | Long-running autonomous runs |
 
 ---
 

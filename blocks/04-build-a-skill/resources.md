@@ -12,7 +12,7 @@ else is "going further."
 
 ## Going further with Copilot
 
-- **GitHub: [MCP for Copilot](https://docs.github.com/en/copilot/customizing-copilot/mcp)**: the next step up if you want to give Copilot brand-new tools (read from your database, query an internal API, etc.). Higher ceiling, more setup.
+- **GitHub: [MCP for Copilot](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp)**: the next step up if you want to give Copilot brand-new tools (read from your database, query an internal API, etc.). Higher ceiling, more setup.
 - **Anthropic: [Model Context Protocol](https://modelcontextprotocol.io/)**: the underlying open standard. Worth understanding if you want your tools to work in Copilot AND Claude Code AND Cursor.
 
 ## The same idea in other tools
