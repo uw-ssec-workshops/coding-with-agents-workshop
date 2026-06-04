@@ -328,4 +328,4 @@ That same training history also tells you **how it can fail**:
 - Reward-hacked on "be confident" -> won't admit it doesn't know
 - Trained on short trajectories -> loops on long ones
 
-**Block 3 turns these into a taxonomy with mitigations.**
+**Enough concepts, all applied now.**
