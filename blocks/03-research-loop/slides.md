@@ -18,7 +18,7 @@ description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 
 ## Where we left off
 
-Block 2: most agent failures are **prompt problems**, not training problems.
+Block 2: when an agent fails, ask whether it's a **prompt problem** or a **training problem** — and the prompt is the part you control.
 
 So how do you systematically write good prompts for hard, multi-step research tasks?
 

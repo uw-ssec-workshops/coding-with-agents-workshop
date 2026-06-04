@@ -21,7 +21,7 @@ description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 | Block | Takeaway |
 |---|---|
 | 1. Landscape | All coding agents have the same anatomy: LLM + tools + memory + loop. |
-| 2. How it works | Most agent failures are **prompt problems**, not training problems. |
+| 2. How it works | Triage failures: **prompt problem** vs **training problem** — the prompt is your lever. |
 | 3. Workflows | **Workflows ARE the prompt**, structured, reusable, auditable. |
 | 4. **Now** | Write one. |
 
