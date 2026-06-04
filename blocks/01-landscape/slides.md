@@ -40,7 +40,7 @@ description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 
 ---
 
-## Four axes that actually matter
+## Axes that actually matter
 
 When you compare tools, ignore the marketing. Look at:
 
@@ -48,6 +48,9 @@ When you compare tools, ignore the marketing. Look at:
 2. **Capability**: single-file edits vs multi-file refactors vs long autonomous runs.
 3. **Integration**: IDE-native vs CLI vs cloud agent.
 4. **Model hosting**: vendor API vs your cloud account vs your hardware.
+5. **Privacy**: proprietary code, unpublished research, and other data you can't send to a vendor.
+
+There are other axes too, depending on your situation.
 
 > The right tool depends on **your constraints**, not on benchmarks.
 
@@ -93,19 +96,6 @@ Same six pieces. Different wrappers.
 | Agent loop | "agent mode" | the whole CLI | "Cmd+I" |
 
 > If you understand the **pieces**, switching tools is a config exercise.
-
----
-
-## Picking a tool
-
-A short decision flow. Not a leaderboard.
-
-1. **Where do you write code?** IDE -> Copilot or Cursor. Terminal-first -> Claude Code or Aider.
-2. **Who pays?** Lab budget on a vendor API? Cloud credits? Personal?
-3. **Where can the model see your data?** Vendor cloud? Your AWS account? On-prem?
-4. **Do you need self-hosting?** Then OpenCode + a hosted or local model.
-
-For today: **GitHub Copilot in VSCode + Codespaces, with Claude (via the workshop's LLM proxy server) as the model backend**. It's the lowest-friction option for a workshop, and it's representative.
 
 ---
 

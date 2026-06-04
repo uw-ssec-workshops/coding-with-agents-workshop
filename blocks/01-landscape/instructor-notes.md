@@ -21,15 +21,14 @@ public-facing version; this is the inside view.
 
 ## Timing checkpoints
 
-Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" slides, they have the most fat.
+Glance at these. If you're behind, cut from the "Landscape" or "Axes that matter" slides, they have the most fat.
 
 | at minute | should be on slide | content |
 |---|---|---|
 | 2 | slide 2 (What changed) | Done with the hook |
-| 7 | slide 4 (Four axes) | Done with the tool tour |
+| 7 | slide 4 (Axes that matter) | Done with the tool tour |
 | 15 | slide 6 (Why they all feel the same) | Done with the anatomy |
-| 20 | slide 7 (Picking a tool) | Done with picking a tool |
-| 21 | slide 7a (where does your data go?) | Data-sensitivity framing; skippable if behind |
+| 21 | slide 7 (where does your data go?) | Data-sensitivity framing; skippable if behind |
 | 22 | slide 8 (Demo) | Demo about to start |
 | 28 | slide 9 (Bridge) | Demo done, transitioning |
 | 30 | hand off to Block 2 | |
@@ -55,9 +54,10 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 - If asked about a tool not on the list (Devin, Replit Agent, etc.) → "same anatomy, different wrapper."
 - Emphasize: *this list will be different in 6 months. The categories won't.*
 
-### 4. Four axes
+### 4. Axes that matter
 
-- Emphasize: **for science, model hosting matters more than for industry.** Data residency, IRB, sometimes air-gapped clusters. (This gets its own slide, 7a, right before the demo, just plant the seed here.)
+- Don't fixate on the count, the list isn't exhaustive. The point is *which axes matter for your constraints*, not memorizing four (or five) of them.
+- Emphasize: **for science, model hosting and privacy matter more than for industry.** Data residency, IRB, air-gapped clusters, proprietary code, unpublished research. (Privacy gets its own slide, slide 7, right before the demo, just plant the seed here.)
 - Capability claims are noisy. The only benchmark that matters is your own code on your own task.
 
 ### 5. Anatomy of a coding agent
@@ -79,12 +79,7 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 - Don't apologize for tools you didn't pick. Make the framing-claim instead: *if you understand the pieces, switching is a config exercise.*
 - This is the workshop's spine, say it explicitly. Pay-off: *when a new tool launches next quarter, you'll know what to look for.*
 
-### 7. Picking a tool
-
-- This is the most opinionated slide. Lean in.
-- Acknowledge Cursor users in the room: "your skills transfer 1:1, Copilot is just what runs cleanly in Codespaces today."
-
-### 7a. Before you paste: where does your data go?
+### 7. Before you paste: where does your data go?
 
 - 60-90 seconds, and the most science-specific slide in the block. Don't rush past it: for many attendees "can I even put my data in here?" is the real blocker to adopting agents.
 - The actionable line: **"match the model hosting to the sensitivity of the data, and when in doubt, don't paste it."**
@@ -159,9 +154,8 @@ Glance at these. If you're behind, cut from the "Landscape" or "Picking a tool" 
 
 In order of expendability:
 
-1. The "Four axes" slide (slide 4), can be a 30-second mention.
-2. The decision-flow walk in "Picking a tool" (slide 7), read it, don't elaborate.
-3. The third row of the comparison table on slide 6.
-4. The "where does your data go?" slide (7a), collapse to the one-liner *"match model hosting to data sensitivity; when in doubt, don't paste it"* (but keep it if the audience handles sensitive data).
+1. The "Axes that matter" slide (slide 4), can be a 30-second mention.
+2. The third row of the comparison table on slide 6.
+3. The "where does your data go?" slide (slide 7), collapse to the one-liner *"match model hosting to data sensitivity; when in doubt, don't paste it"* (but keep it if the audience handles sensitive data).
 
 **Never skip:** the anatomy slide, the demo, or the bridge.
