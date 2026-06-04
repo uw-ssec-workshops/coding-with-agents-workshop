@@ -2,8 +2,8 @@
 marp: true
 theme: workshop
 paginate: true
-title: 'Block 4 - Build Your Own Skill'
-description: 'Coding with AI Agents - 2026 Interdisciplinary Science Summit'
+title: "Block 4 - Build Your Own Skill"
+description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 ---
 
 <!-- _class: lead -->
@@ -12,18 +12,18 @@ description: 'Coding with AI Agents - 2026 Interdisciplinary Science Summit'
 
 ## Block 4: Capstone
 
-_Five fields in a markdown file. No magic. Let's go._
+*Five fields in a markdown file. No magic. Let's go.*
 
 ---
 
 ## The whole workshop, in one slide
 
-| Block           | Takeaway                                                              |
-| --------------- | --------------------------------------------------------------------- |
-| 1. Landscape    | All coding agents have the same anatomy: LLM + tools + memory + loop. |
-| 2. How it works | Most agent failures are **prompt problems**, not training problems.   |
-| 3. Workflows    | **Workflows ARE the prompt**, structured, reusable, auditable.        |
-| 4. **Now**      | Write one.                                                            |
+| Block | Takeaway |
+|---|---|
+| 1. Landscape | All coding agents have the same anatomy: LLM + tools + memory + loop. |
+| 2. How it works | Most agent failures are **prompt problems**, not training problems. |
+| 3. Workflows | **Workflows ARE the prompt**, structured, reusable, auditable. |
+| 4. **Now** | Write one. |
 
 > The pieces are simple. The **practice** is what makes it useful.
 > The next 25 minutes are practice.
@@ -63,10 +63,10 @@ You are a senior research software engineer reviewing scientific Python code...
 
 ## Two worked examples in `.github/agents/`
 
-| Agent                        | What it does                                 | Tools        | Why it's a good template                   |
-| ---------------------------- | -------------------------------------------- | ------------ | ------------------------------------------ |
-| `scientific-python-reviewer` | Reviews against Scientific Python guidelines | read-only    | Persona + standard reference + tight scope |
-| `docstring-writer`           | Adds NumPy-style docstrings                  | read + write | Scoped editing + output style example      |
+| Agent | What it does | Tools | Why it's a good template |
+|---|---|---|---|
+| `scientific-python-reviewer` | Reviews against Scientific Python guidelines | read-only | Persona + standard reference + tight scope |
+| `docstring-writer` | Adds NumPy-style docstrings | read + write | Scoped editing + output style example |
 
 Open them. Read them. **They are the reference for what you'll write.**
 

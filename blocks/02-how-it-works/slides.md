@@ -2,8 +2,8 @@
 marp: true
 theme: workshop
 paginate: true
-title: 'Block 2 - How It Actually Works'
-description: 'Coding with AI Agents - 2026 Interdisciplinary Science Summit'
+title: "Block 2 - How It Actually Works"
+description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 ---
 
 <!-- _class: lead -->
@@ -12,7 +12,7 @@ description: 'Coding with AI Agents - 2026 Interdisciplinary Science Summit'
 
 ## Block 2: Post-Training and Tool Calling
 
-_A primer on why the loop you just saw is even possible._
+*A primer on why the loop you just saw is even possible.*
 
 ---
 
@@ -20,10 +20,10 @@ _A primer on why the loop you just saw is even possible._
 
 Block 1 ended with an agent that, given one prompt, did four things we mostly took for granted:
 
-- **Q1.** It **followed our instructions** at all. _Why?_
-- **Q2.** It **acted helpfully** and **stopped when done** instead of rambling or looping. _Why?_
-- **Q3.** It **called `run_bash`** instead of describing what it would do. _Why?_
-- **Q4.** The same loop worked with **Claude, GPT, or Gemini**. _Why?_
+- **Q1.** It **followed our instructions** at all. *Why?*
+- **Q2.** It **acted helpfully** and **stopped when done** instead of rambling or looping. *Why?*
+- **Q3.** It **called `run_bash`** instead of describing what it would do. *Why?*
+- **Q4.** The same loop worked with **Claude, GPT, or Gemini**. *Why?*
 
 > None of these are things the model picked up by reading the internet.
 > Each has a name in the post-training pipeline.
@@ -34,30 +34,30 @@ Block 1 ended with an agent that, given one prompt, did four things we mostly to
 
 A **base** large language model is trained to predict the next token in
 a corpus of text. That's it. After pre-training, the model is great at
-_continuing_ text in the style of what it just read.
+*continuing* text in the style of what it just read.
 
 What that does NOT give you:
 
-- Following instructions ("write a function" -> base model writes more _prompts_ in the same style)
+- Following instructions ("write a function" -> base model writes more *prompts* in the same style)
 - Helpful behavior, refusals, knowing when to stop
 - Calling tools, the concept doesn't exist in pre-training data
 - Stable identity ("you are a helpful assistant", the base model has no idea what that means)
 
-Everything that makes a coding agent _useful_ is grafted on **after** pre-training.
+Everything that makes a coding agent *useful* is grafted on **after** pre-training.
 
 ---
 
 ## Aside: why can a network learn any of this?
 
-Pre-training, SFT, RLHF, every stage in this block assumes one thing: that a neural network _can_ represent the function you are training it toward. That assumption has a name.
+Pre-training, SFT, RLHF, every stage in this block assumes one thing: that a neural network *can* represent the function you are training it toward. That assumption has a name.
 
-**Universal Approximation Theorem** (Cybenko 1989, Hornik 1991): a network with a non-linear activation and enough neurons can approximate _any_ continuous function to arbitrary precision.
+**Universal Approximation Theorem** (Cybenko 1989, Hornik 1991): a network with a non-linear activation and enough neurons can approximate *any* continuous function to arbitrary precision.
 
 - "Next token given context", "helpful reply given prompt", "tool call given task", all just functions.
 - The **non-linearity** (ReLU, etc.) is the key ingredient. Stack only linear layers and the whole thing collapses back into a single straight line.
-- **Depth** is what makes it _efficient_: deep nets compose simple features into complex ones, instead of needing astronomically many neurons in one layer.
+- **Depth** is what makes it *efficient*: deep nets compose simple features into complex ones, instead of needing astronomically many neurons in one layer.
 
-> Universality only says the function _exists_ inside the network. Training is the bet that gradient descent can _find_ it, and that it _generalizes_ to new inputs. It usually does. That empirical fact is the miracle the rest of this block stands on.
+> Universality only says the function *exists* inside the network. Training is the bet that gradient descent can *find* it, and that it *generalizes* to new inputs. It usually does. That empirical fact is the miracle the rest of this block stands on.
 
 ---
 
@@ -69,7 +69,7 @@ Pre-training, SFT, RLHF, every stage in this block assumes one thing: that a neu
 - Volume: tens of thousands to low millions of pairs.
 - Outcome: the model learns the **format** of "user asks, assistant answers." It now follows instructions instead of pattern-matching them.
 
-**This is what answers Q1.** _(Why does it follow our prompt at all?)_
+**This is what answers Q1.** *(Why does it follow our prompt at all?)*
 
 ---
 
@@ -109,7 +109,7 @@ Two steps:
 
 Outcome: the model learns **what humans find helpful**, when to refuse, and, crucially for agents, **when it has done enough and can stop**.
 
-**This is what answers Q2.** _(Why did it stop instead of looping forever?)_
+**This is what answers Q2.** *(Why did it stop instead of looping forever?)*
 
 > Trade-off: too much RLHF and the model becomes overly cautious or sycophantic. Lab releases live or die on this dial.
 
@@ -166,7 +166,7 @@ The model learns **two things at once**:
 
 **Bleeding edge: agentic RL.** RL applied over multi-turn tool-use trajectories with task-completion reward. This is what major labs are pouring resources into in 2025-2026. It's why Claude Code, Cursor, and Copilot agent mode have gotten so much better in the last 18 months.
 
-**This is what answers Q3.** _(Why did it call `run_bash` instead of just describing it?)_
+**This is what answers Q3.** *(Why did it call `run_bash` instead of just describing it?)*
 
 ---
 
@@ -239,20 +239,20 @@ The trajectory teaches **wire format** (valid JSON, right schema), **multi-step 
 
 ## Why this is convergent
 
-| Lab          | Pre-training | SFT | Preference learning      | Tool-use FT      |
-| ------------ | ------------ | --- | ------------------------ | ---------------- |
-| Anthropic    | yes          | yes | RLHF + Constitutional AI | yes + agentic RL |
-| OpenAI       | yes          | yes | RLHF, RLAIF              | yes + agentic RL |
-| Google       | yes          | yes | RLHF                     | yes              |
-| Meta (Llama) | yes          | yes | DPO                      | partial          |
-| DeepSeek     | yes          | yes | RL on reasoning (R1)     | partial          |
+| Lab | Pre-training | SFT | Preference learning | Tool-use FT |
+|---|---|---|---|---|
+| Anthropic | yes | yes | RLHF + Constitutional AI | yes + agentic RL |
+| OpenAI | yes | yes | RLHF, RLAIF | yes + agentic RL |
+| Google | yes | yes | RLHF | yes |
+| Meta (Llama) | yes | yes | DPO | partial |
+| DeepSeek | yes | yes | RL on reasoning (R1) | partial |
 
 Different data. Different reward signals. Different sequencing.
 
 **Same shape.**
 
-> When you train very different models to do _overlapping skills_, they
-> converge on _overlapping behaviors_. That's why `MODEL = "..."` is
+> When you train very different models to do *overlapping skills*, they
+> converge on *overlapping behaviors*. That's why `MODEL = "..."` is
 > just a string. **Answers Q4.**
 
 ---
@@ -261,13 +261,13 @@ Different data. Different reward signals. Different sequencing.
 
 The actionable mental model:
 
-| Trained in (the model already knows) | In the prompt (you control)     |
-| ------------------------------------ | ------------------------------- |
-| Dialogue format                      | System message                  |
-| Helpful tone, refusals               | Project memory (`AGENTS.md`)    |
-| Tool-call wire format                | Specific tool schemas           |
-| When to stop                         | Current task description        |
-| Knowledge up to training cutoff      | Documents you load into context |
+| Trained in (the model already knows) | In the prompt (you control) |
+|---|---|
+| Dialogue format | System message |
+| Helpful tone, refusals | Project memory (`AGENTS.md`) |
+| Tool-call wire format | Specific tool schemas |
+| When to stop | Current task description |
+| Knowledge up to training cutoff | Documents you load into context |
 
 When debugging an agent, ask:
 
@@ -290,7 +290,7 @@ What competes for that budget on every single turn:
 - Every **tool result**: file contents, `pytest` output, search hits
 - The model's own reasoning and the answer it's about to write
 
-A _token_ is roughly ¾ of a word (or a few characters of code). Windows are
+A *token* is roughly ¾ of a word (or a few characters of code). Windows are
 large (~100K–1M tokens) but **not infinite**, and agent runs fill them fast —
 one `read` of a big file or a noisy traceback can cost thousands of tokens.
 
@@ -308,7 +308,7 @@ We are going to import the **Block 1 agent loop** as a one-line import (`from wo
 What to watch for:
 
 - The same code drives Claude, GPT, Gemini.
-- Different models pick different _first_ tools, take different numbers of turns, write the fix slightly differently.
+- Different models pick different *first* tools, take different numbers of turns, write the fix slightly differently.
 - They all converge on the same **outcome** (passing tests).
 - That's convergent post-training, made tactile.
 
