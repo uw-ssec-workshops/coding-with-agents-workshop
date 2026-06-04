@@ -190,9 +190,7 @@ user:   How many tests are in this repo right now?
 
 A: ↳ tool_call: {"name": "run_bash",
                  "params": {"cmd": "pytest --collect-only -q | tail -1"}}
-
 tool:   137 tests collected
-
 A: 137 tests.
 ────────────────────────────────────────────────────
 ```
@@ -215,31 +213,23 @@ system: You are a coding agent. Tools available:
         [{"name": "run_bash", "params": {"cmd": "string"}},
          {"name": "read_file", "params": {"path": "string"}},
          {"name": "write_file", "params": {"path": "...", "content": "..."}}]
-
 user:   The test_parse_date test is failing. Please fix it.
 
 A: I'll start by running the test to see the error.
    ↳ tool_call: {"name": "run_bash",
                  "params": {"cmd": "pytest -x test_parse.py::test_parse_date"}}
-
 tool:   FAILED test_parse.py::test_parse_date
         AssertionError: expected datetime(2024,1,2), got datetime(2024,2,1)
-
 A: Day/month swap. Let me read the parser.
    ↳ tool_call: {"name": "read_file", "params": {"path": "parser.py"}}
-
 tool:   def parse_date(s): return datetime.strptime(s, "%m/%d/%Y")
-
 A: Format string has month before day; input is DD/MM/YYYY.
    ↳ tool_call: {"name": "write_file",
                  "params": {"path": "parser.py",
                             "content": "def parse_date(s): return datetime.strptime(s, '%d/%m/%Y')"}}
-
 tool:   ok
-
 A: ↳ tool_call: {"name": "run_bash", "params": {"cmd": "pytest -x test_parse.py"}}
 tool:   1 passed
-
 A: Fixed. The format string had month and day swapped. Tests now pass.
 ```
 
@@ -300,7 +290,7 @@ What competes for that budget on every single turn:
 - Every **tool result**: file contents, `pytest` output, search hits
 - The model's own reasoning and the answer it's about to write
 
-A *token* is roughly ¾ of a word (or a few characters of code). Windows are
+A _token_ is roughly ¾ of a word (or a few characters of code). Windows are
 large (~100K–1M tokens) but **not infinite**, and agent runs fill them fast —
 one `read` of a big file or a noisy traceback can cost thousands of tokens.
 
