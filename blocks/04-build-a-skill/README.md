@@ -36,7 +36,7 @@ By the end of this block, an attendee can:
   exercise/
     README.md                       # participant-facing step-by-step
     my-agent.agent.md.template      # SKELETON to copy + fill in
-    ideas.md                        # ~20 starter agent ideas
+    ideas.md                        # 30+ starter agent ideas
 ```
 
 The **worked examples** live in [`.github/agents/`](../../.github/agents/) so
