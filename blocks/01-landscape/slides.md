@@ -12,8 +12,7 @@ description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 
 ## Block 1: The Landscape
 
-*2026 Interdisciplinary Science Summit*
-*Schmidt Sciences x UW SSEC*
+*Eighteen months ago this was autocomplete. Today it's agents. Let's map the terrain.*
 
 ---
 
@@ -36,6 +35,9 @@ description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 | **OpenCode** | CLI, OSS | Bring your own | Self-hostable |
 | **Aider** | CLI, OSS | Bring your own | Pioneered git-aware workflows |
 | **Cline** | VSCode extension | Bring your own | OSS competitor to Copilot |
+| **Hermes** | CLI | Bring your own | Lightweight, scriptable agent |
+| **Pi Coding** | CLI / IDE | Multi-provider | Coding-focused agent workflows |
+| **Harness** | CLI / cloud | Bring your own | Long-running autonomous runs |
 
 ---
 
