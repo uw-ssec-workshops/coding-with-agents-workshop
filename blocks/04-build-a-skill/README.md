@@ -48,7 +48,7 @@ The two used as the Block 4 reference are:
 
 The rest of [`.github/`](../../.github/) is a fuller gallery (more agents,
 prompt-file commands, a skill, path-scoped instructions) mapped to the research
-lifecycle — see [`.github/README.md`](../../.github/README.md). Point curious
+lifecycle — see the [customization gallery in the root README](../../README.md#copilot-customization-gallery). Point curious
 attendees at it.
 
 ## Timing (~30 min)
