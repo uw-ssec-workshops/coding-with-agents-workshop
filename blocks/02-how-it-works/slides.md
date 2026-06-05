@@ -1,12 +1,9 @@
 ---
 marp: true
-theme: default
+theme: workshop
 paginate: true
-size: 16:9
-title: 'Block 2 - How It Actually Works'
-description: 'Coding with AI Agents - 2026 Interdisciplinary Science Summit'
-style: |
-    @import "slides.css";
+title: "Block 2 - How It Actually Works"
+description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 ---
 
 <!-- _class: lead -->
@@ -15,13 +12,7 @@ style: |
 
 ## Block 2: Post-Training and Tool Calling
 
-_A primer on why the loop you just saw is even possible._
-
-<!--
-Speaker notes:
-- 30 seconds. Hand-off from Block 1 demo.
-- Set expectation: this block is the most conceptual of the four. Stick with us, by the end you'll have a mental model that outlasts any product release.
--->
+*A primer on why the loop you just saw is even possible.*
 
 ---
 
@@ -29,20 +20,10 @@ Speaker notes:
 
 Block 1 ended with an agent that, given one prompt, did four things we mostly took for granted:
 
-- **Q1.** It **followed our instructions** at all. _Why?_
-- **Q2.** It **acted helpfully** and **stopped when done** instead of rambling or looping. _Why?_
-- **Q3.** It **called `run_bash`** instead of describing what it would do. _Why?_
-- **Q4.** The same loop worked with **Claude, GPT, or Gemini**. _Why?_
-
-> None of these are things the model picked up by reading the internet.
-> Each has a name in the post-training pipeline.
-
-<!--
-Speaker notes:
-- Read all four questions slowly. Make eye contact.
-- Frame the rest of the block: "we're going to answer Q1 through Q4 in order, each gets one slide."
-- This slide is the contract. The next 25 minutes pay it off.
--->
+- **Q1.** It **followed our instructions** at all. *Why?*
+- **Q2.** It **acted helpfully** and **stopped when done** instead of rambling or looping. *Why?*
+- **Q3.** It **called `run_bash`** instead of describing what it would do. *Why?*
+- **Q4.** We claimed the same loop would work with **GPT or Gemini**, not just Claude. *Why is that swap even possible?*
 
 ---
 
@@ -50,25 +31,30 @@ Speaker notes:
 
 A **base** large language model is trained to predict the next token in
 a corpus of text. That's it. After pre-training, the model is great at
-_continuing_ text in the style of what it just read.
+*continuing* text in the style of what it just read.
 
 What that does NOT give you:
 
-- Following instructions ("write a function" -> base model writes more _prompts_ in the same style)
+- Following instructions ("write a function" -> base model writes more *prompts* in the same style)
 - Helpful behavior, refusals, knowing when to stop
 - Calling tools, the concept doesn't exist in pre-training data
 - Stable identity ("you are a helpful assistant", the base model has no idea what that means)
 
-Everything that makes a coding agent _useful_ is grafted on **after** pre-training.
+Everything that makes a coding agent *useful* is grafted on **after** pre-training.
 
-<!--
-Speaker notes:
-- The "Translate to French: Hello" example is the punchiest concrete demo. Say it out loud:
-  - prompt: "Translate to French: Hello\n"
-  - base model continuation: "Translate to Spanish: Hello\nTranslate to German: Hello\n..."
-- Audience laughs. Good. The point landed.
-- Hammer it: pre-training is necessary, not sufficient. Everything else is post-training.
--->
+---
+
+## Aside: why can a network learn any of this?
+
+Pre-training, SFT, RLHF, every stage in this block assumes one thing: that a neural network *can* represent the function you are training it toward. That assumption has a name.
+
+**Universal Approximation Theorem** (Cybenko 1989, Hornik 1991): a network with a non-linear activation and enough neurons can approximate *any* continuous function to arbitrary precision.
+
+- "Next token given context", "helpful reply given prompt", "tool call given task", all just functions.
+- The **non-linearity** (ReLU, etc.) is the key ingredient. Stack only linear layers and the whole thing collapses back into a single straight line.
+- **Depth** is what makes it *efficient*: deep nets compose simple features into complex ones, instead of needing astronomically many neurons in one layer.
+
+> Universality only says the function *exists* inside the network. Training is the bet that gradient descent can *find* it, and that it *generalizes* to new inputs. It usually does. That empirical fact is the miracle the rest of this block stands on.
 
 ---
 
@@ -80,14 +66,7 @@ Speaker notes:
 - Volume: tens of thousands to low millions of pairs.
 - Outcome: the model learns the **format** of "user asks, assistant answers." It now follows instructions instead of pattern-matching them.
 
-**This is what answers Q1.** _(Why does it follow our prompt at all?)_
-
-<!--
-Speaker notes:
-- Emphasize: SFT is a relatively cheap and small fine-tune. The base model already "knows" everything; SFT just teaches it the dialogue format.
-- This is also why a small open-source SFT dataset (Alpaca, etc.) can turn a base model into a chatty one.
-- Don't get drawn into "and how does fine-tuning work?", wave at backprop, loss functions, and move on.
--->
+**This is what answers Q1.** *(Why does it follow our prompt at all?)*
 
 ---
 
@@ -116,14 +95,6 @@ def running_mean(xs: list[float], k: int) -> list[float]:
 
 The model learns the **shape**: read the spec, write typed code, handle the edge case the prompt mentioned, stop. Multiply by ~hundreds of thousands of examples across languages, frameworks, and difficulty levels.
 
-<!--
-Speaker notes:
-- Walk through the example. Point out: typed signature, edge case from the spec, O(n) instead of naive O(nk), no extra commentary.
-- That's not the model "being smart", that's the model imitating what a contractor wrote.
-- Open-source analogues people may have heard of: CodeAlpaca, Magicoder/OSS-Instruct, the SFT split of OpenCodeInterpreter. Mention only if asked.
-- Key takeaway: the *style* of agent output (concise, typed, edge-case-aware) is literally a learned imitation of how the SFT contractors wrote.
--->
-
 ---
 
 ## Stage 2: RLHF (preference learning)
@@ -131,20 +102,13 @@ Speaker notes:
 Two steps:
 
 1. **Reward model:** collect pairs of model responses with a human label of "A is better than B". Train a small model to predict that preference.
-2. **RL:** use that reward model to push the policy (the LLM) toward higher-scoring outputs. PPO is the classic algorithm; **DPO** is the simpler modern alternative that skips the explicit reward model.
+2. **RL:** use that reward model to push the policy (the LLM) toward higher-scoring outputs. **PPO** (Proximal Policy Optimization) is the classic algorithm; **DPO** (Direct Preference Optimization) is the simpler modern alternative that skips the explicit reward model.
 
 Outcome: the model learns **what humans find helpful**, when to refuse, and, crucially for agents, **when it has done enough and can stop**.
 
-**This is what answers Q2.** _(Why did it stop instead of looping forever?)_
+**This is what answers Q2.** *(Why did it stop instead of looping forever?)*
 
 > Trade-off: too much RLHF and the model becomes overly cautious or sycophantic. Lab releases live or die on this dial.
-
-<!--
-Speaker notes:
-- DPO fans in the audience will appreciate the mention. Don't get into the math; just say "fewer moving parts than PPO + reward model, often equally good."
-- The "when to stop" framing is the workshop-relevant one. Coding agents that don't stop are useless.
-- This is also where models get their "personality" / refusal behavior. Constitutional AI is one variant.
--->
 
 ---
 
@@ -176,14 +140,6 @@ What the model learns from millions of these:
 
 **That's the "knowing when to stop" behavior**, learned as a preference, not a rule.
 
-<!--
-Speaker notes:
-- Walk through both responses out loud. Audience laughs at B - we've all gotten that response.
-- Emphasize: nobody told the model "don't propose 200-line refactors". It learned that humans rate the focused answer higher.
-- Public analogues if asked: HH-RLHF (Anthropic), UltraFeedback, the preference splits in Llama-2/3 papers.
-- Tie back to Q2: the *reason* a coding agent eventually says "done" instead of looping is RLHF preference data like this.
--->
-
 ---
 
 ## Stage 3: Tool-use fine-tuning
@@ -207,14 +163,7 @@ The model learns **two things at once**:
 
 **Bleeding edge: agentic RL.** RL applied over multi-turn tool-use trajectories with task-completion reward. This is what major labs are pouring resources into in 2025-2026. It's why Claude Code, Cursor, and Copilot agent mode have gotten so much better in the last 18 months.
 
-**This is what answers Q3.** _(Why did it call `run_bash` instead of just describing it?)_
-
-<!--
-Speaker notes:
-- The trace example is concrete. Walk through it. Point at each line.
-- "Wire format vs meta-skill" is the punchy two-part framing. Repeat it.
-- Agentic RL is the answer to "why are agents getting better so fast in 2026?", it's not bigger models, it's better RL signal.
--->
+**This is what answers Q3.** *(Why did it call `run_bash` instead of just describing it?)*
 
 ---
 
@@ -238,9 +187,7 @@ user:   How many tests are in this repo right now?
 
 A: ↳ tool_call: {"name": "run_bash",
                  "params": {"cmd": "pytest --collect-only -q | tail -1"}}
-
 tool:   137 tests collected
-
 A: 137 tests.
 ────────────────────────────────────────────────────
 ```
@@ -251,15 +198,6 @@ The **only** thing that changes the assistant's first move is the prompt:
 - **B** requires reading the actual repo state → **must** call a tool.
 
 This is the **meta-skill**: knowing which prompts cross the line into "I need to actually go look." Trained on thousands of paired examples like these.
-
-<!--
-Speaker notes:
-- Start here so the audience sees the simplest possible case before the multi-turn trajectory on the next slide.
-- The point to hammer: tools aren't called *because they exist in the system prompt*. They're called when the prompt requires fresh information the model can't have.
-- Common confusion to head off: "but couldn't the model just guess 137?" Yes, and a base model would. The whole point of this training stage is teaching it not to.
-- If asked: yes, this is also why agents sometimes call tools they shouldn't (over-eager tool use is a known failure mode and a major RLHF target).
-- Bridge to next slide: "OK, that's the easy case — one tool call. Now let's see what a *real* coding trajectory looks like."
--->
 
 ---
 
@@ -272,69 +210,47 @@ system: You are a coding agent. Tools available:
         [{"name": "run_bash", "params": {"cmd": "string"}},
          {"name": "read_file", "params": {"path": "string"}},
          {"name": "write_file", "params": {"path": "...", "content": "..."}}]
-
 user:   The test_parse_date test is failing. Please fix it.
 
 A: I'll start by running the test to see the error.
    ↳ tool_call: {"name": "run_bash",
                  "params": {"cmd": "pytest -x test_parse.py::test_parse_date"}}
-
 tool:   FAILED test_parse.py::test_parse_date
         AssertionError: expected datetime(2024,1,2), got datetime(2024,2,1)
-
 A: Day/month swap. Let me read the parser.
    ↳ tool_call: {"name": "read_file", "params": {"path": "parser.py"}}
-
 tool:   def parse_date(s): return datetime.strptime(s, "%m/%d/%Y")
-
 A: Format string has month before day; input is DD/MM/YYYY.
    ↳ tool_call: {"name": "write_file",
                  "params": {"path": "parser.py",
                             "content": "def parse_date(s): return datetime.strptime(s, '%d/%m/%Y')"}}
-
 tool:   ok
-
 A: ↳ tool_call: {"name": "run_bash", "params": {"cmd": "pytest -x test_parse.py"}}
 tool:   1 passed
-
 A: Fixed. The format string had month and day swapped. Tests now pass.
 ```
 
 The trajectory teaches **wire format** (valid JSON, right schema), **multi-step meta-skill** (run → read → reason → write → re-run), and **termination** (stop after the green test, don't keep poking).
 
-<!--
-Speaker notes:
-- This is the meatier follow-up to the side-by-side slide. Walk down the trajectory line by line. Note the structure: hypothesis → tool call → observation → updated hypothesis.
-- Call out: every assistant turn is either a tool call OR a final answer. That binary is *learned* here.
-- Public analogues if asked: ToolBench, Gorilla, the agentic SFT data described in the Llama-3.1 and DeepSeek-Coder-V2 papers.
-- Bridge to the convergence slide: "Now imagine generating thousands of these trajectories, scoring whether the final test passed, and using *that* as RL reward. That's agentic RL — the bleeding edge from earlier."
--->
-
 ---
 
 ## Why this is convergent
 
-| Lab          | Pre-training | SFT | Preference learning      | Tool-use FT      |
-| ------------ | ------------ | --- | ------------------------ | ---------------- |
-| Anthropic    | yes          | yes | RLHF + Constitutional AI | yes + agentic RL |
-| OpenAI       | yes          | yes | RLHF, RLAIF              | yes + agentic RL |
-| Google       | yes          | yes | RLHF                     | yes              |
-| Meta (Llama) | yes          | yes | DPO                      | partial          |
-| DeepSeek     | yes          | yes | RL on reasoning (R1)     | partial          |
+| Lab | Pre-training | SFT | Preference learning | Tool-use FT |
+|---|---|---|---|---|
+| Anthropic | yes | yes | RLHF + Constitutional AI | yes + agentic RL |
+| OpenAI | yes | yes | RLHF, RLAIF | yes + agentic RL |
+| Google | yes | yes | RLHF | yes |
+| Meta (Llama) | yes | yes | DPO | partial |
+| DeepSeek | yes | yes | RL on reasoning (R1) | partial |
 
 Different data. Different reward signals. Different sequencing.
 
 **Same shape.**
 
-> When you train very different models to do _overlapping skills_, they
-> converge on _overlapping behaviors_. That's why `MODEL = "..."` is
+> When you train very different models to do *overlapping skills*, they
+> converge on *overlapping behaviors*. That's why `MODEL = "..."` is
 > just a string. **Answers Q4.**
-
-<!--
-Speaker notes:
-- This is the slide where "all coding agents work the same way under the hood" gets its proof. Linger.
-- Tee up the demo: "We're about to swap MODEL and watch the same loop drive a different brain."
--->
 
 ---
 
@@ -342,27 +258,42 @@ Speaker notes:
 
 The actionable mental model:
 
-| Trained in (the model already knows) | In the prompt (you control)     |
-| ------------------------------------ | ------------------------------- |
-| Dialogue format                      | System message                  |
-| Helpful tone, refusals               | Project memory (`AGENTS.md`)    |
-| Tool-call wire format                | Specific tool schemas           |
-| When to stop                         | Current task description        |
-| Knowledge up to training cutoff      | Documents you load into context |
+| Trained in (the model already knows) | In the prompt (you control) |
+|---|---|
+| Dialogue format | System message |
+| Helpful tone, refusals | Project memory (`AGENTS.md`) |
+| Tool-call wire format | Specific tool schemas |
+| When to stop | Current task description |
+| Knowledge up to training cutoff | Documents you load into context |
 
 When debugging an agent, ask:
 
 > _"Is this a **training problem** (model X just can't do this), or a
 > **prompt problem** (it could if I told it better)?"_
 
-**Most issues are prompt problems.** That's the whole reason Block 4 exists.
+**The prompt side is the lever you actually control** — and it's what Blocks 3 and 4 build on.
 
-<!--
-Speaker notes:
-- This is the most actionable slide of the whole block. Bookmark it for participants.
-- Concrete example: "if Claude won't follow your style guide, it's not because Claude lacks taste, it's because you didn't put the style guide in AGENTS.md."
-- Almost every agent failure people complain about online turns out to be a prompt problem on inspection.
--->
+---
+
+## The catch: the prompt is a finite budget
+
+Everything "in the prompt" shares **one fixed window of tokens** — the
+**context window**. The model sees only what fits in it, all at once.
+
+What competes for that budget on every single turn:
+
+- The **system prompt** + your `AGENTS.md` (project memory)
+- The **whole conversation so far** (every turn is re-sent)
+- Every **tool result**: file contents, `pytest` output, search hits
+- The model's own reasoning and the answer it's about to write
+
+A *token* is roughly ¾ of a word (or a few characters of code). Windows are
+large (~100K–1M tokens) but **not infinite**, and agent runs fill them fast —
+one `read` of a big file or a noisy traceback can cost thousands of tokens.
+
+> When the window fills, the earliest content (your original instructions)
+> gets pushed out. The model doesn't error — it just **silently forgets**.
+> That's not a bug; it's the architecture. 
 
 ---
 
@@ -373,18 +304,11 @@ We are going to import the **Block 1 agent loop** as a one-line import (`from wo
 What to watch for:
 
 - The same code drives Claude, GPT, Gemini.
-- Different models pick different _first_ tools, take different numbers of turns, write the fix slightly differently.
+- Different models pick different *first* tools, take different numbers of turns, write the fix slightly differently.
 - They all converge on the same **outcome** (passing tests).
 - That's convergent post-training, made tactile.
 
 Bonus, if there's time: re-run the agent with deliberately **vague tool descriptions**. Watch behavior degrade. Prompt levers are real.
-
-<!--
-Speaker notes:
-- Switch to VS Code. Open blocks/02-how-it-works/demo/notebook.ipynb.
-- Reset Block 1's starter file before this slide, see instructor-notes pre-block checklist.
-- Run all cells. Narrate the proxy discovery cell explicitly: "this is a defensive move, in case GPT or Gemini aren't on the proxy."
--->
 
 ---
 
@@ -404,10 +328,4 @@ That same training history also tells you **how it can fail**:
 - Reward-hacked on "be confident" -> won't admit it doesn't know
 - Trained on short trajectories -> loops on long ones
 
-**Block 3 turns these into a taxonomy with mitigations.**
-
-<!--
-Speaker notes:
-- Hard hand-off. Don't linger.
-- Last sentence: "Block 3 turns these into a taxonomy with mitigations." Stop talking.
--->
+**Enough concepts, all applied now.**

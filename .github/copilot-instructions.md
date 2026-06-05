@@ -1,6 +1,6 @@
 # Workshop Repository: GitHub Copilot Instructions
 
-This repository is the participant- and instructor-facing material for the workshop **"Coding with AI Agents: A Hands-On Workshop for Scientists"** (2026 Interdisciplinary Science Summit, Schmidt Sciences x UW SSEC).
+This repository is the participant- and instructor-facing material for the workshop **"Coding with AI Agents: A Hands-On Workshop for Scientists"** (2026 Interdisciplinary Science Summit, Schmidt Sciences x VISS centers).
 
 You are assisting an instructor or workshop participant. Optimize for **clarity, reproducibility, and teaching value** over cleverness.
 
@@ -28,9 +28,16 @@ You are assisting an instructor or workshop participant. Optimize for **clarity,
 - Show, don't tell. Reach for an example or a tiny runnable snippet before reaching for prose.
 - Keep examples self-contained inside `blocks/0N-*/demo/`.
 
-## Workshop chat modes
+## Workshop customizations (`.github/`)
 
-This repo ships with two worked example chat modes in [`.github/chatmodes/`](.github/chatmodes/), `scientific-python-reviewer` (read-only reviewer against Scientific Python guidelines) and `docstring-writer` (adds NumPy-style docstrings). They are referenced in Block 4 as scaffolding for attendees to build their own. When asked "what is this mode" or "how does this work", read the relevant `.chatmode.md` file directly.
+This repo ships a gallery of Copilot customizations under `.github/`, indexed in the [customization gallery in the root README](../README.md#copilot-customization-gallery):
+
+- **Custom agents** in [`.github/agents/`](agents/) (the renamed "chat modes", now `*.agent.md`): `scientific-python-reviewer` and `docstring-writer` are the two Block 4 worked examples; `reproducibility-auditor` and `research-pair` extend the pattern.
+- **Commands (prompt files)** in [`.github/prompts/`](prompts/): `scaffold-package`, `eda-summary`, `write-tests`, `citation-and-release`, plus the **Block 3 research-loop workflow** (`research`, `plan`, `iterate-plan`, `experiment`, `implement`, `validate`, `handoff`) — adapted in-repo from UW SSEC's `rse-plugins`.
+- **Skills** in [`.github/skills/`](skills/): `experiment-log` (bundles a helper script).
+- **Path-scoped instructions** in [`.github/instructions/`](instructions/): `notebooks` and `tests` conventions (auto-applied by `applyTo` glob).
+
+They are referenced in Block 4 as scaffolding for attendees to build their own. When asked "what is this agent/command/skill" or "how does this work", read the relevant file directly. Note: custom agents were formerly "custom chat modes" (`.chatmode.md`); we use the current `.agent.md` form.
 
 ## Things to avoid
 

@@ -8,13 +8,12 @@
     "vscode": {
       "extensions": [
         "marp-team.marp-vscode",
-        "GitHub.copilot",
         "GitHub.copilot-chat",
-        "anthropic.claude-code",
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-toolsai.jupyter",
-        "charliermarsh.ruff"
+        "charliermarsh.ruff",
+        "PKief.material-icon-theme"
       ],
       "settings": {
         "chat.plugins.enabled": false,

@@ -11,21 +11,21 @@ By the end of this block, an attendee can:
 1. Explain why a **base** language model, without post-training, can't follow instructions, can't choose helpful actions, and can't call tools, even though it has read most of the internet.
 2. Name and distinguish the four post-training stages, **pre-training, SFT, RLHF / preference learning, tool-use fine-tuning**, and say what each one teaches the model.
 3. Describe **agentic RL** in one sentence and explain why every major lab is investing in it for coding agents in 2025-2026.
-4. Apply the **"trained in" vs "in the prompt"** mental model to triage agent failures (most are prompt problems).
+4. Apply the **"trained in" vs "in the prompt"** mental model to triage agent failures (is this a training problem or a prompt problem?).
 5. Predict that swapping the model on the workshop's LiteLLM proxy will *mostly* work for the same loop, and explain *why* that's true (convergent post-training).
+6. Explain what a **context window** is, what consumes it during an agent run, and why "the model silently forgot my instructions" is an architectural limit, not a bug (the setup for Block 3's context-exhaustion failure mode).
 
 ## What's in this folder
 
 ```
 02-how-it-works/
   README.md            # this file
-  slides.md            # Marp slides (~10 slides, ~22 min talking)
-  slides.css           # minimal slide theme tweaks
+  slides.md            # Marp slides (~12 slides, ~22 min talking)
+                       # (theme: shared blocks/_shared/slides.css)
   instructor-notes.md  # speaker notes, demo script, fallbacks, timing
   resources.md         # curated further reading
   demo/
     notebook.ipynb     # "Same loop, different brain", model swap experiment
-    _build_notebook.py # source-of-truth builder for the notebook
 ```
 
 ## Timing (30 min)
@@ -38,7 +38,7 @@ By the end of this block, an attendee can:
 | 11–16 | RLHF, answers Q2 ("why does it stop when done?") |
 | 16–21 | Tool-use fine-tuning + agentic RL, answers Q3 ("why does it call `run_bash`?") |
 | 21–23 | Convergent post-training, answers Q4 ("why does the same loop drive Claude AND GPT?") |
-| 23–25 | "Trained in" vs "in the prompt", the actionable takeaway |
+| 23–25 | "Trained in" vs "in the prompt" + the context-window budget (skippable if behind) |
 | 25–28 | **Demo**: "Same loop, different brain", live model swap |
 | 28–30 | Bridge to Block 3 |
 
@@ -64,8 +64,8 @@ The notebook is robust to model unavailability, if the proxy only fronts Claude,
 
 ## Prerequisites
 
-- Block 1 completed (or at least its setup: Codespace running, `LITELLM_API_KEY` and `LITELLM_API_BASE` configured).
-- `workshop_agent` importable (verified by `postCreate.sh`).
+- Block 1 completed (or at least its setup: Codespace running, `LITELLM_API_KEY` and `LITELLM_BASE_URL` configured).
+- `workshop_agent` importable (verified by the `on-create.sh` sanity check).
 
 ## Bridge to Block 3
 

@@ -11,15 +11,16 @@ By the end of this block, an attendee can:
 1. Name the major AI coding agent products in 2026 (Copilot, Claude Code, Cursor, OpenCode, Aider, Cline) and place each on four axes: cost, capability, integration, and model hosting.
 2. Identify the six load-bearing parts of a modern coding agent, **LLM backbone, agent loop, tool use, project memory (`AGENTS.md`), MCP servers, skills/prompts**, and point to where each lives in a real product.
 3. Explain *why* the choice between Copilot, Claude Code, and Cursor is mostly a UX choice, not a capability choice.
-4. Run a working agent end-to-end against Claude (via the workshop's LLM proxy) in a Jupyter notebook and read the loop's tool-call trace.
+4. Decide, for a given piece of research code or data, whether it's safe to send to a given agent, by matching **model hosting** to **data sensitivity** (PII/IRB, embargoed, licensed, retention/training policy).
+5. Run a working agent end-to-end against Claude (via the workshop's LLM proxy) in a Jupyter notebook and read the loop's tool-call trace.
 
 ## What's in this folder
 
 ```
 01-landscape/
   README.md            # this file
-  slides.md            # Marp slides (~10 slides, 22 min talking)
-  slides.css           # minimal slide theme tweaks
+  slides.md            # Marp slides (~11 slides, 22 min talking)
+                       # (theme: shared blocks/_shared/slides.css)
   instructor-notes.md  # speaker notes, demo script, fallbacks, timing
   resources.md         # curated further reading
   demo/
@@ -37,8 +38,8 @@ By the end of this block, an attendee can:
 | 7–15 | Anatomy of a coding agent (the spine) |
 | 15–17 | "They're all the same" |
 | 17–20 | Picking a tool (decision flow) |
-| 20–22 | Setup for today (Codespace + Copilot + LLM proxy) |
-| 22–28 | **Demo**: 2 min live Copilot + 4 min "agent in 50 lines" notebook |
+| 20–21 | Where does your data go? (data-sensitivity framing; skippable) |
+| 21–28 | **Demo**: 2 min live Copilot + 4 min "agent in 50 lines" notebook |
 | 28–30 | Bridge to Block 2 |
 
 ## How to run the material
@@ -71,7 +72,7 @@ git restore src/sci_units/converters.py
 ## Prerequisites
 
 - Codespace running (see top-level [`README.md`](../../README.md) and [`docs/setup.md`](../../docs/setup.md)).
-- LiteLLM proxy credentials configured: `LITELLM_API_KEY` and `LITELLM_API_BASE` (verified by `postCreate.sh`).
+- LiteLLM proxy credentials configured: `LITELLM_API_KEY` and `LITELLM_BASE_URL` (verified by `post-start.sh`).
 - Copilot extension signed in.
 
 ## Bridge to Block 2

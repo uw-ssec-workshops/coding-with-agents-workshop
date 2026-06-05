@@ -19,14 +19,15 @@ ENV VSCODE_HOME=/home/vscode \
     PATH=/home/vscode/.local/bin:${PATH}
 
 USER ${VSCODE_USER}
-WORKDIR /workspaces/schmidt-sciences-workshop
+WORKDIR /workspaces/viss-agentic-ai-workshop-iss-2026
 
 RUN echo 'eval "$(uv generate-shell-completion bash)"' >> ${VSCODE_HOME}/.bashrc
 
-# Pre-install GitHub Copilot CLI and the rse-plugins marketplace plugins
-# during the image build so the devcontainer is ready on attach.
-COPY --chown=${VSCODE_USER}:${VSCODE_USER} .devcontainer/install-plugins.sh /tmp/install-plugins.sh
-RUN bash /tmp/install-plugins.sh && rm -f /tmp/install-plugins.sh
+# Pre-install the GitHub Copilot CLI during the image build so the devcontainer
+# is ready on attach. No agent plugins are installed: the research-loop workflow
+# ships in-repo as Copilot prompt files under .github/prompts/.
+COPY --chown=${VSCODE_USER}:${VSCODE_USER} .devcontainer/install-copilot-cli.sh /tmp/install-copilot-cli.sh
+RUN bash /tmp/install-copilot-cli.sh && rm -f /tmp/install-copilot-cli.sh
 
 # Pre-populate uv's package cache (and its managed CPython) so that
 # onCreateCommand's `uv sync` resolves from disk instead of hitting the network.

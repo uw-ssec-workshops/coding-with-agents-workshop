@@ -12,46 +12,71 @@ Everything you need to do **before** the workshop, plus what to expect when you 
 
 ## What the Codespace gives you
 
-When the Codespace finishes building, the `postCreate.sh` script automatically:
+The Codespace is configured by the scripts in [`.devcontainer/`](../.devcontainer/), which run in stages — when the image is built, when the container is created, when it starts, and when VS Code attaches.
 
-1. Runs `uv sync` to install the workshop's Python dependencies (including the `sci_units` and `workshop_agent` packages as path sources).
-2. Registers a Jupyter kernel called `Workshop (Python 3.12)`.
-3. Runs a sanity check confirming `litellm`, `sci_units`, and `workshop_agent` import.
-4. Reports whether the workshop's LiteLLM proxy credentials are visible.
-5. Confirms the same credentials are also exposed as `ANTHROPIC_*` env vars (used by the Claude Code extension in Block 3).
-6. Installs the `ai-research-workflows` plugin from the [`rse-plugins`](https://github.com/uw-ssec/rse-plugins) marketplace (used in Block 3's demo — provides `/research`, `/plan`, `/implement`, `/validate`). Two `claude plugin ...` commands run back-to-back: one to register the marketplace, one to install the plugin itself. Falls back to printing the manual commands if the Claude Code CLI isn't on PATH yet. Requires Claude Code `>= 2.1.61`; older builds reject the plugin manifest.
+**At image-build time** the container pre-installs:
 
-You should see a final line that reads:
+- Python 3.12 and [`uv`](https://docs.astral.sh/uv/), with the workshop's dependency cache warmed.
+- The **GitHub Copilot CLI** (BYOK against the same gateway). No agent plugins are installed — Block 3's research loop (`/research`, `/plan`, `/iterate-plan`, `/experiment`, `/implement`, `/validate`, `/handoff`) ships **in-repo** as Copilot prompt files in [`.github/prompts/`](../.github/prompts/) and runs in **Copilot Chat**.
+- The pinned **OAI-compatible Copilot** extension VSIX (downloaded and SHA256-verified against `.devcontainer/oai-compatible-copilot-vsix.env`).
+
+**When the container is created/started**, the lifecycle scripts:
+
+1. Run `uv sync` to install the workshop's Python dependencies (including the `sci_units` and `workshop_agent` packages as path sources). — `on-create.sh`
+2. Register a Jupyter kernel called `Workshop (Python 3.12)`. — `on-create.sh`
+3. Run a sanity check confirming `litellm`, `sci_units`, and `workshop_agent` import. — `on-create.sh`
+4. Report whether the workshop's gateway credentials are visible. — `post-start.sh`
+5. Install the **OAI-compatible Copilot** extension into VS Code so Copilot Chat is ready on launch. — `install-vsix.sh` (post-attach)
+
+Each script prints green `==> ... complete` lines as it runs. The last one you'll see reads:
 
 ```
-==> Done. Open blocks/01-landscape/demo/notebook.ipynb to get started.
+==> [post-attach] complete — Copilot extension is installed.
 ```
 
-If you don't, re-run the script manually with:
+If a stage didn't finish, re-run the workspace setup manually with:
 
 ```bash
-bash .devcontainer/postCreate.sh
+bash .devcontainer/on-create.sh
 ```
 
-## LLM proxy server credentials
+or rebuild the container from the command palette (**Codespaces: Rebuild Container**).
 
-The workshop runs a small **LLM proxy server** (built on LiteLLM) that gives participants access to Claude (and potentially other models, GPT, Gemini, etc.). Both **GitHub Copilot in your Codespace** and the **"agent in 50 lines" notebook** talk to the same proxy.
+## Where the agent customizations live
 
-You need two environment variables:
+Everything the workshop ships is **visible at the repo root** — no generated or
+symlinked folders to browse. Open [`.github/`](../.github/) in the Explorer:
 
-| Variable | What it is |
+- [`.github/prompts/`](../.github/prompts/) — slash-command prompt files, including Block 3's research loop (`/research`, `/plan`, `/iterate-plan`, `/experiment`, `/implement`, `/validate`, `/handoff`).
+- [`.github/agents/`](../.github/agents/) — custom agents (Block 4 worked examples).
+- [`.github/skills/`](../.github/skills/) — skills that bundle a helper script.
+- [`.github/instructions/`](../.github/instructions/) — path-scoped conventions.
+
+See the [customization gallery in the root README](../README.md#copilot-customization-gallery) for the full gallery.
+
+## Gateway credentials
+
+The workshop runs an **LLM gateway** (LiteLLM / LLMoxie) that gives participants access to Claude — currently **Claude Sonnet 4.6** and **Claude Haiku 4.5** — and potentially other models (GPT, Gemini, ...) behind the same endpoint. Copilot Chat, the Copilot CLI, and the **"agent in 50 lines" notebook** all talk to this one gateway.
+
+You provide two values as **Codespace user secrets**:
+
+| Secret | What it is |
 |---|---|
-| `LITELLM_API_KEY` | API key for the LLM proxy server (provided to you for the workshop) |
-| `LITELLM_API_BASE` | URL of the proxy, e.g. `https://litellm.example.org` (provided to you for the workshop) |
+| `LITELLM_API_KEY` | API key for the gateway (provided to you for the workshop) |
+| `LITELLM_BASE_URL` | Base URL of the gateway, e.g. `https://litellm.example.org` (provided to you for the workshop) |
 
-The Codespace forwards both from your **Codespace user secrets**. To add them:
+To add them:
 
 1. Go to your GitHub profile -> **Settings -> Codespaces -> Codespaces secrets -> New secret**.
-2. Add `LITELLM_API_KEY` and `LITELLM_API_BASE` with the values you were given.
-3. Scope each secret to this repository (`schmidt-sciences-workshop`).
-4. Restart the Codespace (or run `source /etc/environment` in the terminal).
+2. Add `LITELLM_API_KEY` and `LITELLM_BASE_URL` with the values you were given.
+3. Scope each secret to this repository (`viss-agentic-ai-workshop-iss-2026`).
+4. Rebuild or restart the Codespace so the new secrets are injected.
 
-The Codespace's `devcontainer.json` automatically also exposes these same values as `ANTHROPIC_API_KEY` and `ANTHROPIC_BASE_URL` so the **Claude Code VS Code extension** (used in Block 3) talks to the same proxy with the same key. You only need to set the `LITELLM_*` secrets; the `ANTHROPIC_*` mapping happens for free.
+You only set those two secrets; `devcontainer.json` and the lifecycle scripts fan them out to every tool for you:
+
+- **Copilot Chat** (the OAI-compatible extension) reads `LITELLM_BASE_URL` plus `OAI_API_KEY` (aliased from `LITELLM_API_KEY`).
+- **Copilot CLI** reads `COPILOT_PROVIDER_BASE_URL` / `COPILOT_PROVIDER_API_KEY` (also aliased from the same two secrets).
+- **The notebooks** wire `litellm` to the gateway in their setup cell.
 
 The instructors will walk you through this live at the start of the workshop if you haven't done it yet.
 
@@ -60,9 +85,9 @@ To verify your credentials work:
 ```bash
 uv run python -c "
 import os, litellm
-litellm.api_base = os.environ['LITELLM_API_BASE']
+litellm.api_base = os.environ['LITELLM_BASE_URL']
 litellm.api_key = os.environ['LITELLM_API_KEY']
-print(litellm.completion(model='claude-sonnet-4-5', max_tokens=16,
+print(litellm.completion(model='claude-sonnet-4-6', max_tokens=16,
     messages=[{'role':'user','content':'ping'}]).choices[0].message.content)
 "
 ```
@@ -75,20 +100,20 @@ If you'd rather run locally:
 
 1. Install [`uv`](https://docs.astral.sh/uv/) and Python 3.12.
 2. Clone this repo.
-3. Run `uv sync` then `bash .devcontainer/postCreate.sh`.
-4. Export `LITELLM_API_KEY` and `LITELLM_API_BASE` in your shell.
-5. Use any editor you like; if it's VSCode, install the `GitHub.copilot` and `ms-toolsai.jupyter` extensions.
+3. Run `uv sync`, then `bash .devcontainer/on-create.sh` to register the Jupyter kernel and run the sanity check.
+4. Export `LITELLM_API_KEY` and `LITELLM_BASE_URL` in your shell.
+5. Use any editor you like; if it's VSCode, install the `ms-toolsai.jupyter` extension. The workshop's OAI-compatible Copilot extension and pre-installed CLIs are only wired up automatically inside the Codespace, so you'd configure those yourself locally.
 
 ## Troubleshooting
 
 | Symptom | Fix |
 |---|---|
-| `postCreate.sh` says "no LiteLLM proxy credentials detected" | Add `LITELLM_API_KEY` and `LITELLM_API_BASE` Codespace secrets and restart the Codespace. See above. |
+| `post-start.sh` warns `LITELLM_BASE_URL is not set` / `LITELLM_API_KEY is not set` | Add `LITELLM_API_KEY` and `LITELLM_BASE_URL` Codespace secrets and rebuild/restart the Codespace. See above. |
 | `litellm.completion(...)` raises `AuthenticationError` / 401 | `LITELLM_API_KEY` is wrong or expired. Double-check the value in your Codespace secrets. |
-| `litellm.completion(...)` raises `BadRequestError` / "model not found" | The model alias on the proxy doesn't match. Update the `MODEL` constant at the top of the notebook (ask an instructor for the correct alias). |
-| `litellm.completion(...)` hangs or `ConnectionError` | `LITELLM_API_BASE` is wrong or unreachable. `echo $LITELLM_API_BASE` in the terminal to confirm. |
+| `litellm.completion(...)` raises `BadRequestError` / "model not found" | The model alias on the gateway doesn't match. Update the `MODEL` constant at the top of the notebook (ask an instructor for the correct alias). |
+| `litellm.completion(...)` hangs or `ConnectionError` | `LITELLM_BASE_URL` is wrong or unreachable. `echo $LITELLM_BASE_URL` in the terminal to confirm. |
 | Jupyter kernel `Workshop (Python 3.12)` doesn't appear | Run `uv run python -m ipykernel install --user --name workshop --display-name "Workshop (Python 3.12)"` and reload the window. |
-| Copilot Chat doesn't respond | Confirm you're signed in to GitHub from the Accounts menu and that the `GitHub.copilot-chat` extension is enabled. |
+| Copilot Chat doesn't respond | Confirm the **OAI-compatible Copilot** extension is installed and the workshop models appear in the model picker. If not, check that `LITELLM_BASE_URL` / `LITELLM_API_KEY` secrets are set and rebuild the Codespace (the extension reads them at startup). |
 | `uv sync` fails | Delete `.venv/` and re-run. If still failing, paste the error in the workshop chat. |
 | `pytest` complains about missing `sci_units` | Re-run `uv sync` from the repo root, `sci_units` is declared as a path source in `pyproject.toml`. |
 

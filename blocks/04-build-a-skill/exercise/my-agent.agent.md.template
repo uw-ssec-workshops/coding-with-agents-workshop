@@ -1,17 +1,18 @@
 ---
-description: 'TODO: one-line description shown in the Copilot mode picker'
-tools: ['readFiles', 'codebase']
-# Add 'editFiles' if your mode needs to modify code.
-# Add 'runCommands' if your mode needs to run shell commands (pytest, etc.).
+name: TODO-your-agent-name
+description: 'TODO: one-line description shown in the Copilot agent picker'
+tools: ['read', 'search/codebase']
+# Add 'edit/editFiles' if your agent needs to modify code.
+# Add 'execute/runInTerminal' if your agent needs to run shell commands (pytest, etc.).
 # Start narrow: you can always grant more.
 ---
 
-# TODO: your mode name
+# TODO: your agent name
 
-You are <persona>. Your job is to <one sentence describing what this mode does>.
+You are <persona>. Your job is to <one sentence describing what this agent does>.
 
-This is a chat mode I'm building during Block 4 of the workshop. It mirrors
-the structure of the worked examples in `.github/chatmodes/`.
+This is a custom agent I'm building during Block 4 of the workshop. It mirrors
+the structure of the worked examples in `.github/agents/`.
 
 ## What you do
 

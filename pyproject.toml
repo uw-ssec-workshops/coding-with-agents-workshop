@@ -1,5 +1,5 @@
 [project]
-name = "schmidt-sciences-workshop"
+name = "viss-agentic-ai-workshop-iss-2026"
 version = "0.1.0"
 description = "Coding with AI Agents: A Hands-On Workshop for Scientists (2026 Interdisciplinary Science Summit)"
 readme = "README.md"
@@ -10,7 +10,6 @@ authors = [
 ]
 dependencies = [
     "ipykernel>=6.29.0",
-    "jupyterlab>=4.2.0",
     "litellm>=1.50.0",
     "matplotlib>=3.9.0",
     "numpy>=2.0.0",

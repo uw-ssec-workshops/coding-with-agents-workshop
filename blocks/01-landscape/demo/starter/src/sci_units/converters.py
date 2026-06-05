@@ -7,7 +7,7 @@ Block 1 demo. Do not "fix" it outside the demo flow.
 
 def fahrenheit_to_celsius(f: float) -> float:
     """Convert a temperature in degrees Fahrenheit to degrees Celsius."""
-    return (f - 32) * 5 / 9
+    return (f - 32) * 9 / 5
 
 
 def celsius_to_fahrenheit(c: float) -> float:

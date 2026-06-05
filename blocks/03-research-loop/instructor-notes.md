@@ -5,14 +5,10 @@ public-facing version; this is the inside view.
 
 ## Pre-block checklist (do this in the 5 min before you start)
 
-- [ ] Open VS Code in the Codespace and open the integrated terminal (`` Ctrl+` `` / `` Cmd+` ``). We're running Claude Code as a CLI from the terminal, not from the graphical panel — `claude` in the integrated terminal still gets VS Code's inline diff viewer and diagnostics for free, and (unlike the panel) lets us pick the working directory.
-- [ ] Confirm Claude Code is on a recent version (`claude --version`, want `>= 2.1.61`). Older builds reject the `rse-plugins` manifest. Upgrade with `npm i -g @anthropic-ai/claude-code` if needed.
-- [ ] Confirm Claude Code is signed in: run `claude` once and verify it doesn't prompt for login (then `/exit`). If it does prompt, follow the sign-in flow before going on stage.
-- [ ] Confirm the `ai-research-workflows` plugin is installed: `claude plugin list` should include `ai-research-workflows`. If it's missing, run, in order:
-    1. `claude plugin marketplace add https://github.com/uw-ssec/rse-plugins` (registers the source — this alone does **not** install anything)
-    2. `claude plugin install ai-research-workflows@rse-plugins` (this is the step that actually installs the `/research`, `/plan`, `/implement`, `/validate` commands)
-    3. Exit any running `claude` session; the next launch picks up the new slash commands.
-- [ ] In the integrated terminal: `cd blocks/03-research-loop/demo && rm -rf .agents/`. We want a clean slate so artifacts appear *during* the demo. **Don't launch `claude` yet** — the demo starts with you running it live in front of the room (slide 4). Working directory matters: `claude`'s cwd becomes wherever you launch it, so cd'ing into `demo/` (not `demo/starter/`) makes `AGENTS.md` visible at the cwd, with the starter scripts in the `starter/` subfolder and the fallback `expected-artifacts/` right next to them.
+- [ ] Open VS Code in the Codespace with the **workspace folder set to `blocks/03-research-loop/demo/`** (File → Open Folder, or open the Codespace there). The cwd matters: opening `demo/` (not `demo/starter/`) puts `AGENTS.md` at the workspace root, with the starter scripts in the `starter/` subfolder and the fallback `expected-artifacts/` right next to them.
+- [ ] Open **Copilot Chat** and switch the picker to **Agent** mode (the dropdown at the top of the chat panel). Confirm a workshop model is selected (Claude Sonnet 4.6 / Haiku 4.5).
+- [ ] Confirm the workflow commands appear: type `/` in chat and look for `research`, `plan`, `iterate-plan`, `experiment`, `implement`, `validate`, `handoff` (the demo uses four). They ship in [`.github/prompts/`](../../.github/prompts/). If they're missing, run **Developer: Reload Window**.
+- [ ] In the integrated terminal: `cd blocks/03-research-loop/demo && rm -rf .agents/`. We want a clean slate so artifacts appear *during* the demo. **Don't run any command yet** — the demo starts with you running `/research` live in front of the room (slide 4).
 - [ ] Have **all four prompts copied to a scratch buffer** (text file, sticky note, Slack DM to yourself, wherever you can paste fast). The exact prompts are below.
 - [ ] Open `blocks/03-research-loop/demo/expected-artifacts/` in a side tab as the **fallback** in case the live demo fails.
 
@@ -20,13 +16,14 @@ public-facing version; this is the inside view.
 
 | at minute | should be on slide / phase | content |
 |---|---|---|
-| 3 | slide 3 (6-phase workflow) | Done with framing |
-| 6 | switching to Claude Code | Demo about to start |
+| 3 | slide 3 (the research loop) | Done with framing |
+| 6 | switching to Copilot Chat (agent mode) | Demo about to start |
 | 10 | `/research` complete | Plan kicks off |
 | 14 | `/plan` complete | Implement kicks off |
 | 20 | `/implement` complete (or near it) | Validate kicks off |
 | 22 | `/validate` complete | Switching back to slides |
 | 26 | slide 5 (failure modes) -> slide 6 (mitigations) | Demo recap done |
+| 26 | slides 6a/6b (git hygiene, prompt injection) | Extra `/implement`-time filler; skip if on schedule |
 | 27 | slide 7 (use cases) | Tour done |
 | 29 | slide 8 (research vs. engineering) | Cross-field framing done |
 | 30 | slide 9 (bridge) | Hand off to Block 4 |
@@ -42,18 +39,19 @@ If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If
 
 ### 2. Where we left off ("workflows are the prompt")
 
-- This is the through-line. Land it explicitly.
+- This is the through-line. State it explicitly.
 - Connect: *"Block 2 said 'in the prompt' matters more than 'trained in.' Workflows are the systematic version of that, every phase of your work has a templated prompt."*
+- Spell out the spine chain: *Block 1 introduced project memory; Block 2 said in-the-prompt > trained-in; Block 3 says structured workflows are the systematic way to do that.*
 
-### 3. The 6-phase workflow
+### 3. The research loop (Copilot prompt files)
 
 - Read the table. **Don't memorize**: the *patterns* at the bottom matter more than the individual commands.
-- *"You don't use all six every time. You pick the pattern that matches your work."*
-- Acknowledge: this is one specific implementation (`rse-plugins` for Claude Code). The pattern is portable; in Block 4, attendees will build their own.
+- *"You don't use all seven every time. You pick the pattern that matches your work."* (We demo four.)
+- Acknowledge: each command is just a `.github/prompts/*.prompt.md` file in this repo — all seven ship in-repo, nothing to install. The phase design and artifact templates are adapted from UW SSEC's `rse-plugins`; the point is the *pattern* is portable, and in Block 4 attendees build their own.
 
 ### 4. Demo intro
 
-- In the integrated terminal (already at `blocks/03-research-loop/demo`), run `claude`. Briefly show that there is no `.agents/` directory yet, and that `AGENTS.md` and the `starter/` scripts are right there at the cwd.
+- In Copilot Chat (Agent mode), briefly show that there is no `.agents/` directory yet, and that `AGENTS.md` and the `starter/` scripts are right there in the workspace. Type `/` to show the workflow commands in the picker (we'll use four of them).
 - *"We're going to package this. Watch the artifacts appear in `.agents/` as we go."*
 
 ### 5. Failure mode taxonomy
@@ -64,7 +62,23 @@ If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If
 ### 6. Mitigations
 
 - Three groups: process, prompt-side, manual.
-- *"Agents are coworkers, not magic. Coworkers get pushback."* Drop this line slowly.
+- *"Agents are coworkers, not magic. Coworkers get pushback."* Drop this line slowly, it's the most quotable thing in Block 3.
+- The mitigations are the actionable thing. Tell them to bookmark this slide.
+
+### 6a. Reviewing the agent's work (git hygiene)
+
+- 45-60 seconds. This is the practical complement to mitigations: the `.agents/` artifacts are the *plan* audit trail, git is the *code* audit trail.
+- The quotable line: **"Read the diff, not the chat. The 'Done!' is a claim; the diff is the evidence."** Ties straight back to the "confident wrong answer" failure mode on slide 5.
+- Concrete demo callback: *"Notice we `git restore`d between runs all morning, that's the same one-command undo you'd use after a bad phase."*
+- For scientists new to git: keep it to the four bullets, don't teach git here, just establish "commit before, review the diff, commit per phase." Point them at the Software/Code Carpentry links in `resources.md`.
+
+### 6b. When the input is hostile (prompt injection)
+
+- 45-60 seconds. The one *security* beat in the workshop, and increasingly the question a savvy audience asks. Don't oversell it into paranoia; frame it as a known failure mode with the same levers they already learned.
+- The intuition to land: **"the agent can't fully tell your instructions from instructions hidden in the content it reads."** The data file example (a malicious CSV header) is the one that surprises scientists, lead with it.
+- The mitigation that matters most for this room: *"reading untrusted data → use a read-only agent. No edit, no shell."* That's a tool-list decision, the same lever from Block 4.
+- The closing line, *"a credulous, eager coworker, don't hand it your credentials and point it at the open internet"*, is the memorable one. Deliver it, then move on.
+- If asked "has this actually happened?": yes, real incidents exist (poisoned READMEs, injected web content). Keep it short; offer office hours for the rabbit hole.
 
 ### 7. Practical use cases
 
@@ -75,8 +89,9 @@ If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If
 ### 8. Two modes: research vs. engineering
 
 - 60-90 seconds. Reframes everything they just saw: the four-phase demo was the *durable* end of the dial. Research work usually wants the *fast* end.
+- This slide exists for two audiences: (a) people from non-RSE backgrounds (NLP, ML, comp ling) who want to know the loop isn't only for "build me a package", and (b) AI engineers who want fast iteration and worry the full loop is overkill.
 - Read the table left-to-right. Then drop the punchline slowly: *"Pick the loop length to match the half-life of the code."*
-- **The `AGENTS.md` callout is the answer to "how do I configure an agent for my research context?"** Stress it explicitly: *"This is the one file you'll edit most. It's portable across tools (Claude Code, Copilot, Cursor all read some flavor of it). Your domain conventions live there, not in your daily prompts."*
+- **The `AGENTS.md` callout is the answer to "how do I configure an agent for my research context?"** Stress it explicitly: *"This is the one file you'll edit most. It's portable across tools (Copilot, Cursor, and others all read some flavor of it). Your domain conventions live there, not in your daily prompts."*
 - For the cross-field examples: pick the closest field to your audience and elaborate for ~10 seconds. Examples:
   - **NLP / ML:** *"AGENTS.md = eval harness paths, metric definitions, 'always use seed=42', model registry conventions."*
   - **Behavioral / social science:** *"AGENTS.md = your coding scheme, IRB constraints on what data the agent may read, stats assumptions (parametric vs not), how you label conditions."*
@@ -87,12 +102,12 @@ If `/implement` is faster than expected, jump to slide 6 (mitigations) early. If
 ### 9. Bridge to Block 4
 
 - Hard hand-off.
-- *"Five files, no magic."*
-- Stop talking.
+- *"A markdown file, no magic."* This framing is what makes Block 4 feel approachable.
+- Last sentence: *"Block 4: build your own."* Then hand off.
 
 ## Demo script: the four prompts
 
-Copy these to your scratch buffer before starting. **Run them one at a time, in order**, in your `claude` terminal session.
+Copy these to your scratch buffer before starting. **Run them one at a time, in order**, in Copilot Chat (Agent mode). Type the slash command, then paste the rest of the line as the input.
 
 ### Prompt 1: `/research` (target: 4 min)
 
@@ -148,12 +163,11 @@ Copy these to your scratch buffer before starting. **Run them one at a time, in 
 
 | Symptom | Recovery |
 |---|---|
-| `claude` won't launch / not signed in | Switch to slides 5-7 immediately; walk through the `expected-artifacts/` folder as if it were live output. Promise to debug after the block. |
-| `claude plugin list` doesn't show `ai-research-workflows` | In a fresh terminal: `claude plugin marketplace add https://github.com/uw-ssec/rse-plugins && claude plugin install ai-research-workflows@rse-plugins`, then exit and re-launch `claude`. ~30 sec total. (Adding the marketplace alone does *not* install the plugin — both commands are required.) |
-| `claude plugin install` fails with `Unrecognized keys: "category", "strict"` | Claude Code is too old. Upgrade: `npm i -g @anthropic-ai/claude-code`, restart, retry the install. |
+| Copilot Chat won't respond / model not selected | Check the model picker shows a workshop model; confirm `LITELLM_*` secrets are set. Meanwhile switch to slides 5-7 and walk through the `expected-artifacts/` folder as if it were live output. Promise to debug after the block. |
+| The `/research` etc. commands don't appear in the `/` picker | Run **Developer: Reload Window** (the prompt files in `.github/prompts/` are picked up on reload). ~10 sec. If still missing, the demo can be run by pasting the prompt body manually. |
 | `/research` produces obviously wrong output | Open `expected-artifacts/research-vscm-package.md` and walk through it instead. Frame it as: *"the live one was a bit off; here's what a polished one looks like."* |
-| `/implement` runs forever | Interrupt it with `Esc` (cancels the current tool and returns to the prompt; `Ctrl+C` exits the whole session, which we don't want). *"This is exactly the failure mode on slide 5, the model gets stuck. Here's what we'd do."* Switch to the pre-built `expected-artifacts/implement-*.md`. |
-| The whole thing fails (proxy down, etc.) | Skip the demo entirely. Spend extra time on slides 5-7 (failure modes are the bigger conceptual content anyway). |
+| `/implement` runs forever | Click **Stop** in the chat panel to cancel the current run. *"This is exactly the failure mode on slide 5, the model gets stuck. Here's what we'd do."* Switch to the pre-built `expected-artifacts/implement-*.md`. |
+| The whole thing fails (gateway down, etc.) | Skip the demo entirely. Spend extra time on slides 5-7 (failure modes are the bigger conceptual content anyway). |
 
 The expected-artifacts folder is your safety net. **Don't try to debug live.** A failed demo narrated as a failure mode is *better* than a successful demo, pedagogically.
 
@@ -161,18 +175,19 @@ The expected-artifacts folder is your safety net. **Don't try to debug live.** A
 
 | Question | Short answer |
 |---|---|
-| "Can I use rse-plugins with Copilot?" | "The plugin is Claude Code-specific, but the *pattern* (slash commands, markdown artifacts in `.agents/`) is portable. Block 4 walks through how to build a similar workflow in your tool of choice, Copilot prompt files are one option." |
-| "Why didn't you use Copilot for this block?" | "Workshop's spine: all coding agents work the same way under the hood. Showing a different IDE *proves* the spine in front of the room. Block 4 brings it back to Copilot." |
+| "Where do these slash commands come from?" | "They're four markdown files in `.github/prompts/` — `research.prompt.md`, `plan.prompt.md`, etc. Each is frontmatter (tools) plus a templated system prompt. The phase design is adapted from UW SSEC's `rse-plugins`; we ship them as Copilot prompt files so the whole workshop stays in one tool." |
+| "Could I run the same workflow in Claude Code or Cursor?" | "Yes — the *pattern* (named slash commands, markdown artifacts in `.agents/`) is portable; the file format differs per tool. We keep everything in Copilot Chat here for consistency, but you can port these to any agent." |
 | "Should I write workflows for my own projects?" | "Yes, but start small. One slash command for the workflow you do most often (e.g., `/run-tests-and-summarize` or `/explain-this-traceback`) is a good first project. That's Block 4." |
-| "Does `/handoff` actually work?" | "Yes, it writes a self-contained markdown doc; the next session reads it and picks up. Especially valuable for long-running multi-day work." |
-| "Can the agent's plan be wrong?" | "Often. That's why `/iterate-plan` exists, surgical edits, not regenerate. And why `/validate` is non-optional for anything you'd commit." |
+| "How do I carry context across a long session?" | "Run `/handoff` — it writes a self-contained markdown doc to `.agents/`, then you start a fresh chat and point it at that file. It ships in `.github/prompts/` like the others." |
+| "Can the agent's plan be wrong?" | "Often. Run `/iterate-plan` for surgical edits (or hand-edit the plan — it's plain markdown) instead of regenerating. And `/validate` is non-optional for anything you'd commit." |
 
 ## What to skip if you're behind time
 
 In order of expendability:
 
 1. The "iterate" / "experiment" / "handoff" rows on slide 3, collapse to "and three more for refinement, comparison, and context transfer."
-2. One column of the failure modes table on slide 5, drop "Where it comes from" if you have to (sad, it's the Block 2 payoff, but the *mitigations* are more actionable).
+2. Slides 6a (git hygiene) and 6b (prompt injection), they're high-value but not load-bearing for the spine. Best used as extra narration filler *while `/implement` grinds*; if the demo runs to time, cut them. If your audience handles sensitive data or is security-minded, keep 6b.
+3. One column of the failure modes table on slide 5, drop "Where it comes from" if you have to (sad, it's the Block 2 payoff, but the *mitigations* are more actionable).
 3. The practical use cases tour (slide 7), collapse to one sentence: *"Agents help most with feature implementation, debugging, test writing, docs, code review, exploration, and experiment management; they're easiest to misuse on architectural decisions."*
 4. The cross-field paragraph at the bottom of slide 8, keep the table, drop the prose. Or vice versa if you have a single-field audience.
 5. The bonus discussion of `/validate` failures during the demo.

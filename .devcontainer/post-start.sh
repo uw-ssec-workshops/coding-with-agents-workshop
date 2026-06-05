@@ -10,7 +10,7 @@ BOLD="\033[1m"
 RESET="\033[0m"
 
 STAGE="post-start"
-TOTAL_STEPS=4
+TOTAL_STEPS=3
 
 say()  { printf "%b\n==> [%s] (%s/%s) %s%b\n" "${BOLD}${GREEN}" "${STAGE}" "$1" "${TOTAL_STEPS}" "$2" "${RESET}"; }
 info() { printf "      %s\n" "$1"; }
@@ -65,40 +65,6 @@ if [ -n "${OAI_API_KEY:-}" ]; then
   info "OAI_API_KEY alias: detected"
 else
   warn "OAI_API_KEY is not set; the LLMoxie Copilot extension may not authenticate"
-fi
-
-say 4 "Configuring Claude Code for the LLMoxie gateway"
-# Claude Code reads env vars from ~/.claude/settings.json. The auth token and
-# base URL come from the Codespace secrets (LITELLM_API_KEY / LITELLM_BASE_URL)
-# rather than being committed to the repo. Regenerated every start so secret
-# rotation propagates. Any pre-existing settings keys are preserved.
-CLAUDE_DIR="${HOME}/.claude"
-CLAUDE_SETTINGS="${CLAUDE_DIR}/settings.json"
-mkdir -p "${CLAUDE_DIR}"
-
-EXISTING_SETTINGS='{}'
-if [ -f "${CLAUDE_SETTINGS}" ] && jq -e . "${CLAUDE_SETTINGS}" >/dev/null 2>&1; then
-  EXISTING_SETTINGS="$(cat "${CLAUDE_SETTINGS}")"
-elif [ -f "${CLAUDE_SETTINGS}" ]; then
-  warn "Existing ${CLAUDE_SETTINGS} is not valid JSON — replacing it"
-fi
-
-printf '%s' "${EXISTING_SETTINGS}" | jq \
-  --arg base "${LITELLM_BASE_URL:-}" \
-  --arg token "${LITELLM_API_KEY:-}" \
-  '.env = ((.env // {}) + {
-      ANTHROPIC_BASE_URL: $base,
-      ANTHROPIC_AUTH_TOKEN: $token,
-      CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: "1"
-   })
-   | .model = "claude-sonnet-4-6"' > "${CLAUDE_SETTINGS}.tmp"
-mv "${CLAUDE_SETTINGS}.tmp" "${CLAUDE_SETTINGS}"
-chmod 600 "${CLAUDE_SETTINGS}"
-
-if [ -n "${LITELLM_BASE_URL:-}" ] && [ -n "${LITELLM_API_KEY:-}" ]; then
-  info "Wrote ${CLAUDE_SETTINGS} (gateway creds from secrets, default model claude-sonnet-4-6)"
-else
-  warn "Wrote ${CLAUDE_SETTINGS}, but LITELLM_BASE_URL/LITELLM_API_KEY are empty — Claude Code will not authenticate"
 fi
 
 printf "%b\n==> [%s] complete — container is ready.%b\n" "${BOLD}${GREEN}" "${STAGE}" "${RESET}"

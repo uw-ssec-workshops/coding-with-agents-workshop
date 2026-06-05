@@ -3,9 +3,10 @@
 A small, curated list. Optimized for *applying* what we just demoed
 (structured workflows, failure mode awareness) to real research code.
 
-## The plugin we used
+## The workflow we used
 
-- **[`rse-plugins`](https://github.com/uw-ssec/rse-plugins)**: the Claude Code plugin we demoed live. Source code, install instructions, and per-command documentation. Built by the [UW Scientific Software Engineering Center](https://escience.washington.edu/software-engineering/ssec/).
+- **[`.github/prompts/`](../../.github/prompts/)**: the seven prompt files that make up the research loop — `research`, `plan`, `iterate-plan`, `experiment`, `implement`, `validate`, `handoff` (`.prompt.md` each). The demo runs four of them; all seven ship in-repo, no plugin to install. Each is a templated Copilot Chat slash command — read them as the reference for Block 4.
+- **[`rse-plugins`](https://github.com/uw-ssec/rse-plugins)**: the research-plan-implement-validate workflow our prompt files are adapted from, built by the [UW Scientific Software Engineering Center](https://escience.washington.edu/software-engineering/ssec/). The upstream version is a Claude Code / Copilot CLI plugin; we reimplemented its commands and artifact templates as in-repo Copilot prompt files. Read its source for the original (and richer) per-phase guidance.
 
 ## Conventions for scientific Python packages
 
@@ -26,7 +27,7 @@ A small, curated list. Optimized for *applying* what we just demoed
 
 ## Companion to the demo
 
-The teammate who originally wrote the rse-plugins demo wrote a
+The team behind `rse-plugins` wrote a
 [handout](https://github.com/uw-ssec/rse-plugins) and a 4-minute
 [demo script](https://github.com/uw-ssec/rse-plugins), both of which
 informed this block. They're useful as condensed reference if you want
