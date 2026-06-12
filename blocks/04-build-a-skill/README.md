@@ -5,9 +5,10 @@
 **Spine:** *Skills are simple, a few fields in a markdown file. Now write one.*
 
 The capstone. Each attendee builds a working custom agent of their own and
-runs it against the climate model from Block 3 (or their own code). The
-worked examples in [`.github/agents/`](../../.github/agents/) plus the
-[`exercise/`](exercise/) folder are the scaffolding.
+runs it against the `sci_units` package from Block 1, the Block 3 text-entry
+dataset, or their own code. The worked examples in
+[`.github/agents/`](../../.github/agents/) plus the [`exercise/`](exercise/)
+folder are the scaffolding.
 
 > **A note on naming:** Copilot's custom agents were until recently called
 > **custom chat modes** (`.chatmode.md` files in `.github/chatmodes/`). VS Code
@@ -22,14 +23,14 @@ By the end of this block, an attendee can:
 1. Read a Copilot custom agent file and identify which line corresponds to which **anatomy concept** from Block 1 (LLM backbone, tool use, project memory, system prompt).
 2. **Write** a custom agent end-to-end: pick a job, write a focused system prompt, choose a narrow tool list, save it to `.github/agents/`, and invoke it.
 3. **Iterate** on an agent that almost works: tighten the prompt, add explicit constraints, narrow or broaden the tool list.
-4. Map the same agent pattern to **other primitives** (Copilot prompt-file commands for one-shots, like the Block 3 workflow; skills for multi-step capabilities; MCP servers if they want to add new tools).
+4. Map the same agent pattern to **other primitives** (Copilot prompt-file commands for one-shots, like `eda-summary` or `scaffold-package`; skills for multi-step capabilities, like the Block 3 research loop; MCP servers if they want to add new tools).
 
 ## What's in this folder
 
 ```
 04-build-a-skill/
   README.md            # this file
-  slides.md            # Marp slides (~6 slides, ~10 min talking)
+  slides.md            # Marp slides (~8 slides incl. 1 optional, ~10 min talking)
                        # (theme: shared blocks/_shared/slides.css)
   instructor-notes.md  # facilitation guide, live-build script, what to circulate for
   resources.md         # Copilot custom-agent docs, prompt files, skills, MCP
@@ -87,7 +88,7 @@ VISS members will be available the day after the workshop to help
 attendees:
 
 - Try their agent against their own data or workflows.
-- Promote an agent to a Copilot **prompt-file command** (like the Block 3 workflow) or a **skill** (with bundled scripts) if they want a different shape, or wrap a new tool with an **MCP server**.
+- Promote an agent to a Copilot **prompt-file command** (a one-shot `/slash` action) or a **skill** (a multi-step capability the agent can auto-select, like the Block 3 research loop) if they want a different shape, or wrap a new tool with an **MCP server**.
 - Port their agent to another tool (Cursor, Claude Code, ...) — the pattern carries over even though the file format differs.
 - Talk through agentic research workflows in general.
 

@@ -22,7 +22,7 @@ description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
 |---|---|
 | 1. Landscape | All coding agents have the same anatomy: LLM + tools + memory + loop. |
 | 2. How it works | Triage failures: **prompt problem** vs **training problem** — the prompt is your lever. |
-| 3. Workflows | **Workflows ARE the prompt**, structured, reusable, auditable. |
+| 3. Workflows | **Workflows are reusable skills** — structured, auditable, the agent picks one or you invoke it. |
 | 4. **Now** | Write one. |
 
 > The pieces are simple. The **practice** is what makes it useful.
@@ -71,8 +71,31 @@ You are a senior research software engineer reviewing scientific Python code...
 Open them. Read them. **They are the reference for what you'll write.**
 
 > The exercise's `ideas.md` has 30+ more agent ideas if you don't have one
-> in mind, by category (review, generation, refactoring, climate-specific,
-> general research, onboarding). The rest of `.github/` is a fuller gallery.
+> in mind, by category (review, generation, refactoring, HCI / experiment
+> analysis, general research, onboarding). The rest of `.github/` is a fuller gallery.
+
+---
+
+## Prompts vs. skills vs. agents (all in `.github/`)
+
+Three primitives, same idea (a markdown file = instructions + tools), different shapes:
+
+| | **Prompt file** | **Skill** | **Custom agent** |
+|---|---|---|---|
+| **Folder** | `.github/prompts/*.prompt.md` | `.github/skills/<name>/SKILL.md` | `.github/agents/*.agent.md` |
+| **Invoked** | You type `/name` | Agent auto-picks (or `/name`) | You select it in the agent picker |
+| **Input** | Structured `${input:var}` fields | Natural-language context (+ `argument-hint`) | The whole conversation |
+| **Best for** | One-shot repeatable task | A multi-step capability (can bundle scripts) | A persistent persona with a fixed tool list |
+| **Lifespan** | One turn | One task | The whole chat |
+| **Example here** | `eda-summary`, `scaffold-package` | the 7 research-loop skills | `docstring-writer`, `research-analyst` |
+
+> They **compose**: `research-analyst` (an *agent*) drives the seven *skills* in
+> order. Pick the smallest primitive that does the job — most of the time that's a
+> prompt file or a skill, not a whole agent.
+
+> Prompts don't only take static `${input}` fields — they can gather context
+> *interactively* by calling the `vscode/askQuestions` tool ("which file should I
+> test?") instead of guessing.
 
 ---
 
@@ -83,7 +106,7 @@ Open them. Read them. **They are the reference for what you'll write.**
     cp blocks/04-build-a-skill/exercise/my-agent.agent.md.template \
        .github/agents/my-agent.agent.md
     ```
-2. **Pick** a target, the climate model, `sci_units`, or your own code.
+2. **Pick** a target, the `sci_units` package, the Block 3 text-entry dataset, or your own code.
 3. **Pick** a job, see `exercise/ideas.md`, or invent your own.
 4. **Edit** the file: name, description, tools, system prompt, constraints.
 5. **Reload** Copilot Chat (or wait, agents auto-detect).
@@ -94,6 +117,20 @@ Full instructions: [`blocks/04-build-a-skill/exercise/README.md`](../../blocks/0
 > Instructors circulating. **Get something narrow working** before
 > trying to make it broader. Ship a boring agent that runs over an
 > ambitious agent that doesn't.
+
+---
+
+## Optional: want to write *more* skills?
+
+Once your first agent works, the natural next step is a **multi-phase skill
+workflow** — several skills that hand off through artifacts, like the Block 3
+research loop you watched.
+
+> **Try it (take-home / office hours):** write **one** new skill of your own
+> that chains onto the Block 3 loop —
+> e.g. a `power-analysis` skill that runs *before* `plan-analysis`, or a
+> `peer-review` skill that critiques a `draft-report` artifact. Same shape:
+> `name` + `description` + `tools` + steps + an artifact in `docs/`.
 
 ---
 

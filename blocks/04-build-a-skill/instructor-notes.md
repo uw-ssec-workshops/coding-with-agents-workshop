@@ -1,21 +1,13 @@
 # Block 4: Instructor Notes
 
-These are the notes you actually deliver from. The slide deck has the
-public-facing version; this is the inside view.
-
 This is the most facilitation-heavy block in the workshop. The slides
 are short on purpose; your job is mostly **circulating**.
-
-> **Naming reminder:** what used to be a "custom chat mode" (`.chatmode.md`)
-> is now a **custom agent** (`.agent.md` in `.github/agents/`). Same fields,
-> current name. If an attendee found an older tutorial that says "chat mode",
-> reassure them it's the same thing.
 
 ## Pre-block checklist
 
 - [ ] Confirm both worked-example agents appear in the Copilot agent picker. (Open the chat panel, click the agent dropdown, look for `scientific-python-reviewer` and `docstring-writer`.) If not: **Developer: Reload Window**.
 - [ ] Have the **live-build agent** memorized or in a scratch buffer (see "Live-build script" below).
-- [ ] Have the climate model open in a side editor: `blocks/03-research-loop/demo/starter/climate_model.py`.
+- [ ] Have a code target open in a side editor for agents to run against — e.g. the `sci_units` package at `blocks/01-landscape/demo/starter/`, or the Block 3 dataset/generator at `blocks/03-research-loop/demo/starter/`.
 - [ ] Have `blocks/04-build-a-skill/exercise/ideas.md` open in another tab, you'll point participants at it constantly.
 - [ ] Identify any participants who have brought their own code, they'll need slightly different guidance during circulation.
 
@@ -61,16 +53,28 @@ If you're behind: cut show-and-tell first (it's optional). Then collapse the liv
 - Open `scientific-python-reviewer.agent.md` in a side editor. Point at structure.
 - Open `docstring-writer.agent.md`. Same shape, different tool list.
 - *"The exercise tells you to copy patterns. Do that, the worked examples ARE the curriculum."*
-- If anyone asks "is there more?": yes, `.github/` has a fuller gallery (more agents, prompt-file commands, a skill, instructions) mapped to the research lifecycle. Point them at the customization gallery in the root `README.md`, but don't detour the whole room.
+- If anyone asks "is there more?": yes, `.github/` has a fuller gallery (more agents, prompt-file commands, skills, instructions) mapped to the research lifecycle. Point them at the customization gallery in the root `README.md`, but don't detour the whole room.
 
-### 5. Your turn (HOLD this slide for the whole hands-on)
+### 5. Prompts vs. skills vs. agents
+
+- 60-90 seconds. This is the slide that ties Block 3 (skills) and Block 4 (agents) together with the prompt files they've also seen.
+- The one-liner to land: *"Same idea — a markdown file of instructions + a tool list — three shapes. Prompt file = a `/command` you fire; skill = a capability the agent picks; agent = a persona you switch into."*
+- The composition point is the payoff: *"`research-analyst` is an agent that runs the seven skills for you."* That's why the primitives aren't competitors.
+- Don't read the whole table aloud — point at the **Input** row (structured `${input}` for prompts vs natural language for skills, the thing someone always asks) and the **Best for** row.
+
+### 6. Your turn (HOLD this slide for the whole hands-on)
 
 - Project for the duration. Participants need it as a reference.
 - Repeat *"narrow over broad"* whenever you spot someone aiming too big.
 - ~3 min in: walk the room. Help anyone whose agent hasn't appeared in the picker.
 - ~10 min in: announce 5 min remaining and start scouting show-and-tell volunteers.
 
-### 6. Wrap-up
+### 7. Optional: write more skills
+
+- **Optional / skippable** — only show it if the hands-on finished early or someone asks "where do I go next?". Otherwise mention it in one line and move to wrap-up.
+- The point: the next step up from one agent is a multi-skill workflow that hands off through artifacts, like the Block 3 loop. The take-home exercise (write one skill that chains onto that loop) is a great office-hours starter; don't try to run it live.
+
+### 8. Wrap-up
 
 - Confirm office hours time + location explicitly.
 - Thank: co-instructors, Schmidt Sciences, the VISS centers, and the attendees.
@@ -78,8 +82,7 @@ If you're behind: cut show-and-tell first (it's optional). Then collapse the liv
 
 ## Live-build script
 
-Build a tiny `error-explainer` agent in ~3-4 minutes. The point is to
-demystify, not to impress. Keep it small and visible.
+Build a tiny `error-explainer` agent in ~3-4 minutes. Keep it small and visible.
 
 **Type, don't paste.** The visible typing is part of the lesson.
 
@@ -129,8 +132,8 @@ Save. Open Copilot Chat. Click the agent picker. **Point out** that
 
 ```
 Traceback (most recent call last):
-  File "co2_emissions.py", line 39, in _read_ssp_csv
-    df = pd.read_csv('SSP_CO2emissions.csv', skiprows=1)
+  File "analysis.py", line 12, in <module>
+    df = pd.read_csv('data.csv', comment='#')
 NameError: name 'pd' is not defined
 ```
 
@@ -157,23 +160,12 @@ The biggest categories of stuck participants and how to unstick them:
 - Each volunteer gets 60-90 seconds: show the agent file, run a query, show the result.
 - If no volunteers: walk through what you saw circulating ("a bunch of you built docstring writers, here's a clever twist someone added"). Don't force.
 
-## What to skip if you're behind time
-
-In order:
-
-1. Show-and-tell (skip entirely; thank participants and move to wrap-up).
-2. Live build (point at the worked examples and say *"go read these for 1 minute, then build your own"*).
-3. Slide 3 (anatomy), collapse to "open the file, you'll see the structure."
-
-**Never skip:** slide 5 (the hands-on instructions), the office hours pointer, the thank-yous.
-
 ## Common audience questions
 
 | Question | Short answer |
 |---|---|
-| "Didn't these used to be called chat modes?" | "Yes. VS Code renamed custom chat modes to custom agents (`.chatmode.md` -> `.agent.md`, `.github/chatmodes/` -> `.github/agents/`). Same fields, same idea." |
 | "What's the difference between a custom agent and a prompt file?" | "Custom agent = persistent persona for the whole conversation, picked from the agent dropdown. Prompt file = one-shot `/slash` command. Use prompt files for repeated quick actions, agents for sustained tasks." |
-| "What's a skill then?" | "A skill is a folder (`.github/skills/<name>/SKILL.md`) that can bundle scripts and resources, loaded on demand. Use it for a multi-step capability, not a single prompt. See `.github/skills/experiment-log/`." |
+| "What's a skill then?" | "A skill is a folder (`.github/skills/<name>/SKILL.md`) that can bundle scripts and resources, loaded on demand. Use it for a multi-step capability, not a single prompt. See the Block 3 research-loop skills in `.github/skills/`." |
 | "Can I have multiple agents active?" | "One at a time per chat. But you can switch mid-conversation, and agents can hand off to each other." |
 | "Does the agent use the LiteLLM proxy?" | "Yes, Copilot uses the same env vars regardless of agent. The model you see in the picker comes from your Copilot settings." |
 | "Can I use this with another tool (Cursor, Claude Code)?" | "Yes. They have their own equivalents (Cursor rules/modes, Claude Code skills). The pattern transfers; the file format differs slightly. We keep the whole workshop in Copilot Chat for consistency. See `resources.md`." |

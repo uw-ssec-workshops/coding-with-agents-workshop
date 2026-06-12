@@ -8,37 +8,39 @@ description. Pick one and remix it into a custom agent (`.github/agents/`).
 
 | Skill | Tools | What it does | Good target |
 |---|---|---|---|
-| `style-checker` | `read`, `search/codebase` | Flag PEP 8 violations + missing types in a file | `climate_model.py` |
-| `docstring-checker` | `read`, `search/codebase` | List public functions missing docstrings, with a one-line ask | `co2_emissions.py` |
+| `style-checker` | `read`, `search/codebase` | Flag PEP 8 violations + missing types in a file | `sci_units/converters.py` |
+| `docstring-checker` | `read`, `search/codebase` | List public functions missing docstrings, with a one-line ask | `sci_units/converters.py` |
 | `complexity-flagger` | `read`, `search/codebase` | Identify functions that need splitting; suggest extraction points | any |
-| `naming-reviewer` | `read`, `search/codebase` | Flag confusing variable / function names in scope | `climate_model.py` (variables `c0`, `t0`, `s` are great fodder) |
+| `naming-reviewer` | `read`, `search/codebase` | Flag confusing variable / function names in scope | your own code (terse one-letter names are great fodder) |
 | `dependency-auditor` | `read`, `search/codebase` | Read `pyproject.toml` and identify unpinned / suspicious deps | any package |
 
 ## Code generation (writes to files: slightly trickier)
 
 | Skill | Tools | What it does | Good target |
 |---|---|---|---|
-| `test-author` | `read`, `edit/editFiles` | Write pytest tests for a function | `vscm.emissions` (in expected-artifacts) |
-| `cli-designer` | `read`, `edit/editFiles` | Add an `argparse`-based CLI to a script | `climate_model.py` |
-| `type-annotator` | `read`, `edit/editFiles` | Add type hints to functions in a file | `co2_emissions.py` |
-| `pyproject-bootstrapper` | `read`, `edit/editFiles` | Generate a starter `pyproject.toml` from existing imports | climate model dir |
+| `test-author` | `read`, `edit/editFiles` | Write pytest tests for a function | `sci_units.converters` |
+| `cli-designer` | `read`, `edit/editFiles` | Add an `argparse`-based CLI to a script | any script (or your own code) |
+| `type-annotator` | `read`, `edit/editFiles` | Add type hints to functions in a file | any partially-typed file |
+| `pyproject-bootstrapper` | `read`, `edit/editFiles` | Generate a starter `pyproject.toml` from existing imports | any flat-script dir / your own code |
 
 ## Refactoring
 
 | Skill | Tools | What it does | Good target |
 |---|---|---|---|
-| `tab-to-space` | `read`, `edit/editFiles` | Replace tabs with 4 spaces in selected files | `climate_model.py`, `co2_emissions.py` |
-| `script-to-package` | `read`, `edit/editFiles` | Plan (in markdown) the steps to convert a flat script to a `src/` package | climate model dir |
-| `extract-function` | `read`, `edit/editFiles` | Pull a code block into a named function with appropriate args | `VSCM.run` |
+| `tab-to-space` | `read`, `edit/editFiles` | Replace tabs with 4 spaces in selected files | any tab-indented file / your own code |
+| `script-to-package` | `read`, `edit/editFiles` | Plan (in markdown) the steps to convert a flat script to a `src/` package | any flat script / your own code |
+| `extract-function` | `read`, `edit/editFiles` | Pull a code block into a named function with appropriate args | any long function / your own code |
 | `path-modernizer` | `read`, `edit/editFiles` | Replace `os.path` calls with `pathlib` equivalents | any older code |
 
-## Domain-specific (climate / SSP)
+## Domain-specific (HCI / experiment analysis)
+
+Targets the Block 3 text-entry dataset (`blocks/03-research-loop/demo/starter/data.csv`) or your own experiment data.
 
 | Skill | Tools | What it does | Good target |
 |---|---|---|---|
-| `ssp-explainer` | `read`, `search/codebase` | Explain a given SSP scenario in plain language with a numerical sketch | climate model |
-| `forcing-equation-checker` | `read`, `search/codebase` | Read the temperature update step and verify the climate sensitivity formula | `climate_model.py:VSCM.run` |
-| `co2-trajectory-summarizer` | `read`, `search/codebase` | Summarize the SSP CSV: shape, range, year coverage, columns | `SSP_CO2emissions.csv` |
+| `design-detector` | `read`, `search/codebase` | Read a dataset + its codebook and state whether it's within- or between-subjects, and which test family fits | `data.csv` + `AGENTS.md` |
+| `assumption-checker` | `read`, `execute/runInTerminal` | Run normality / variance checks on an outcome and report whether a parametric test is justified | `data.csv` (`wpm`) |
+| `wrong-test-spotter` | `read`, `search/codebase` | Read an analysis script and flag an independent-samples test used on repeated-measures data | any analysis `.py` / `.ipynb` |
 
 ## General research
 
@@ -62,7 +64,7 @@ For attendees working with survey data, behavioral experiments, mixed-methods, o
 | `analysis-narrator` | `read`, `search/codebase` | Read a notebook of effects + p-values, draft a "results" paragraph in your field's voice (APA / AMA / your style guide) | any analysis notebook |
 | `power-analysis-explainer` | `read`, `search/codebase` | Read a study design, propose what a reasonable power analysis would look like (without claiming to do the math) | any preregistration draft |
 
-> **Tip for non-physical-science attendees:** pick `climate_model.py` only if it's faster than opening your own work. Otherwise, drop a notebook / CSV from your lab into a scratch folder and target that, the custom-agent pattern is identical.
+> **Tip for non-physical-science attendees:** pick `sci_units` or the Block 3 dataset only if it's faster than opening your own work. Otherwise, drop a notebook / CSV from your lab into a scratch folder and target that, the custom-agent pattern is identical.
 
 ## Experiment management
 
@@ -82,7 +84,7 @@ The agent reads run outputs, summarizes them, and helps drive the next iteration
 |---|---|---|---|
 | `repo-tour-guide` | `read`, `search/codebase` | Read a repo's structure and produce a 5-bullet "what is this and where to start" doc | this workshop repo! |
 | `function-of-the-day` | `read`, `search/codebase` | Pick one function in the project and explain it in detail | any |
-| `glossary-builder` | `read`, `search/codebase` | Identify domain terms in a codebase and define them | climate model |
+| `glossary-builder` | `read`, `search/codebase` | Identify domain terms in a codebase and define them | `sci_units` / your own code |
 
 ## Going-further (stretch: probably won't finish in the block, take home)
 
