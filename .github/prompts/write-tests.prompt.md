@@ -1,7 +1,7 @@
 ---
 agent: agent
 description: 'Write focused pytest tests for a target function or module.'
-tools: ['read', 'edit/editFiles', 'search/codebase', 'execute/runInTerminal']
+tools: ['read', 'edit/editFiles', 'search/codebase', 'execute/runInTerminal', 'vscode/askQuestions']
 ---
 
 # Write pytest tests
@@ -9,8 +9,10 @@ tools: ['read', 'edit/editFiles', 'search/codebase', 'execute/runInTerminal']
 Add a small, high-value set of `pytest` tests for a target the user names.
 This is the **testing / validation** phase of the research lifecycle.
 
-Target: `${input:target:function or module to test, e.g. sci_units.converters.celsius_to_fahrenheit (blank = open file)}`.
-If blank, use the currently open file `${file}`.
+Target: `${input:target:function or module to test, e.g. sci_units.converters.celsius_to_fahrenheit (blank = use the highlighted selection or the open file)}`.
+If blank, test the highlighted code in `${selection}` when something is selected;
+if nothing is selected, use `#tool:vscode/askQuestions` to confirm whether to test
+the open file `${file}` or a specific target before writing any tests.
 
 ## Steps
 

@@ -1,7 +1,7 @@
 ---
 agent: agent
 description: 'Draft a CITATION.cff and release notes from the repo metadata and git history.'
-tools: ['read', 'search/codebase', 'execute/runInTerminal']
+tools: ['read', 'search/codebase', 'execute/runInTerminal', 'vscode/askQuestions']
 ---
 
 # Citation + release notes
@@ -11,11 +11,15 @@ Help a research project become citable and release-ready. This is the
 software becomes something other scientists can cite and reuse.
 
 Scope for this run: `${input:scope:e.g. "v0.2.0 release" or "just the CITATION.cff"}`.
+If the scope is blank or unclear, use `#tool:vscode/askQuestions` to confirm with
+the user whether this is a full release or just the `CITATION.cff` before starting.
+Repo root: `${workspaceFolder}` — read project metadata from there.
 
 ## Steps
 
-1. Read `pyproject.toml`, `README.md`, `LICENSE`, and any existing
-   `CITATION.cff`. Pull authors, project name, license, version, and repo URL.
+1. Read `${workspaceFolder}/pyproject.toml`, `${workspaceFolder}/README.md`,
+   `${workspaceFolder}/LICENSE`, and any existing `CITATION.cff`. Pull authors,
+   project name, license, version, and repo URL.
 2. **CITATION.cff**: draft or update a valid Citation File Format file
    (`cff-version: 1.2.0`). Include `title`, `authors` (name/affiliation/ORCID
    if discoverable — otherwise leave a clearly-marked TODO), `version`,

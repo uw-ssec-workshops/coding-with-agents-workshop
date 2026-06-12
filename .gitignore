@@ -37,8 +37,3 @@ slides.pptx
 .env.*
 !.env.example
 .aws/
-
-# Artifacts written by the Block 3 research-loop workflow commands
-# (/research, /plan, /implement, /validate). Demo run output, not source.
-# The curated fallback copies live in blocks/*/demo/expected-artifacts/.
-.agents/
