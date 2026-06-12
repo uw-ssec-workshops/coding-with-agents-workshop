@@ -1,6 +1,6 @@
 ---
 name: statistical-tests
-description: 'Run the confirmatory statistical test an analysis plan specifies — honoring the study design and the assumption-check results — and report the statistic, p-value, effect size, and CI to docs/, with no fabricated numbers. Use when the plan and assumption checks are done and someone wants the actual test result. Phase 4 of the analysis workflow.'
+description: 'Run the confirmatory statistical test an analysis plan specifies — honoring the study design and the assumption-check results — and report the statistic, p-value, effect size, and a CI (when one is computed) to docs/, with no fabricated numbers. Use when the plan and assumption checks are done and someone wants the actual test result. Phase 4 of the analysis workflow.'
 tools: ['read', 'edit/editFiles', 'search/codebase', 'execute/runInTerminal']
 argument-hint: '[optional: force a specific test]'
 ---
@@ -36,7 +36,8 @@ it means *inside that directory*.
    test, and prints the results. Keep it reproducible.
 3. **Run it** and capture the real output.
 4. **Report, for each test:** test name, statistic, df (if any), p-value,
-   **effect size + 95% CI**, and n.
+   **effect size** (plus a **95% CI when you actually compute one** — otherwise
+   state "CI not computed"), and n.
 5. **Post-hoc + correction** if there are 3+ conditions: pairwise tests with the
    planned correction (e.g. Holm), reported in a table.
 6. **Write the artifact** to `docs/test-<slug>.md` and present the headline
@@ -51,7 +52,7 @@ Test chosen: <test> — because assumptions <held / failed: see explore-<slug>.m
 
 ## Primary result
 - <test>: stat=<..>, p=<..> (alpha=<..>) → <reject / fail to reject H0>
-- Effect size: <name>=<..>, 95% CI [<..>, <..>]
+- Effect size: <name>=<..> (95% CI [<..>, <..>] if computed, else "CI not computed")
 - n = <..>
 
 ## Post-hoc (if applicable, corrected)
@@ -71,8 +72,9 @@ Test chosen: <test> — because assumptions <held / failed: see explore-<slug>.m
 
 - **No fabricated numbers, ever.** If you didn't run it, don't report it. Paste
   results from the actual run.
-- Report **effect size + CI alongside every p-value** — a p-value alone is not a
-  result.
+- Report an **effect size alongside every p-value** — a p-value alone is not a
+  result. Add a 95% CI **when you compute one**; if you don't, write "CI not
+  computed" rather than inventing an interval.
 - Don't reshape or edit the source data; the only files you create are the analysis
   script and the `docs/` artifact.
 - If reality contradicts the plan (e.g. an assumption you expected to hold fails),

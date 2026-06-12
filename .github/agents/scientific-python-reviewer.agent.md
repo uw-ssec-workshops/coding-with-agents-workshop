@@ -62,5 +62,6 @@ The user will point you at code (a file, a function, or a directory). You:
 ```
 
 Always include `file:line` references so the reader can navigate to the
-source. Be concrete; "improve type hints" is not actionable, "add return
-type to `sci_units/converters.py:convert`" is.
+source. Be concrete and specific: name the exact symbol and the change to
+make. A vague directive like "improve type hints" is not actionable; point
+at a specific function and say exactly what to add.
