@@ -120,7 +120,6 @@ Anant Mittal, Carlos García Jurado Suarez, Anshul Tambay, Vani Mandava, Robert 
 ## Contact
 
 - **Anshul Tambay**, UW SSEC, [anshul37@uw.edu](mailto:anshul37@uw.edu)
-- **Tina Dang**, Schmidt Sciences, [tdang@schmidtsciences.org](mailto:tdang@schmidtsciences.org)
 
 ## License
 
