@@ -1,7 +1,7 @@
 ---
 agent: agent
 description: 'Plan the conversion of a flat research script into an installable src/ package.'
-tools: ['read', 'search/codebase']
+tools: ['read', 'search/codebase', 'vscode/askQuestions']
 ---
 
 # Scaffold a package (plan only)
@@ -12,7 +12,8 @@ a `src/` layout. This is the **project setup** phase of the research
 lifecycle.
 
 Target: `${input:target:script or folder to package, e.g. blocks/03-research-loop/demo/starter/ (blank = open file)}`.
-If blank, use the currently open file `${file}`.
+If blank, don't assume: use `#tool:vscode/askQuestions` to confirm with the user
+whether to package the open file `${file}` or a specific script/folder first.
 
 ## Steps
 

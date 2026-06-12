@@ -34,7 +34,7 @@
               "isDefault": true
           },
           {
-              "id": "claude-haiku-4-5-20251001",
+              "id": "claude-haiku-4-5",
               "displayName": "Claude Haiku 4.5 (UW SSEC)",
               "owned_by": "uw-ssec",
               "isUserSelectable": true
@@ -65,14 +65,7 @@
     // OAI_API_KEY is placed in remoteEnv because the LLMoxie Copilot extension runtime reads
     // that OpenAI-compatible environment variable at activation time. Setting it only around
     // lifecycle shell commands would not propagate to the VS Code extension host.
-    "OAI_API_KEY": "${localEnv:LITELLM_API_KEY}",
-    // Point the GitHub Copilot CLI (BYOK) at the same LLMoxie gateway used by the
-    // oaicopilot extension so the CLI exposes the same models. Users can switch
-    // among the available models in-session via the /model slash command
-    // (e.g. /model claude-sonnet-4-6, /model claude-haiku-4-5-20251001).
-    "COPILOT_PROVIDER_BASE_URL": "${localEnv:LITELLM_BASE_URL}/v1",
-    "COPILOT_PROVIDER_API_KEY": "${localEnv:LITELLM_API_KEY}",
-    "COPILOT_MODEL": "claude-sonnet-4-6"
+    "OAI_API_KEY": "${localEnv:LITELLM_API_KEY}"
   },
   "onCreateCommand": "bash .devcontainer/on-create.sh",
   "postCreateCommand": "bash .devcontainer/post-create.sh",

@@ -1,7 +1,7 @@
 ---
 agent: agent
 description: 'Summarize a tabular dataset: shape, columns, types, ranges, and missingness.'
-tools: ['read', 'search/codebase']
+tools: ['read', 'search/codebase', 'vscode/askQuestions']
 ---
 
 # Exploratory data summary
@@ -11,7 +11,8 @@ are working with before they analyze it. This is the **data / EDA** phase of
 the research lifecycle.
 
 The file to summarize is: `${input:dataset:path to a .csv / .tsv / .parquet (or leave blank to use the open file)}`.
-If blank, use the currently open file `${file}`.
+If blank, don't guess: use `#tool:vscode/askQuestions` to confirm with the user
+whether to summarize the open file `${file}` or a specific dataset, then proceed.
 
 ## Steps
 

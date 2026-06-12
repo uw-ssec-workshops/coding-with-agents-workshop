@@ -23,7 +23,7 @@ cp blocks/04-build-a-skill/exercise/my-agent.agent.md.template \
 ```
 
 (Replace `my-agent` with whatever you want to call your agent. Examples:
-`error-explainer`, `style-checker`, `ssp-explainer`.)
+`error-explainer`, `style-checker`, `assumption-checker`.)
 
 ## 2. Pick a target (1 min)
 
@@ -31,19 +31,19 @@ What code (or data, or notebook) will your agent run against? Pick
 whichever gets you to "running" fastest:
 
 1. **Your own work** — a snippet of code, a notebook, a CSV from your lab, a transcript. This is the most useful target if you brought something. The pattern is identical regardless of domain (physical science, ML, behavioral / social science, bio, stats, qualitative work).
-2. **The climate model** in [`blocks/03-research-loop/demo/starter/`](../../03-research-loop/demo/starter/), realistic research Python, has obvious style and structure issues, fits a wide range of agents.
-3. **`sci_units`** in [`blocks/01-landscape/demo/starter/`](../../01-landscape/demo/starter/), small and simple, good for narrow agents.
+2. **`sci_units`** in [`blocks/01-landscape/demo/starter/`](../../01-landscape/demo/starter/), a small Python package, good for code-oriented agents (reviewers, docstring writers, refactorers).
+3. **The Block 3 text-entry dataset** in [`blocks/03-research-loop/demo/starter/`](../../03-research-loop/demo/starter/) (`data.csv` + `make_data.py`), good for data-oriented agents (EDA summarizers, assumption checkers, codebook writers).
 
-If you didn't bring something, that's fine — use the climate model. If
-the climate model feels far from your work, drop a notebook or CSV from
-your lab into a scratch folder and target that. The point is the
+If you didn't bring something, that's fine — use `sci_units` or the
+Block 3 dataset. If they feel far from your work, drop a notebook or CSV
+from your lab into a scratch folder and target that. The point is the
 *pattern*, not the example.
 
 ## 3. Pick a job (1 min)
 
 What does your agent do? See [`ideas.md`](ideas.md) for 30+ starting ideas
-across categories: code review, code generation, refactoring, climate-
-specific, general research, behavioral / social science / stats,
+across categories: code review, code generation, refactoring, HCI /
+experiment analysis, general research, behavioral / social science / stats,
 experiment management, onboarding.
 
 Or invent your own. The good first ones are **narrow** ("review against
@@ -73,8 +73,9 @@ Open `.github/agents/my-agent.agent.md` and fill in the TODOs:
 4. Type a query that exercises your agent.
 
 Example queries depending on what you built:
-- For a reviewer: *"Review `blocks/03-research-loop/demo/starter/climate_model.py`."*
+- For a reviewer: *"Review `blocks/01-landscape/demo/starter/src/sci_units/converters.py`."*
 - For a docstring writer: *"Add docstrings to `blocks/01-landscape/demo/starter/src/sci_units/converters.py`."*
+- For an assumption checker: *"Check the normality assumption on `blocks/03-research-loop/demo/starter/data.csv`."*
 - For an error explainer: *"Explain this traceback: <paste>."*
 
 ## 6. Iterate
@@ -87,7 +88,7 @@ Did your agent do what you expected? If not, that's the point.
 - **Agent being too cautious or too eager?** Add explicit "do NOT" constraints.
 
 This iteration loop, *write, run, observe, adjust the prompt*, is the
-same loop behind the Block 3 workflow prompt files in `.github/prompts/`.
+same loop behind the Block 3 research-loop skills in `.github/skills/`.
 You're doing real prompt engineering.
 
 ## 7. Stretch: take it further
@@ -104,7 +105,7 @@ from an agent: it can bundle scripts and resources and load on demand.
 The fields are slightly different (YAML frontmatter with `name` and
 `description`; markdown body) but the *shape* is identical to a Copilot
 agent: persona + steps + tools + output format. See the worked
-`experiment-log` skill in [`.github/skills/`](../../../.github/skills/).
+Block 3 research-loop skills in [`.github/skills/`](../../../.github/skills/).
 
 1. Make `.github/skills/<your-skill-name>/` at the repo root.
 2. Create `SKILL.md` with `---\nname: <your-skill-name>\ndescription: <one line>\n---` frontmatter, then paste the body from your agent.
@@ -124,8 +125,9 @@ already has a few worked commands to copy from.
 2. Write a body like: *"First, review `${input:file}` against Scientific Python guidelines. Then add the missing docstrings."*
 3. Invoke from chat with `/review-and-fix file=path/to/code.py`.
 
-This is what the Block 3 workflow prompt files are doing under the hood:
-slash commands, each a templated prompt, that you run in sequence.
+Prompt files are the one-shot cousin of the Block 3 research-loop skills:
+where a skill is a multi-step capability the agent auto-selects, a prompt
+file is a templated `/slash` command you fire deliberately.
 
 ### Stretch C — Sketch an MCP server stub for a new tool
 

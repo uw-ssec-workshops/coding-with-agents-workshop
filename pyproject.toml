@@ -13,9 +13,12 @@ dependencies = [
     "litellm>=1.50.0",
     "matplotlib>=3.9.0",
     "numpy>=2.0.0",
+    "pandas>=3.0.3",
     "pint>=0.24.0",
     "pytest>=8.3.0",
     "sci-units",
+    "scipy>=1.17.1",
+    "statsmodels>=0.14.6",
     "workshop-agent",
 ]
 
@@ -35,12 +38,6 @@ workshop-agent = { path = "workshop_agent", editable = true }
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-extend-exclude = [
-    # Block 3's demo subject is intentionally messy (mixed tabs, missing types,
-    # no package layout). The whole point of the demo is for the agent to
-    # discover and clean it up live. Keep ruff's hands off.
-    "blocks/03-research-loop/demo/starter",
-]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

@@ -23,12 +23,6 @@ WORKDIR /workspaces/viss-agentic-ai-workshop-iss-2026
 
 RUN echo 'eval "$(uv generate-shell-completion bash)"' >> ${VSCODE_HOME}/.bashrc
 
-# Pre-install the GitHub Copilot CLI during the image build so the devcontainer
-# is ready on attach. No agent plugins are installed: the research-loop workflow
-# ships in-repo as Copilot prompt files under .github/prompts/.
-COPY --chown=${VSCODE_USER}:${VSCODE_USER} .devcontainer/install-copilot-cli.sh /tmp/install-copilot-cli.sh
-RUN bash /tmp/install-copilot-cli.sh && rm -f /tmp/install-copilot-cli.sh
-
 # Pre-populate uv's package cache (and its managed CPython) so that
 # onCreateCommand's `uv sync` resolves from disk instead of hitting the network.
 # The editable path dependencies (sci-units, workshop-agent) are copied in as
