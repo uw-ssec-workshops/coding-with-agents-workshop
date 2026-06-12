@@ -1,73 +1,98 @@
-# Very Simple Climate Model (VSCM): agent guidance
+# Text-entry study: agent guidance
 
-A minimal climate model used as the running scenario in **Block 3** of the
-"Coding with AI Agents" workshop. Any agent working in this directory
-should read this file first.
+A small within-subjects HCI experiment used as the running scenario in **Block 3**
+of the "Coding with AI Agents" workshop. Read this file first before analyzing the
+data.
 
-## What this code is
+## Paths and where to write artifacts
 
-Two standalone Python scripts implementing a Very Simple Climate Model:
+This study lives in `blocks/03-research-loop/demo/`. The workshop repo is normally
+open at its **root**, so use full repo-root-relative paths:
 
-- `climate_model.py`, class `VSCM` that integrates temperature change
-  from CO2 concentrations using a climate sensitivity parameter and
-  logarithmic forcing.
-- `co2_emissions.py`, CO2 concentration sources: a `Constant_CO2`
-  toy model and an `SSPEmissions` reader that loads
-  `SSP_CO2emissions.csv` (the four standard SSP scenarios, synthetic
-  values for the workshop).
+- **Data:** `blocks/03-research-loop/demo/starter/data.csv`
+- **Write every workflow artifact to `blocks/03-research-loop/demo/docs/`** (create
+  it if needed) — the profile, analysis plan, EDA, test results, draft, and
+  validation. **Do NOT write to the repo's top-level `docs/`.**
 
-Currently, this is **not a package**: no `pyproject.toml`, no `src/`
-layout, no tests, no installable CLI. The whole point of the demo is to
-turn it into one.
+These artifacts are meant to be **committed** (`git add blocks/03-research-loop/demo/docs/`)
+as the analysis audit trail — a dated record of what was analyzed and why.
 
-## What we want it to become
+## What this data is
 
-An installable Python package called **`vscm`**, following the
-[Scientific Python project guidelines](https://scientific-python.org/specs/),
-suitable for a research lab to `pip install` and use programmatically or
-from the command line.
+`starter/data.csv` — a **synthetic** text-entry experiment. Each participant typed
+standardized phrases on three on-screen keyboard interfaces, and we recorded their
+typing speed and error rate. The data is **long/tidy**: one row per
+participant × interface.
 
-Concretely:
+- `make_data.py` generates the CSV deterministically (fixed seed). It is demo
+  scaffolding — the thing you analyze is `data.csv`, not the generator.
+- The CSV's **first line is a `#` comment**; load with
+  `pandas.read_csv(path, comment="#")` (or `skiprows=1`).
 
-- **Layout:** `src/vscm/` with `__init__.py`, modules split sensibly
-  (`model.py`, `emissions.py`, etc.).
-- **Build:** `pyproject.toml` using `uv` for dev workflow and `hatchling`
-  for the build backend.
-- **CLI:** a `vscm` entry point (e.g., `vscm run --scenario 245 --start 2015 --end 2100 --plot`).
-- **Tests:** `tests/` directory, `pytest`-based, covering the SSP loader,
-  the constant-emissions toy, and the `VSCM` integrator with at least
-  one snapshot test of the temperature trajectory.
-- **Style:** type-annotated, formatted with `ruff`, NumPy-style docstrings
-  on the public API.
-- **Docs:** a short `README.md` with install + usage instructions.
-- **Reproducibility:** the SSP CSV ships with the package (use
-  `importlib.resources` to find it, not a relative path).
+## Study design (read carefully — it determines the test)
 
-## Conventions
+- **Within-subjects (repeated measures).** Every participant uses **all three**
+  interfaces, so the three measurements from one participant are *paired*, not
+  independent. **Rows are not independent.** Do **not** analyze this with an
+  independent-samples test (one-way ANOVA, Welch/Student t-test).
+- **Factor:** `interface` with three levels — `qwerty` (baseline on-screen
+  keyboard), `swipe` (gesture typing), `predictive` (heavy auto-complete).
+- **Primary outcome:** `wpm` (words per minute). **Secondary:** `error_rate`
+  (fraction of characters corrected). The primary analysis is on `wpm`.
+- **Order:** `presentation_order` (1/2/3) is counterbalanced across participants,
+  so you can sanity-check for a learning/order effect.
 
-- Python 3.12.
-- Prefer NumPy + (existing) pandas dependencies. Do not add `xarray` or
-  `scipy` unless a concrete feature requires it.
-- Keep matplotlib optional, gate the plotting helpers behind an extra
-  (`vscm[plot]`) so headless installs work without a GUI backend.
-- Use `pathlib`, not `os.path`.
-- The CSV's first line is a comment that pandas should skip
-  (`pd.read_csv(..., skiprows=1)`); preserve that contract or add a
-  proper `# `-comment-aware loader.
+### Variable dictionary
+
+| column | type | meaning |
+|---|---|---|
+| `participant_id` | str | participant label (`P01`…`P30`); the repeated-measures key |
+| `interface` | categorical | `qwerty` / `swipe` / `predictive` (within-subjects factor) |
+| `presentation_order` | int | 1–3, the order this participant saw this interface |
+| `wpm` | float | typing speed, words per minute (primary outcome) |
+| `error_rate` | float | fraction of characters corrected (secondary outcome) |
+
+### Hypotheses
+
+- **H0:** typing speed (`wpm`) does not differ across the three interfaces.
+- **H1:** at least one interface differs in `wpm`.
+
+## Analysis conventions
+
+- **alpha = 0.05.**
+- **Respect the repeated-measures design.** The candidate test is a
+  repeated-measures ANOVA; its non-parametric equivalent is the **Friedman test**.
+  Pairwise follow-ups are **paired** (Wilcoxon signed-rank or paired t), never
+  independent-samples.
+- **Check assumptions before trusting a parametric test:** normality (e.g.
+  Shapiro–Wilk per interface or on residuals) and sphericity. If normality fails,
+  **fall back to Friedman + Wilcoxon signed-rank post-hoc.**
+- **Always report an effect size + 95% CI**, not just a p-value (e.g. Kendall's W
+  for Friedman; matched-pairs rank-biserial for Wilcoxon).
+- **Correct for multiple comparisons** (Holm) across the pairwise post-hoc tests.
+- **Never invent citations.** Where a reference is needed in a draft, write
+  `[CITATION NEEDED]` — do not fabricate authors, years, or DOIs.
+- **Reproducibility:** set a NumPy seed; every reported number must reproduce from
+  `data.csv`.
+
+## Reporting style
+
+A draft write-up produces, in this order, in markdown:
+
+1. **Methods** — participants, design (within-subjects), apparatus (the three
+   interfaces), procedure, measures, and the analysis approach (which test, why,
+   assumption checks, effect size, correction).
+2. **Analysis / Results** — the findings, each traceable to a computed number,
+   leading with the answer to the research question.
 
 ## Out of scope for this demo
 
-- Publishing to PyPI.
-- Continuous integration / GitHub Actions.
-- A docs site beyond a `README.md`.
-- Notebook examples (a follow-up).
+- Causal claims beyond what the manipulated `interface` factor supports.
+- Modeling the learning/order effect beyond a sanity check.
+- Publishing, CI, a docs site.
 
-## How to verify the script still runs after refactoring
+## How to verify a run
 
-```bash
-uv run python -m vscm --scenario 245 --start 2015 --end 2100
-```
-
-It should print (or plot, if `--plot`) a temperature trajectory that
-ends roughly between +1 C and +5 C above the 2015 baseline depending on
-scenario.
+Re-run the analysis script the agent wrote and confirm the headline numbers
+(Friedman χ², p, effect size, and the pairwise post-hoc) reproduce from
+`starter/data.csv`.
