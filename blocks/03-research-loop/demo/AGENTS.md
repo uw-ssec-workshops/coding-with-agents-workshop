@@ -67,8 +67,10 @@ participant × interface.
 - **Check assumptions before trusting a parametric test:** normality (e.g.
   Shapiro–Wilk per interface or on residuals) and sphericity. If normality fails,
   **fall back to Friedman + Wilcoxon signed-rank post-hoc.**
-- **Always report an effect size + 95% CI**, not just a p-value (e.g. Kendall's W
-  for Friedman; matched-pairs rank-biserial for Wilcoxon).
+- **Always report an effect size**, not just a p-value (e.g. Kendall's W for
+  Friedman; matched-pairs rank-biserial for Wilcoxon). Add a **95% CI when you
+  compute one**; if you don't, note "CI not computed" rather than inventing an
+  interval.
 - **Correct for multiple comparisons** (Holm) across the pairwise post-hoc tests.
 - **Never invent citations.** Where a reference is needed in a draft, write
   `[CITATION NEEDED]` — do not fabricate authors, years, or DOIs.

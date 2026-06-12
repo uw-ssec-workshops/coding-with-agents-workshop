@@ -13,8 +13,8 @@ one-way ANOVA is **not** an option: the design is repeated-measures.
 
 - **Friedman:** χ²(2) = 45.19, p = 1.5 × 10⁻¹⁰ (α = 0.05) → **reject H0**. Typing
   speed differs across the three interfaces.
-- **Effect size:** Kendall's W = 0.75 — a large concordance of rankings (most
-  participants order the interfaces the same way).
+- **Effect size:** Kendall's W = 0.75 (95% CI not computed) — a large concordance
+  of rankings (most participants order the interfaces the same way).
 - n = 30 participants (complete cases on all three interfaces).
 
 ## Post-hoc (Wilcoxon signed-rank, Holm-corrected)

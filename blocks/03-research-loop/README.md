@@ -72,7 +72,7 @@ If anything goes wrong on the day, the [`expected-artifacts/`](demo/expected-art
 
 ## Prerequisites
 
-- Codespace running (see top-level [`README.md`](../../README.md) and [`docs/setup.md`](../../docs/setup.md)).
+- Codespace running (see top-level [`README.md`](../../README.md)).
 - `LITELLM_API_KEY` and `LITELLM_BASE_URL` Codespace secrets set (Copilot Chat reads them via the OAI-compatible extension).
 - The workflow skills present in [`.github/skills/`](../../.github/skills/) — they ship with the repo. If the agent doesn't seem to see them, run **Developer: Reload Window**.
 - `pandas`, `scipy`, and `statsmodels` are in the workshop environment (the analysis needs them; they're declared in the root `pyproject.toml`).
