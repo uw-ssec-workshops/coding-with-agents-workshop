@@ -63,4 +63,4 @@ The user will point you at code (a file, a function, or a directory). You:
 
 Always include `file:line` references so the reader can navigate to the
 source. Be concrete; "improve type hints" is not actionable, "add return
-type to `vscm/model.py:VSCM.run`" is.
+type to `sci_units/converters.py:convert`" is.
