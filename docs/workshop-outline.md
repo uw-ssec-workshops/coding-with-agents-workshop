@@ -30,7 +30,7 @@ A conceptual overview of how base large language models (LLMs) are post-trained 
 
 ### Block 3: Agent-Driven Research Software Engineering (30 minutes)
 
-A live demonstration to show the full research-plan-implement cycle: an AI agent that researches a problem, produces a plan aligned with Scientific Python community guidelines, and generates an implementation. This block showcases how to apply agents to real research software engineering tasks and serves as a bridge to the final hands-on session. We will also discuss practical use cases (feature implementation, debugging, test writing, documentation, code review, and exploratory coding) as well as common failure modes (context window exhaustion, looping, poor performance on niche languages) and how to mitigate them.
+A live demonstration of a full analysis workflow built from reusable skills: an AI agent that profiles a dataset, plans the right statistical test for the study design, runs the exploratory analysis and confirmatory test, and drafts the methods and results sections of a paper. This block showcases how to apply agents to real research analysis and writing, and serves as a bridge to the final hands-on session. We will also discuss practical use cases (statistical analysis, debugging, exploratory data analysis, scientific writing, code review, test writing, and experiment management) as well as common failure modes (context window exhaustion, looping, poor performance on niche languages, confidently choosing the wrong statistical test) and how to mitigate them.
 
 ### Block 4: Build Your Own Skill (Remaining Time)
 
