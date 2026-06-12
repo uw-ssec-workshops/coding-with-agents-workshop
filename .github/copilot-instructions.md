@@ -34,7 +34,7 @@ This repo ships a gallery of Copilot customizations under `.github/`, indexed in
 
 - **Custom agents** in [`.github/agents/`](agents/) (the renamed "chat modes", now `*.agent.md`): `scientific-python-reviewer` and `docstring-writer` are the two Block 4 worked examples; `reproducibility-auditor`, `research-pair`, and `research-analyst` (which orchestrates the seven Block 3 skills end to end) extend the pattern.
 - **Commands (prompt files)** in [`.github/prompts/`](prompts/): `scaffold-package`, `eda-summary`, `write-tests`, `citation-and-release` — one-shot `/slash` commands.
-- **Skills** in [`.github/skills/`](skills/): the **Block 3 research-loop workflow** (`profile-dataset`, `plan-analysis`, `explore-data`, `statistical-tests`, `draft-report`, `validate-analysis`, `handoff`), each writing an artifact to `docs/`; plus `experiment-log` (bundles a helper script). Skills are auto-selected by the agent from their `description`, or invoked by name.
+- **Skills** in [`.github/skills/`](skills/): the **Block 3 research-loop workflow** (`profile-dataset`, `plan-analysis`, `explore-data`, `statistical-tests`, `draft-report`, `validate-analysis`, `handoff`), each writing an artifact to `docs/`. Skills are auto-selected by the agent from their `description`, or invoked by name.
 - **Path-scoped instructions** in [`.github/instructions/`](instructions/): `notebooks` and `tests` conventions (auto-applied by `applyTo` glob).
 
 They are referenced in Block 4 as scaffolding for attendees to build their own. When asked "what is this agent/command/skill" or "how does this work", read the relevant file directly. Note: custom agents were formerly "custom chat modes" (`.chatmode.md`); we use the current `.agent.md` form.
