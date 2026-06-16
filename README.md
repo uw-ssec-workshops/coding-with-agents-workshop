@@ -90,7 +90,7 @@ The [`.github/`](.github/) folder is a **worked gallery** of ways to customize a
 - One folder per block, reusable layout.
 - All Python work goes through `uv` (`uv run pytest`, `uv add <pkg>`, etc.).
 - Notebooks are written to be read top-to-bottom as a teaching document, not just executed.
-- Slides are written for the **Marp for VS Code** extension (preinstalled in the Codespace). Open any `slides.md` and click the preview icon, or run **`Marp: Export Slide Deck...`** from the command palette to produce HTML/PDF/PPTX.
+- Slides are written for the **Marp for VS Code** extension (preinstalled in the Codespace). Open any `slides.md` and click the preview icon.
 
 
 ## Contact
