@@ -87,9 +87,9 @@ Three primitives, same idea (a markdown file = instructions + tools), different 
 | **Input** | Structured `${input:var}` fields | Natural-language context (+ `argument-hint`) | The whole conversation |
 | **Best for** | One-shot repeatable task | A multi-step capability (can bundle scripts) | A persistent persona with a fixed tool list |
 | **Lifespan** | One turn | One task | The whole chat |
-| **Example here** | `eda-summary`, `scaffold-package` | the 7 research-loop skills | `docstring-writer`, `research-analyst` |
+| **Example here** | `eda-summary`, `scaffold-package` | the 7 research-loop skills | `docstring-writer`, `research-data-scientist` |
 
-> They **compose**: `research-analyst` (an *agent*) drives the seven *skills* in
+> They **compose**: `research-data-scientist` (an *agent*) drives the seven *skills* in
 > order. Pick the smallest primitive that does the job — most of the time that's a
 > prompt file or a skill, not a whole agent.
 

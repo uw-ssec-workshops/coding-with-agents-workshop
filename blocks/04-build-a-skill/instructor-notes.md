@@ -59,7 +59,7 @@ If you're behind: cut show-and-tell first (it's optional). Then collapse the liv
 
 - 60-90 seconds. This is the slide that ties Block 3 (skills) and Block 4 (agents) together with the prompt files they've also seen.
 - The one-liner to land: *"Same idea — a markdown file of instructions + a tool list — three shapes. Prompt file = a `/command` you fire; skill = a capability the agent picks; agent = a persona you switch into."*
-- The composition point is the payoff: *"`research-analyst` is an agent that runs the seven skills for you."* That's why the primitives aren't competitors.
+- The composition point is the payoff: *"`research-data-scientist` is an agent that runs the seven skills for you."* That's why the primitives aren't competitors.
 - Don't read the whole table aloud — point at the **Input** row (structured `${input}` for prompts vs natural language for skills, the thing someone always asks) and the **Best for** row.
 
 ### 6. Your turn (HOLD this slide for the whole hands-on)
