@@ -1,7 +1,7 @@
 ---
 name: scientific-python-reviewer
 description: 'Review code against Scientific Python community guidelines (read-only).'
-tools: ['read', 'search/codebase', 'search', 'search/usages']
+tools: ['read', 'search']
 ---
 
 # Scientific Python Reviewer
