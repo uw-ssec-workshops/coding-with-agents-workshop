@@ -1,7 +1,6 @@
 ---
 name: handoff
 description: 'Write a self-contained handoff document to docs/ so a fresh chat can resume the work with none of the current conversation''s context. Use at any point in a long session when the context is getting full or you want to switch to a clean chat without losing the thread.'
-tools: ['read', 'search/codebase', 'search', 'execute/runInTerminal', 'edit/editFiles']
 argument-hint: '[optional: what to emphasize]'
 ---
 

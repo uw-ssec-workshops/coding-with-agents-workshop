@@ -1,7 +1,6 @@
 ---
 name: explore-data
 description: 'Run exploratory data analysis and the assumption checks an analysis plan calls for — distributions, group summaries, normality/variance/sphericity, outliers — emit figures, and write the findings to docs/. Use when someone has a plan (or just a dataset) and wants to see the data and check whether the intended test''s assumptions actually hold before running it. Phase 3 of the analysis workflow.'
-tools: ['read', 'edit/editFiles', 'search/codebase', 'execute/runInTerminal']
 argument-hint: '[optional: assumptions or columns to focus on]'
 ---
 

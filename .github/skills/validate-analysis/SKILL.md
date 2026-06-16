@@ -1,7 +1,6 @@
 ---
 name: validate-analysis
 description: 'Verify an analysis and its write-up against the plan and the data — re-run the test, confirm the reported numbers reproduce, confirm the right test was used for the design, and confirm the draft''s claims are supported with no fabricated citations — and report pass/fail with evidence to docs/. Use as the quality gate before trusting or shipping an analysis. Phase 6 of the analysis workflow.'
-tools: ['read', 'edit/editFiles', 'search/codebase', 'execute/runInTerminal']
 argument-hint: '[plan or artifacts to validate]'
 ---
 
