@@ -17,7 +17,7 @@ Each block folder follows a similar layout:
 
 ```
 blocks/0N-name/
-  README.md            # what this block teaches, learning goals, timing
+  README.md            # what this block teaches
   slides.md            # Marp-flavored slides
   instructor-notes.md  # speaker notes, demo script, fallbacks
   resources.md         # curated further reading
