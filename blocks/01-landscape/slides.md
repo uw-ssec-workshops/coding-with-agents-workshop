@@ -3,7 +3,7 @@ marp: true
 theme: workshop
 paginate: true
 title: "Block 1 - The AI Coding Agent Landscape"
-description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
+description: "Coding with AI Agents"
 ---
 
 <!-- _class: lead -->

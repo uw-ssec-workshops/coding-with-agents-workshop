@@ -3,7 +3,7 @@ marp: true
 theme: workshop
 paginate: true
 title: "Block 4 - Build Your Own Skill"
-description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
+description: "Coding with AI Agents"
 ---
 
 <!-- _class: lead -->

@@ -78,7 +78,6 @@ If you're behind: cut show-and-tell first (it's optional). Then collapse the liv
 
 - Confirm office hours time + location explicitly.
 - Thank: co-instructors, Schmidt Sciences, the VISS centers, and the attendees.
-- Keep the close short; don't gild it.
 
 ## Live-build script
 

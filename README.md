@@ -1,7 +1,5 @@
 # Coding with AI Agents: A Hands-On Workshop for Scientists
 
-Workshop materials for the **2026 Interdisciplinary Science Summit**, hosted by Schmidt Sciences and the VISS centers.
-
 This repository contains the slides, demos, hands-on notebooks, and instructor notes for a ~2-hour workshop teaching scientists how AI coding agents work and how to use them well in research software engineering.
 
 ## Workshop structure

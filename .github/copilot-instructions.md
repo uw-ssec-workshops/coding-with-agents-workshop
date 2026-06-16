@@ -1,6 +1,6 @@
 # Workshop Repository: GitHub Copilot Instructions
 
-This repository is the participant- and instructor-facing material for the workshop **"Coding with AI Agents: A Hands-On Workshop for Scientists"** (2026 Interdisciplinary Science Summit, Schmidt Sciences x VISS centers).
+This repository is the participant- and instructor-facing material for the workshop **"Coding with AI Agents: A Hands-On Workshop for Scientists"**.
 
 You are assisting an instructor or workshop participant. Optimize for **clarity, reproducibility, and teaching value** over cleverness.
 
