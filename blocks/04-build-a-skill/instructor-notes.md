@@ -161,12 +161,4 @@ The biggest categories of stuck participants and how to unstick them:
 
 ## Common audience questions
 
-| Question | Short answer |
-|---|---|
-| "What's the difference between a custom agent and a prompt file?" | "Custom agent = persistent persona for the whole conversation, picked from the agent dropdown. Prompt file = one-shot `/slash` command. Use prompt files for repeated quick actions, agents for sustained tasks." |
-| "What's a skill then?" | "A skill is a folder (`.github/skills/<name>/SKILL.md`) that can bundle scripts and resources, loaded on demand. Use it for a multi-step capability, not a single prompt. See the Block 3 research-loop skills in `.github/skills/`." |
-| "Can I have multiple agents active?" | "One at a time per chat. But you can switch mid-conversation, and agents can hand off to each other." |
-| "Does the agent use the LiteLLM proxy?" | "Yes, Copilot uses the same env vars regardless of agent. The model you see in the picker comes from your Copilot settings." |
-| "Can I use this with another tool (Cursor, Claude Code)?" | "Yes. They have their own equivalents (Cursor rules/modes, Claude Code skills). The pattern transfers; the file format differs slightly. We keep the whole workshop in Copilot Chat for consistency. See `resources.md`." |
-| "Where do I save the agent if I want to use it on my own repo?" | "Same place: `.github/agents/<name>.agent.md` in that repo. The file is portable; commit it and your collaborators get it too." |
-| "How do I test an agent without running a real query?" | "You can't, really. The iteration loop is: edit prompt -> reload -> run -> observe -> edit. Same as prompt engineering anywhere." |
+See the consolidated [`common-audience-questions.md`](../../common-audience-questions.md) at the repo root (Block 4 section).

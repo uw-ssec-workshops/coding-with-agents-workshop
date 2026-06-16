@@ -193,17 +193,6 @@ Use the handoff skill to write a handoff so a fresh chat could resume this.
 
 The expected-artifacts folder is your safety net, and `expected-artifacts/analysis.py` reproduces every number live. **Don't try to debug live.** A failed demo narrated as a failure mode is *better* than a successful demo, pedagogically.
 
-## Common audience questions
-
-| Question | Short answer |
-|---|---|
-| "Where do these skills come from?" | "They're seven markdown files in `.github/skills/` — `profile-dataset/SKILL.md`, `plan-analysis/SKILL.md`, etc. Each is frontmatter (name, description, tools) plus a templated prompt. We ship them in-repo so the whole workshop stays in one tool." |
-| "Invoke by name, or let the agent pick?" | "Both. The `description`'s `Use when…` clause is what the agent matches a generic ask against. Naming the skill is just the explicit version — handy for a live demo." |
-| "Could I run the same workflow in Claude Code or Cursor?" | "Yes — the *pattern* (named skills, markdown artifacts in `docs/`) is portable; the file format differs per tool. We keep everything in Copilot Chat here for consistency." |
-| "Did the agent pick the right test?" | "That's the whole point of `plan-analysis` + `validate-analysis`. The design is within-subjects, so the answer is a repeated-measures / Friedman family. An independent t-test or one-way ANOVA is the trap — and `validate-analysis` is what catches it." |
-| "How do I carry context across a long session?" | "Run the `handoff` skill — it writes a self-contained markdown doc to `docs/`, then you start a fresh chat and point it at that file." |
-| "Can the agent's plan be wrong?" | "Often. Hand-edit the plan (it's plain markdown) or re-run `plan-analysis`. And `validate-analysis` is non-optional for anything you'd put in a paper." |
-
 ## What to skip if you're behind time
 
 In order of expendability:

@@ -19,7 +19,7 @@ public-facing version; this is the inside view.
 
 ### 2. What changed
 
-- Look at slide.
+- Read the slide.
 
 ### 3. The landscape
 
@@ -44,11 +44,11 @@ public-facing version; this is the inside view.
 
 ### 6. Why they all feel the same
 
-- Look at slide.
+- Read the slide.
 
 ### 7. Before you paste: where does your data go?
 
-- Look at slide.
+- Read the slide.
 
 ### 8. Demo intro
 
@@ -58,7 +58,7 @@ public-facing version; this is the inside view.
 
 ### 9. Bridge to Block 2
 
-- Look at slide.
+- Read the slide.
 
 ## Demo script
 
@@ -86,4 +86,3 @@ public-facing version; this is the inside view.
 ### Part B: The notebook 
 
 - Kernel: `Python Environments`.
-

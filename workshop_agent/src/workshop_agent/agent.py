@@ -169,18 +169,18 @@ def run_agent(
         msg = response.choices[0].message
         finish = response.choices[0].finish_reason
 
-        emit(f"\n--- step {step}  (finish_reason={finish}) ---")
+        emit(f"\n\n=== STEP {step}  (finish_reason={finish}) ===")
         if msg.content:
-            emit(f"[text]\n{msg.content}")
+            emit(f"\n[TEXT]\n{msg.content}")
         for tc in msg.tool_calls or []:
-            emit(f"[tool_call] {tc.function.name}({tc.function.arguments[:200]})")
+            emit(f"\n[TOOL CALL] {tc.function.name}({tc.function.arguments[:200]})")
 
         # Append the assistant's full message (text + tool_calls) so the
         # model sees its own decisions on the next turn.
         messages.append(msg.model_dump(exclude_none=True))
 
         if not msg.tool_calls:
-            emit("\n=== agent finished ===")
+            emit("\n\n=== AGENT FINISHED ===")
             return messages
 
         for tc in msg.tool_calls:
@@ -190,8 +190,8 @@ def run_agent(
             except Exception as e:
                 output = f"ERROR: {type(e).__name__}: {e}"
             preview = output if len(output) <= 300 else output[:300] + "..."
-            emit(f"[tool_result]\n{preview}")
+            emit(f"\n[TOOL RESULT]\n{preview}")
             messages.append({"role": "tool", "tool_call_id": tc.id, "content": output})
 
-    emit(f"\n=== hit max_steps={max_steps} without finishing ===")
+    emit(f"\n\n=== HIT MAX_STEPS={max_steps} WITHOUT FINISHING ===")
     return messages
