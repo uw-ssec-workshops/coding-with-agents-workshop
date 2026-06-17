@@ -1,15 +1,5 @@
 # Block 1: Instructor Notes
 
-These are the notes you actually deliver from. The slide deck has the
-public-facing version; this is the inside view.
-
-## Keep these handy 
-
-- Prompt you can paste during the demo:
-
-  ```
-  There are failing tests in this project. Investigate, fix the bug, and verify with pytest. Make the smallest possible change.
-  ```
 
 ## Per-slide notes
 

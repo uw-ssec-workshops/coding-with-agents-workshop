@@ -1,7 +1,5 @@
 # Block 2: Instructor Notes
 
-These are the notes you actually deliver from. The slide deck has the
-public-facing version; this is the inside view.
 
 ## Pre-block checklist 
 
