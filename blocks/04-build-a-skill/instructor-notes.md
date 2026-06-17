@@ -1,164 +1,25 @@
 # Block 4: Instructor Notes
 
-This is the most facilitation-heavy block in the workshop. The slides
-are short on purpose; your job is mostly **circulating**.
-
-## Pre-block checklist
-
-- [ ] Confirm both worked-example agents appear in the Copilot agent picker. (Open the chat panel, click the agent dropdown, look for `scientific-python-reviewer` and `docstring-writer`.) If not: **Developer: Reload Window**.
-- [ ] Have the **live-build agent** memorized or in a scratch buffer (see "Live-build script" below).
-- [ ] Have a code target open in a side editor for agents to run against — e.g. the `sci_units` package at `blocks/01-landscape/demo/starter/`, or the Block 3 dataset/generator at `blocks/03-research-loop/demo/starter/`.
-- [ ] Have `blocks/04-build-a-skill/exercise/ideas.md` open in another tab, you'll point participants at it constantly.
-- [ ] Identify any participants who have brought their own code, they'll need slightly different guidance during circulation.
-
-## Timing checkpoints
-
-| at minute | should be on slide / phase | what to do |
-|---|---|---|
-| 3 | slide 2 (recap) | Done with framing |
-| 8 | slide 4 (worked examples) | Done with anatomy + tour |
-| 12 | slide 5 (your turn) | Live build done; release the room |
-| 17 | hands-on (5 min in) | Walking the room; helping the stuck |
-| 22 | hands-on (10 min in) | Announce 5 min remaining; scout show-and-tell volunteers |
-| 25 | show-and-tell | 1-2 volunteers demo |
-| 28 | slide 6 (wrap-up) | Office hours pointer + thank-yous |
-| 30 | done | Thank-yous, fade to applause |
-
-If you're behind: cut show-and-tell first (it's optional). Then collapse the live-build to a quick walkthrough of `.github/agents/scientific-python-reviewer.agent.md` rather than typing one fresh.
-
 ## Per-slide notes
 
 ### 1. Title
 
-- 30 seconds. Hand-off from Block 3 with energy.
-- *"This is the part you've been waiting for. Light on talk, heavy on doing."*
+- Let's build our own agentic workflows.
 
 ### 2. The whole workshop, in one slide
 
-- Read across the rows. Pause briefly on each.
-- *"The pieces are simple. The practice is what makes it useful. The next 25 minutes are practice."*, say this slowly. It's the workshop's closing thesis.
+- Read the slide.
 
-### 3. Anatomy of a Copilot custom agent
 
-- Walk through the example file left-to-right, top-to-bottom.
-- Call out the Block 1 mappings:
-  - `tools` -> the agent loop's hands.
-  - System prompt -> persona + project memory + workflow.
-  - "What you do NOT do" -> safety constraints (analogous to RLHF refusals, but in the prompt, not the weights).
-- *"A handful of fields. That's it. You can read the file in 30 seconds."*
-- Tee up the live build.
+### 3. Prompts vs. skills vs. agents
 
-### 4. Two worked examples
+- Read the slide.
 
-- Open `scientific-python-reviewer.agent.md` in a side editor. Point at structure.
-- Open `docstring-writer.agent.md`. Same shape, different tool list.
-- *"The exercise tells you to copy patterns. Do that, the worked examples ARE the curriculum."*
-- If anyone asks "is there more?": yes, `.github/` has a fuller gallery (more agents, prompt-file commands, skills, instructions) mapped to the research lifecycle. Point them at the customization gallery in the root `README.md`, but don't detour the whole room.
+### 4. Your turn (HOLD this slide for the whole hands-on)
 
-### 5. Prompts vs. skills vs. agents
+- Read the slide.
 
-- 60-90 seconds. This is the slide that ties Block 3 (skills) and Block 4 (agents) together with the prompt files they've also seen.
-- The one-liner to land: *"Same idea — a markdown file of instructions + a tool list — three shapes. Prompt file = a `/command` you fire; skill = a capability the agent picks; agent = a persona you switch into."*
-- The composition point is the payoff: *"`research-data-scientist` is an agent that runs the seven skills for you."* That's why the primitives aren't competitors.
-- Don't read the whole table aloud — point at the **Input** row (structured `${input}` for prompts vs natural language for skills, the thing someone always asks) and the **Best for** row.
-
-### 6. Your turn (HOLD this slide for the whole hands-on)
-
-- Project for the duration. Participants need it as a reference.
-- Repeat *"narrow over broad"* whenever you spot someone aiming too big.
-- ~3 min in: walk the room. Help anyone whose agent hasn't appeared in the picker.
-- ~10 min in: announce 5 min remaining and start scouting show-and-tell volunteers.
-
-### 7. Optional: write more skills
-
-- **Optional / skippable** — only show it if the hands-on finished early or someone asks "where do I go next?". Otherwise mention it in one line and move to wrap-up.
-- The point: the next step up from one agent is a multi-skill workflow that hands off through artifacts, like the Block 3 loop. The take-home exercise (write one skill that chains onto that loop) is a great office-hours starter; don't try to run it live.
-
-### 8. Wrap-up
+### 5. Wrap-up
 
 - Confirm office hours time + location explicitly.
 - Thank: co-instructors, Schmidt Sciences, the VISS centers, and the attendees.
-
-## Live-build script
-
-Build a tiny `error-explainer` agent in ~3-4 minutes. Keep it small and visible.
-
-**Type, don't paste.** The visible typing is part of the lesson.
-
-```bash
-# In a terminal, in the workshop root:
-cp blocks/04-build-a-skill/exercise/my-agent.agent.md.template \
-   .github/agents/error-explainer.agent.md
-code .github/agents/error-explainer.agent.md
-```
-
-Then in the editor, replace the TODOs with:
-
-```markdown
----
-name: error-explainer
-description: 'Explain a Python traceback in plain English and suggest a fix.'
-tools: ['read', 'search/codebase']
----
-
-# Error Explainer
-
-You are a friendly Python tutor. The user pastes you a traceback.
-
-## What you do
-
-1. Read the traceback. Identify the error type and the relevant line.
-2. If the line references project files, read them with `read` to confirm context.
-3. Explain in plain English: what the error is, why it happened, and one or two ways to fix it.
-4. Be concrete: cite the actual line of code. No vague suggestions.
-
-## What you do NOT do
-
-- You do not edit files. You only explain.
-- You do not lecture about Python in general. Stay focused on this specific error.
-
-## Output format
-
-```
-**Error:** <one-line summary>
-**Cause:** <one or two sentences>
-**Fix:** <one or two concrete suggestions, with code snippet if helpful>
-```
-```
-
-Save. Open Copilot Chat. Click the agent picker. **Point out** that
-`error-explainer` now appears. Switch to it. Paste a small fake traceback:
-
-```
-Traceback (most recent call last):
-  File "analysis.py", line 12, in <module>
-    df = pd.read_csv('data.csv', comment='#')
-NameError: name 'pd' is not defined
-```
-
-Watch it explain. Move on to the hands-on slide. Whole thing should be
-~4 minutes including narration.
-
-## What to circulate for
-
-The biggest categories of stuck participants and how to unstick them:
-
-| Stuck on | Ask | Then |
-|---|---|---|
-| Picking what to build | "What's a tiny annoying thing in your day-to-day?" | Point at `ideas.md` |
-| Agent not appearing in picker | "What's your filename?" | Confirm `*.agent.md` in `.github/agents/`. Tell them to **Reload Window** |
-| Agent loaded but YAML error | (check the chat panel for an error toast) | Read the frontmatter together. Common: missing quotes around description, malformed `tools` list |
-| Agent runs but does the wrong thing | "Read your steps out loud" | Usually the steps are too vague. Tighten step 1, add a "do NOT" |
-| Agent stuck in a loop / doing too much | (check for missing terminal condition) | Add to system prompt: *"After at most 5 tool calls, summarize and stop."* |
-| Wants to use `edit/editFiles` but worried | "What scope?" | Suggest narrowing: *"only edit files in `tests/`"* in system prompt + the file path filter |
-| Wants something more advanced | "Have you got the basic one working?" | If yes, point at the prompt-file, skill, or MCP sections of `resources.md`. If no, finish the basic one first. |
-
-## Show-and-tell
-
-- ~5 min before the slot, identify 1-2 volunteers whose agents work AND aren't too domain-specific (so the rest of the room can follow).
-- Each volunteer gets 60-90 seconds: show the agent file, run a query, show the result.
-- If no volunteers: walk through what you saw circulating ("a bunch of you built docstring writers, here's a clever twist someone added"). Don't force.
-
-## Common audience questions
-
-See the consolidated [`common-audience-questions.md`](../../common-audience-questions.md) at the repo root (Block 4 section).

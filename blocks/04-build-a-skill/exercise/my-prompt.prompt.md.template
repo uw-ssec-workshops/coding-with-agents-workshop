@@ -1,0 +1,39 @@
+---
+agent: agent
+description: 'TODO: one-line description of this one-shot command'
+tools: ['read', 'search/codebase']
+# Add 'edit/editFiles' if the command should modify code.
+# Add 'execute/runInTerminal' if it should run shell commands (pytest, etc.).
+# Add 'vscode/askQuestions' if it should confirm with the user when an input is blank.
+---
+
+# TODO: command title
+
+<one or two sentences describing what this command does and the phase of the
+research lifecycle it belongs to.> This is a custom prompt-file command I'm
+building during Block 4. It mirrors the structure of the worked examples in
+`.github/prompts/`.
+
+The target is: `${input:target:TODO describe what the user passes, e.g. path to a .csv (leave blank to use the open file)}`.
+If blank, don't guess: use the highlighted selection in `${selection}` if there is
+one, otherwise use `#tool:vscode/askQuestions` to confirm whether to act on the
+open file `${file}` or a specific target before doing anything.
+
+## Steps
+
+1. <step 1, usually "read X">
+2. <step 2, usually "do Y">
+3. <step 3, usually "produce Z">
+
+## Constraints
+
+- <constraint 1, common: "do not modify the file; this is read-only">
+- <constraint 2, common: "do not fabricate numbers / citations">
+- <constraint 3, common: "keep it to one screen">
+
+## Output format
+
+```
+TODO: show a concrete example of what good output looks like.
+Concrete examples beat abstract descriptions.
+```
