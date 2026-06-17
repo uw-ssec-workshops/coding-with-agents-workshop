@@ -15,7 +15,7 @@ open at its **root**, so use full repo-root-relative paths:
   validation. **Do NOT write to the repo's top-level `docs/`.**
 
 These artifacts are meant to be **committed** (`git add blocks/03-research-loop/demo/docs/`)
-as the analysis audit trail — a dated record of what was analyzed and why.
+as the analysis audit trail for a dated record of what was analyzed and why.
 
 ## What this data is
 
@@ -25,13 +25,13 @@ typing speed and error rate. The data is **long/tidy**: one row per
 participant × interface.
 
 - `make_data.py` generates the CSV deterministically (fixed seed). It is demo
-  scaffolding — the thing you analyze is `data.csv`, not the generator.
+  scaffolding and the thing you analyze is `data.csv`, not the generator.
 - The CSV's **first line is a `#` comment**; load with
   `pandas.read_csv(path, comment="#")` (or `skiprows=1`).
 
 ## Study design (read carefully — it determines the test)
 
-- **Within-subjects (repeated measures).** Every participant uses **all three**
+- **Within-subjects (repeated measures):** Every participant uses **all three**
   interfaces, so the three measurements from one participant are *paired*, not
   independent. **Rows are not independent.** Do **not** analyze this with an
   independent-samples test (one-way ANOVA, Welch/Student t-test).
@@ -40,7 +40,7 @@ participant × interface.
 - **Primary outcome:** `wpm` (words per minute). **Secondary:** `error_rate`
   (fraction of characters corrected). The primary analysis is on `wpm`.
 - **Order:** `presentation_order` (1/2/3) is counterbalanced across participants,
-  so you can sanity-check for a learning/order effect.
+  so you can sanity check for a learning/order effect.
 
 ### Variable dictionary
 
