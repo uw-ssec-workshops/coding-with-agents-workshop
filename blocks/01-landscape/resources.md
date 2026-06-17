@@ -15,7 +15,6 @@ tool announcement.
 - **GitHub: [Copilot in agent mode](https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide)**: the official docs for the tool we used in the live demo.
 - **Anthropic: [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)**: the CLI agent, popular in research labs that have Anthropic API access.
 - **Cursor: [Documentation](https://docs.cursor.com/)**: useful even if you don't use Cursor; their rules and modes docs are well written.
-- **Aider: [Project site](https://aider.chat/)**: git-aware CLI agent, OSS, model-agnostic. The original "do it in a terminal" tool.
 
 ## Project memory
 

@@ -1,7 +1,6 @@
 ---
 name: statistical-tests
 description: 'Run the confirmatory statistical test an analysis plan specifies — honoring the study design and the assumption-check results — and report the statistic, p-value, effect size, and a CI (when one is computed) to docs/, with no fabricated numbers. Use when the plan and assumption checks are done and someone wants the actual test result. Phase 4 of the analysis workflow.'
-tools: ['read', 'edit/editFiles', 'search/codebase', 'execute/runInTerminal']
 argument-hint: '[optional: force a specific test]'
 ---
 

@@ -1,0 +1,22 @@
+---
+applyTo: "TODO/glob/**/*.py"
+# The glob decides WHEN these instructions auto-inject. Examples:
+#   "**/tests/**/*.py"  -> any file under a tests/ directory
+#   "**/*.ipynb"        -> any Jupyter notebook
+#   "**"                -> every file (use sparingly)
+---
+
+# TODO: name these conventions (e.g. "Test conventions")
+
+These instructions apply automatically whenever a file matching the `applyTo`
+glob above is in context. Unlike an agent or a prompt, you never invoke this —
+Copilot injects it for you. This mirrors the worked examples in
+`.github/instructions/`.
+
+When working on these files in this project:
+
+- <rule 1, a concrete, checkable convention, e.g. "Use `pytest`, not `unittest`">
+- <rule 2, prefer specifics over vibes, e.g. "Compare floats with `pytest.approx`">
+- <rule 3, often a "do NOT", e.g. "Do not emit `pip install` cells">
+- <rule 4>
+- <rule 5>
