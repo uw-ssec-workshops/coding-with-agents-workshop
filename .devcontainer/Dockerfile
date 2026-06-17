@@ -19,7 +19,10 @@ ENV VSCODE_HOME=/home/vscode \
     PATH=/home/vscode/.local/bin:${PATH}
 
 USER ${VSCODE_USER}
-WORKDIR /workspaces/viss-agentic-ai-workshop-iss-2026
+# No WORKDIR is set intentionally: at runtime the devcontainer mounts the repo
+# at /workspaces/<repo-name>, which differs per fork/repo, and every build step
+# below uses absolute paths (/tmp/...) or cd. Hardcoding a repo-specific WORKDIR
+# would be misleading and wrong for repos with a different name.
 
 RUN echo 'eval "$(uv generate-shell-completion bash)"' >> ${VSCODE_HOME}/.bashrc
 

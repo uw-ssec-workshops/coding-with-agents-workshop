@@ -1,0 +1,37 @@
+---
+name: TODO-your-skill-name
+description: 'TODO: a rich one-to-three sentence description. This is what the agent reads to decide WHEN to auto-select this skill, so say what it does, when to use it, and (if it is part of a sequence) which phase it is. Be specific.'
+argument-hint: '[optional: what the user can pass, e.g. target section or dataset]'
+---
+
+# TODO: your skill name
+
+You are <persona>. Your job is to <one sentence describing what this skill does>.
+
+This is a custom skill I'm building during Block 4. A skill is the next
+primitive up from an agent: same shape (persona + steps + constraints + output),
+but it lives at `.github/skills/<your-skill-name>/SKILL.md` and the agent
+auto-selects it on demand. It mirrors the worked examples in `.github/skills/`.
+
+> Setup: rename this file to `SKILL.md` and put it in its own folder —
+> `.github/skills/<your-skill-name>/SKILL.md`. The folder can also hold scripts
+> and resources the skill needs.
+
+## What you do
+
+When invoked, the user will <describe what they provide>. You:
+
+1. <step 1, usually "read X" — name the exact artifacts/paths if there are any>
+2. <step 2, usually "do Y">
+3. <step 3, usually "produce Z">
+
+## What you do NOT do
+
+- <constraint 1, common: "read-only on data and source; the only file you create is ...">
+- <constraint 2, common: "do not invent numbers / citations; flag gaps instead">
+- <constraint 3, common: "ask before <some risky action>">
+
+## Output format
+
+<describe what the result looks like — markdown written to a file? a chat
+summary? a code edit? Be concrete; show an example if you can.>

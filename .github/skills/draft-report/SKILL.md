@@ -1,7 +1,6 @@
 ---
 name: draft-report
 description: 'Draft the Methods and Analysis/Results sections of a paper from the analysis artifacts — grounded strictly in what was actually computed, with no invented numbers and no fabricated citations. Use when the EDA and tests are done and someone wants a paper-ready write-up of the method and the results. Phase 5 of the analysis workflow.'
-tools: ['read', 'edit/editFiles', 'search/codebase']
 argument-hint: '[optional: target section or venue/style]'
 ---
 

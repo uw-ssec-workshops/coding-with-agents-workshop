@@ -1,7 +1,6 @@
 ---
 name: profile-dataset
 description: 'Document a dataset and its study design exactly as they are — shape, columns, dtypes, ranges, missingness, and the stated hypothesis — and write the findings to docs/. Use when someone hands you a dataset (a CSV/TSV/parquet + maybe an AGENTS.md) and wants to understand what they are working with before any analysis. Phase 1 of the analysis workflow.'
-tools: ['read', 'search/codebase', 'search', 'edit/editFiles']
 argument-hint: '[dataset path] (defaults to the open file)'
 ---
 

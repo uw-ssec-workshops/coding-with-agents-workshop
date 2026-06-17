@@ -1,12 +1,10 @@
 # Coding with AI Agents: A Hands-On Workshop for Scientists
 
-Workshop materials for the **2026 Interdisciplinary Science Summit**, hosted by Schmidt Sciences and the VISS centers.
-
 This repository contains the slides, demos, hands-on notebooks, and instructor notes for a ~2-hour workshop teaching scientists how AI coding agents work and how to use them well in research software engineering.
 
 ## Workshop structure
 
-The workshop is organized into four 30-minute-ish blocks. See [`docs/workshop-outline.md`](docs/workshop-outline.md) for the full prose outline.
+The workshop is organized into four 30-minute-ish blocks.
 
 | # | Block | Folder | Format |
 |---|---|---|---|
@@ -15,11 +13,11 @@ The workshop is organized into four 30-minute-ish blocks. See [`docs/workshop-ou
 | 3 | Agent-Driven Research Software Engineering | [`blocks/03-research-loop/`](blocks/03-research-loop/) | Slides + live Copilot Chat workflow demo |
 | 4 | Build Your Own Skill (capstone) | [`blocks/04-build-a-skill/`](blocks/04-build-a-skill/) | Slides + hands-on custom-agent build |
 
-Each block folder follows the same layout:
+Each block folder follows a similar layout:
 
 ```
 blocks/0N-name/
-  README.md            # what this block teaches, learning goals, timing
+  README.md            # what this block teaches
   slides.md            # Marp-flavored slides
   instructor-notes.md  # speaker notes, demo script, fallbacks
   resources.md         # curated further reading
@@ -28,9 +26,9 @@ blocks/0N-name/
 
 ## Tools used
 
-- **Copilot Chat in VSCode / Codespaces**: the deep-dive tool through Blocks 1, 2, and 4. The Codespace ships a custom **OAI-compatible Copilot** extension ([`uw-ssec/oai-compatible-copilot`](https://github.com/uw-ssec/oai-compatible-copilot)) that points Copilot Chat at the workshop's gateway, so you pick the workshop's models in the model picker with no Copilot subscription or setup.
-- **Copilot Chat skills** for Block 3's research loop: `profile-dataset`, `plan-analysis`, `explore-data`, `statistical-tests`, `draft-report`, `validate-analysis`, `handoff` ship **in-repo** as [`.github/skills/<name>/SKILL.md`](.github/skills/) and run in the same Copilot Chat panel (agent mode). The agent auto-selects a skill from its `description`, or you invoke one by name.
-- **Claude (via the workshop's gateway)**: the model backend, fronting Claude Sonnet 4.6 and Claude Haiku 4.5. Copilot Chat and the notebooks hit the same gateway. The notebooks use the **`litellm` Python SDK**, so the same agent loop works against any other model the gateway fronts.
+- **Copilot Chat in VSCode / Codespaces**: The Codespace ships a custom **OAI-compatible Copilot** extension ([`uw-ssec/oai-compatible-copilot`](https://github.com/uw-ssec/oai-compatible-copilot)) that points Copilot Chat at the workshop's AI gateway, so you pick the workshop's models in the model picker with no Copilot subscription or setup.
+- **Copilot Chat Skills** for Block 3's research loop: `profile-dataset`, `plan-analysis`, `explore-data`, `statistical-tests`, `draft-report`, `validate-analysis`, `handoff` ship **in-repo** as [`.github/skills/<name>/SKILL.md`](.github/skills/) and run in the same Copilot Chat panel (agent mode). The agent auto-selects a skill from its `description`, or you invoke one by name.
+- **Claude Models (via the workshop's gateway)**: the model backend, fronting Claude Sonnet 4.6 and Claude Haiku 4.5. Copilot Chat and the notebooks hit the same gateway. The notebooks use the **`litellm` Python SDK**, so the same agent loop works against any other model the gateway fronts.
 - **Python 3.12 + `uv`**: environment and package management.
 - **Marp**: slides as markdown.
 
@@ -38,12 +36,7 @@ You don't need anything installed locally: everything runs in a GitHub Codespace
 
 ## Copilot customization gallery
 
-The [`.github/`](.github/) folder is a **worked gallery** of ways to customize an
-AI coding agent for research software engineering with GitHub Copilot. It pairs
-with Block 4 ("Build Your Own Skill"): read these as references, then write your
-own. Everything there is plain markdown (plus one tiny Python helper) — just
-**structured prompts + tool lists + project memory** — and the same ideas port to
-Claude Code skills, Cursor rules, and others.
+The [`.github/`](.github/) folder is a **worked gallery** of ways to customize an AI coding agent for research software engineering with GitHub Copilot. It pairs with Block 4 ("Build Your Own Skill"): read these as references, and then write your own. Everything there is plain markdown but contains **structured prompts, tool lists, and project context**. The same ideas port to Claude Code skills, Cursor rules, and coding agent harnesses.
 
 ### The five primitives
 
@@ -62,13 +55,11 @@ Claude Code skills, Cursor rules, and others.
 
 ### Mapped to the research-software lifecycle
 
-These demos are deliberately **narrow** — each does one job on one phase of a
-research project. Narrow agents work; "be my coding assistant" disappoints.
 
 | Lifecycle phase           | What it is                                          | Primitive    | Location                                                                                                  |
 | ------------------------- | -------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------- |
 | Research loop (Block 3)   | Seven skills, each writing an artifact to `docs/`   | skills       | [`.github/skills/`](.github/skills/)                                                                      |
-| Full analysis loop        | Orchestrate the seven research-loop skills          | agent        | [`research-analyst`](.github/agents/research-analyst.agent.md)                                            |
+| Full analysis loop        | Orchestrate the seven research-loop skills          | agent        | [`research-data-scientist`](.github/agents/research-data-scientist.agent.md)                              |
 | Project setup             | Flat script → installable package (plan)            | command      | [`scaffold-package`](.github/prompts/scaffold-package.prompt.md)                                          |
 | Data / EDA                | First look at a dataset                             | command      | [`eda-summary`](.github/prompts/eda-summary.prompt.md)                                                    |
 | Implementation / planning | Read-only thinking partner, then hand off           | agent        | [`research-pair`](.github/agents/research-pair.agent.md)                                                  |
@@ -79,9 +70,6 @@ research project. Narrow agents work; "be my coding assistant" disappoints.
 | Packaging / publication   | Draft `CITATION.cff` + release notes                | command      | [`citation-and-release`](.github/prompts/citation-and-release.prompt.md)                                  |
 | Conventions (notebooks)   | Notebook-as-teaching-document rules                 | instructions | [`notebooks.instructions.md`](.github/instructions/notebooks.instructions.md)                             |
 | Conventions (tests)       | pytest + `uv` conventions                           | instructions | [`tests.instructions.md`](.github/instructions/tests.instructions.md)                                     |
-
-The two **worked examples** referenced throughout Block 4 are
-`scientific-python-reviewer` (read-only) and `docstring-writer` (write-mode).
 
 ### How to try them in this Codespace
 
@@ -94,33 +82,17 @@ The two **worked examples** referenced throughout Block 4 are
   `blocks/03-research-loop/demo/starter/`") and the matching research-loop skill
   (here `profile-dataset`) loads on demand.
 - **Instructions:** open a notebook or a file under `tests/` and they apply
-  automatically — no picker, no slash command.
+  automatically.
 
-Good targets are already in the repo:
-[`blocks/01-landscape/demo/starter/`](blocks/01-landscape/demo/starter/)
-(`sci_units`, a small Python package) and
-[`blocks/03-research-loop/demo/starter/`](blocks/03-research-loop/demo/starter/)
-(the text-entry dataset + its generator). Or point them at your own code.
 
 ## Repo conventions
 
 - One folder per block, reusable layout.
 - All Python work goes through `uv` (`uv run pytest`, `uv add <pkg>`, etc.).
 - Notebooks are written to be read top-to-bottom as a teaching document, not just executed.
-- Slides are written for the **Marp for VS Code** extension (preinstalled in the Codespace). Open any `slides.md` and click the preview icon, or run **`Marp: Export Slide Deck...`** from the command palette to produce HTML/PDF/PPTX.
+- Slides are written for the **Marp for VS Code** extension (preinstalled in the Codespace). Open any `slides.md` and click the preview icon.
 
-## Following day: office hours
-
-VISS members will be available the day after the workshop to help you try the agent on your own data, write your own skills, and explore agentic research workflows. Bring a snippet of code or data you'd like to work on.
-
-## Instructors
-
-Anant Mittal, Carlos García Jurado Suarez, Anshul Tambay, Vani Mandava, Robert Bates, Ryan Hausen, Eric Liu, Tina Dang, Arfon Smith.
 
 ## Contact
 
 - **Anshul Tambay**, UW SSEC, [anshul37@uw.edu](mailto:anshul37@uw.edu)
-
-## License
-
-MIT, see `LICENSE` (to be added).

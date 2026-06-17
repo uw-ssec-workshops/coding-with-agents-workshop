@@ -3,7 +3,7 @@ marp: true
 theme: workshop
 paginate: true
 title: "Block 2 - How It Actually Works"
-description: "Coding with AI Agents - 2026 Interdisciplinary Science Summit"
+description: "Coding with AI Agents"
 ---
 
 <!-- _class: lead -->
@@ -23,24 +23,22 @@ Block 1 ended with an agent that, given one prompt, did four things we mostly to
 - **Q1.** It **followed our instructions** at all. *Why?*
 - **Q2.** It **acted helpfully** and **stopped when done** instead of rambling or looping. *Why?*
 - **Q3.** It **called `run_bash`** instead of describing what it would do. *Why?*
-- **Q4.** We claimed the same loop would work with **GPT or Gemini**, not just Claude. *Why is that swap even possible?*
+- **Q4.** We claimed the same loop would work with **other models**. *Why is that swap even possible?*
 
 ---
 
 ## Pre-training: a fluent autocomplete
 
-A **base** large language model is trained to predict the next token in
-a corpus of text. That's it. After pre-training, the model is great at
-*continuing* text in the style of what it just read.
+A **base** large language model is trained to predict the next token in a corpus of text. That's it. After pre-training, the model is great at *continuing* text in the style of what it just read.
 
 What that does NOT give you:
 
-- Following instructions ("write a function" -> base model writes more *prompts* in the same style)
+- Following instructions ("write a function", base model may write more *prompts* in the same style)
 - Helpful behavior, refusals, knowing when to stop
 - Calling tools, the concept doesn't exist in pre-training data
 - Stable identity ("you are a helpful assistant", the base model has no idea what that means)
 
-Everything that makes a coding agent *useful* is grafted on **after** pre-training.
+Everything that makes a coding agent *useful* is post-training.
 
 ---
 
@@ -51,9 +49,10 @@ Pre-training, SFT, RLHF, every stage in this block assumes one thing: that a neu
 **Universal Approximation Theorem** (Cybenko 1989, Hornik 1991): a network with a non-linear activation and enough neurons can approximate *any* continuous function to arbitrary precision.
 
 - "Next token given context", "helpful reply given prompt", "tool call given task", all just functions.
-- The **non-linearity** (ReLU, etc.) is the key ingredient. Stack only linear layers and the whole thing collapses back into a single straight line.
+- The **non-linearity** (ReLU, etc.) is the key ingredient. 
 - **Depth** is what makes it *efficient*: deep nets compose simple features into complex ones, instead of needing astronomically many neurons in one layer.
 
+--
 > Universality only says the function *exists* inside the network. Training is the bet that gradient descent can *find* it, and that it *generalizes* to new inputs. It usually does. That empirical fact is the miracle the rest of this block stands on.
 
 ---
@@ -194,8 +193,8 @@ A: 137 tests.
 
 The **only** thing that changes the assistant's first move is the prompt:
 
-- **A** is answerable from training knowledge → answer directly, **don't** call a tool.
-- **B** requires reading the actual repo state → **must** call a tool.
+- **A** is answerable from training knowledge. Answer directly, **don't** call a tool.
+- **B** requires reading the actual repo state. **Must** call a tool.
 
 This is the **meta-skill**: knowing which prompts cross the line into "I need to actually go look." Trained on thousands of paired examples like these.
 
@@ -236,21 +235,11 @@ The trajectory teaches **wire format** (valid JSON, right schema), **multi-step 
 
 ## Why this is convergent
 
-| Lab | Pre-training | SFT | Preference learning | Tool-use FT |
-|---|---|---|---|---|
-| Anthropic | yes | yes | RLHF + Constitutional AI | yes + agentic RL |
-| OpenAI | yes | yes | RLHF, RLAIF | yes + agentic RL |
-| Google | yes | yes | RLHF | yes |
-| Meta (Llama) | yes | yes | DPO | partial |
-| DeepSeek | yes | yes | RL on reasoning (R1) | partial |
+Anthropic, OpenAI, Google, Meta, and DeepSeek all run a **similar pipeline** but with different data, and reward signals.
 
-Different data. Different reward signals. Different sequencing.
+--
 
-**Same shape.**
-
-> When you train very different models to do *overlapping skills*, they
-> converge on *overlapping behaviors*. That's why `MODEL = "..."` is
-> just a string. **Answers Q4.**
+> When you train very different models to do *overlapping skills*, they converge on *overlapping behaviors*. That's why `MODEL = "..."` is just a string. **Answers Q4.**
 
 ---
 
@@ -266,19 +255,18 @@ The actionable mental model:
 | When to stop | Current task description |
 | Knowledge up to training cutoff | Documents you load into context |
 
+--
 When debugging an agent, ask:
 
-> _"Is this a **training problem** (model X just can't do this), or a
-> **prompt problem** (it could if I told it better)?"_
+> _"Is this a **training problem** (model X just can't do this), or a **prompt problem** (it could if I told it better)?"_
 
-**The prompt side is the lever you actually control** — and it's what Blocks 3 and 4 build on.
+**The prompt side is the only lever you can control**. 
 
 ---
 
 ## The catch: the prompt is a finite budget
 
-Everything "in the prompt" shares **one fixed window of tokens** — the
-**context window**. The model sees only what fits in it, all at once.
+Everything "in the prompt" shares **one fixed window of tokens (context window)**. The model sees only what fits in it, all at once.
 
 What competes for that budget on every single turn:
 
@@ -287,13 +275,7 @@ What competes for that budget on every single turn:
 - Every **tool result**: file contents, `pytest` output, search hits
 - The model's own reasoning and the answer it's about to write
 
-A *token* is roughly ¾ of a word (or a few characters of code). Windows are
-large (~100K–1M tokens) but **not infinite**, and agent runs fill them fast —
-one `read` of a big file or a noisy traceback can cost thousands of tokens.
-
-> When the window fills, the earliest content (your original instructions)
-> gets pushed out. The model doesn't error — it just **silently forgets**.
-> That's not a bug; it's the architecture. 
+A *token* is roughly ¾ of a word (or a few characters of code). Windows are large (~100K–1M tokens) but **not infinite**, and agent runs fill them fast. Single `read` of a big file or a noisy traceback can cost thousands of tokens.
 
 ---
 
@@ -303,7 +285,7 @@ We are going to import the **Block 1 agent loop** as a one-line import (`from wo
 
 What to watch for:
 
-- The same code drives Claude, GPT, Gemini.
+- The same code drives different models.
 - Different models pick different *first* tools, take different numbers of turns, write the fix slightly differently.
 - They all converge on the same **outcome** (passing tests).
 - That's convergent post-training, made tactile.
@@ -323,9 +305,9 @@ You now have the model:
 
 That same training history also tells you **how it can fail**:
 
-- Context window full -> forgets what it was doing
-- Niche language not in training data -> hallucinates plausible nonsense
-- Reward-hacked on "be confident" -> won't admit it doesn't know
-- Trained on short trajectories -> loops on long ones
+- If context window gets full, it will forget what it was doing
+- If niche language is not in training data, it will hallucinate plausible nonsense
+- If the model reward-hacked on "be confident", it won't admit it doesn't know
+- It trained on short trajectories, it will loop on long ones
 
 **Enough concepts, all applied now.**

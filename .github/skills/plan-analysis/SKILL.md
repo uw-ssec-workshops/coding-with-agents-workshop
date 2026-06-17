@@ -1,7 +1,6 @@
 ---
 name: plan-analysis
 description: 'Turn a dataset profile and a research question into a defensible, testable analysis plan — the right statistical test(s) for the study design, the assumptions to check first, and explicit success criteria — written to docs/. Use when someone knows their data and wants to decide HOW to analyze it before running anything. Phase 2 of the analysis workflow.'
-tools: ['read', 'search/codebase', 'search', 'edit/editFiles']
 argument-hint: '[research question, e.g. "do the groups differ on the outcome?"]'
 ---
 
