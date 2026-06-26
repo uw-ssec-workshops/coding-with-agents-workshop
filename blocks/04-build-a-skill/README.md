@@ -15,7 +15,6 @@ By the end of this block, an attendee can:
 04-build-a-skill/
   README.md            # this file
   slides.md            # Marp slides
-  instructor-notes.md  # speaker notes
   resources.md         # Copilot custom-agent docs, prompt files, skills, MCP
   exercise/
     README.md                            # participant-facing step-by-step

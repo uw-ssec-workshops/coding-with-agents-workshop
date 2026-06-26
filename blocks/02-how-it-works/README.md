@@ -16,8 +16,7 @@ By the end of this block, an attendee can:
 ```
 02-how-it-works/
   README.md            # this file
-  slides.md            # Marp slides 
-  instructor-notes.md  # speaker notes
+  slides.md            # Marp slides
   resources.md         # curated further reading
   demo/
     notebook.ipynb     # "Same loop, different brain", model swap experiment

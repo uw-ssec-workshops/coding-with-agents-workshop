@@ -7,7 +7,7 @@ You are assisting an instructor or workshop participant. Optimize for **clarity,
 ## Repo at a glance
 
 - `docs/`, workshop outline, participant setup guide.
-- `blocks/0N-*/`, one folder per block. Each contains `slides.md` (Marp), a `demo/` folder, `instructor-notes.md`, and `resources.md`.
+- `blocks/0N-*/`, one folder per block. Each contains `slides.md` (Marp), a `demo/` folder, and `resources.md`.
 - `blocks/01-landscape/demo/starter/`, a tiny `sci_units` Python package used as the running scenario across blocks.
 - `workshop_agent/`, the agent loop, sandbox, and tool schemas extracted from Block 1's `notebook.ipynb` and packaged so Blocks 2-4 can `from workshop_agent import run_agent` instead of copy pasting the loop. The notebook stays the pedagogical source-of-truth and keeps the two in sync if you change either.
 - `.devcontainer/`, Codespace setup (Python 3.12 + uv + Jupyter + Copilot).
