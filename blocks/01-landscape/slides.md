@@ -117,12 +117,15 @@ When you use an agent, **your code, data, and prompts leave your machine** and g
 
 ## Demo: same task, two ways
 
-**The scenario**: a tiny `sci_units` Python package for temperature unit conversions with failing tests.
+**The scenario**: a tiny `sci_units` Python package for temperature unit conversions with failing tests (`uv run pytest -v`).
 
 We are going to fix it twice.
 
 1. **First**, with Copilot in agent mode. ~2 minutes. Polished UX. Watch what it does.
+  _Prompt_: `There are failing tests in this project. Investigate, fix the bug, and verify with pytest. Make the smallest possible change.`
 2. **Then**, with a ~50-line Python notebook that talks to a model through the workshop's LLM proxy, the same proxy Copilot is using. Watch the **same loop** with no UX polish at all.
+  _Remember to select kernel as_: `Python Environments`.
+
 
 --
 > The point: it's the same loop.

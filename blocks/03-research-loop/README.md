@@ -18,8 +18,7 @@ By the end of this block, an attendee can:
 ```
 03-research-loop/
   README.md            # this file
-  slides.md            # Marp slides 
-  instructor-notes.md  # speaker notes
+  slides.md            # Marp slides (includes demo prompts)
   resources.md         # the skills, stats-for-HCI references, failure-mode reading
   demo/
     AGENTS.md          # project memory: the text-entry study design + analysis conventions
@@ -37,7 +36,7 @@ This is a **live, instructor-led demo**.
 
 1. Open **Copilot Chat** and switch the picker to **Agent** mode.
 2. Wipe any leftover artifacts from prior runs (from the repo root): `rm -rf blocks/03-research-loop/demo/docs/`.
-3. Walk the seven skills from [`instructor-notes.md`](instructor-notes.md), one at a time. They are defined in [`.github/skills/`](../../.github/skills/); invoke one by name (*"use the `plan-analysis` skill…"*) or describe the task and let the agent pick. The **first** prompt names the full demo paths (e.g. `blocks/03-research-loop/demo/starter/data.csv`) and tells the agent to read `blocks/03-research-loop/demo/AGENTS.md` first.
+3. Walk the six demo skills from [`slides.md`](slides.md) (Demo 1/6 through 6/6), one at a time. Paste each prompt into Copilot Chat. They are defined in [`.github/skills/`](../../.github/skills/); invoke one by name (*"use the `plan-analysis` skill…"*) or describe the task and let the agent pick. The **first** prompt names the full demo paths (e.g. `blocks/03-research-loop/demo/starter/data.csv`) and tells the agent to read `blocks/03-research-loop/demo/AGENTS.md` first.
 4. When you're done, **commit the trail**: `git add blocks/03-research-loop/demo/docs/ && git commit`. That's the auditability lesson. These artifacts are a dated record of what was analyzed and why.
 
 If anything goes wrong on the day, the [`expected-artifacts/`](demo/expected-artifacts/) folder ships pre-generated outputs (including a runnable `analysis.py` and the EDA figures) to walk through instead.

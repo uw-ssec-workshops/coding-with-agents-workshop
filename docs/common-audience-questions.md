@@ -5,8 +5,7 @@ with short, deliverable answers. Organized by block and grounded in each block's
 `slides.md`. Use these as quick reference during Q&A; they intentionally repeat
 the framing from the slides so you can answer without flipping back.
 
-> These were consolidated out of the per-block `instructor-notes.md` files so
-> there's one list to skim before you present.
+> One list to skim before you present — grounded in each block's `slides.md`.
 
 ---
 
