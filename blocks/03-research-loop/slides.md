@@ -86,7 +86,71 @@ We'll run all 6 skills in order and watch the artifacts appear in `docs/`.
 > Analysis hint: it's repeated-measures data with a non-normal outcome. The
 > *obvious* test is the *wrong* test.
 
-DEMO TIME.
+Before you start: wipe prior runs — `rm -rf blocks/03-research-loop/demo/docs/`
+
+---
+
+## Demo 1/6: `profile-dataset`
+
+Read `AGENTS.md` first so the agent locks onto the demo folder and its conventions.
+
+```
+Read blocks/03-research-loop/demo/AGENTS.md first, then use the profile-dataset skill on blocks/03-research-loop/demo/starter/data.csv.
+```
+
+**Watch for:** artifact at `demo/docs/profile-text-entry.md`
+
+---
+
+## Demo 2/6: `plan-analysis`
+
+```
+Use the plan-analysis skill to plan how to test whether the three interfaces differ in typing speed.
+```
+
+**Watch for:** does it respect the within-subjects design? The right answer is a repeated-measures / Friedman family and not a one-way ANOVA. Open `demo/docs/analysis-plan-text-entry.md` and note the **Automated vs Manual** success criteria.
+
+---
+
+## Demo 3/6: `explore-data`
+
+```
+Use the explore-data skill to run the EDA and assumption checks the plan calls for.
+```
+
+**Watch for:** this phase decides which test is valid. When Shapiro–Wilk results come back, `swipe` fails normality (p < .0001) — the outlier near 10 wpm is why we go non-parametric. Check figures in `demo/docs/figures/`.
+
+---
+
+## Demo 4/6: `statistical-tests`
+
+```
+Use the statistical-tests skill to run the test the assumptions support.
+```
+
+**Watch for:** Friedman (correct) or independent one-way ANOVA (the trap)? Expect: Friedman χ²(2) ≈ 45.2, p ≈ 1.5e-10, Kendall's W ≈ 0.75; Wilcoxon post-hoc (Holm) all significant; ordering qwerty > swipe > predictive..
+
+---
+
+## Demo 5/6: `draft-report`
+
+```
+Use the draft-report skill to write the Methods and Analysis sections.
+```
+
+**Watch for:** citations. Open `demo/docs/draft-text-entry.md` — `[CITATION NEEDED]` markers are correct; confident fake citations are the failure mode.
+
+---
+
+## Demo 6/6: `validate-analysis`
+
+```
+Use the validate-analysis skill to check the analysis and the draft.
+```
+
+**Watch for:** the quality gate. It re-runs the numbers and checks the draft's claims against them. Read the pass/fail summary in `demo/docs/validate-text-entry.md`.
+
+When you're done: `git add blocks/03-research-loop/demo/docs/ && git commit`
 
 ---
 

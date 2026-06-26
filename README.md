@@ -1,6 +1,6 @@
 # Coding with AI Agents: A Hands-On Workshop for Scientists
 
-This repository contains the slides, demos, hands-on notebooks, and instructor notes for a ~2-hour workshop teaching scientists how AI coding agents work and how to use them well in research software engineering.
+This repository contains the slides, demos, and hands-on notebooks for a ~2-hour workshop teaching scientists how AI coding agents work and how to use them well in research software engineering.
 
 ## Workshop structure
 
@@ -18,8 +18,7 @@ Each block folder follows a similar layout:
 ```
 blocks/0N-name/
   README.md            # what this block teaches
-  slides.md            # Marp-flavored slides
-  instructor-notes.md  # speaker notes, demo script, fallbacks
+  slides.md            # Marp slides (includes demo prompts)
   resources.md         # curated further reading
   demo/                # runnable code, starter files, notebooks
 ```
